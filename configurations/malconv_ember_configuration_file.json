@@ -1,0 +1,15 @@
+{
+  "training_file": "training_splits/ember/training_subset.txt",
+  "validation_file": "training_splits/ember/validation_subset.txt",
+  "test_file": "training_splits/ember/validation_subset.txt",
+  "batch_size": 16,
+  "num_epochs": 1,
+  "patience": 5,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_input_size": 1048576,
+  "threshold": 0.5,
+  "padding_value": 256,
+  "model_path": "models/EMBER-MalConv"
+
+}

@@ -103,7 +103,10 @@ if __name__ == "__main__":
         validation_dataloader,
         configuration["patience"]
     )
-    torch.save(model.state_dict(), os.path.join(configuration["output_directory_path"],"model.pth"))
+    if not os.path.exists(configuration["model_path"]):
+        os.makedirs(configuration["model_path"])
+    torch.save(model.state_dict(), os.path.join(configuration["model_path"],"model.pth"))
+
 
 
 
