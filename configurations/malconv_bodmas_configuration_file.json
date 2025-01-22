@@ -1,0 +1,14 @@
+{
+  "training_file": "training_splits/bodmas/bodmas_training_file.txt",
+  "validation_file": "training_splits/bodmas/bodmas_validation_file.txt",
+  "test_file": "training_splits/bodmas/bodmas_test_file.txt",
+  "batch_size": 4,
+  "num_epochs": 50,
+  "patience": 5,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_input_size": 1048576,
+  "threshold": 0.5,
+  "padding_value": 256
+
+}
