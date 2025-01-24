@@ -3,7 +3,7 @@
   "validation_file": "training_splits/ember/ember_validation_file_server.txt",
   "test_file": "training_splits/ember/ember_test_file_server.txt",
   "batch_size": 16,
-  "num_epochs": 1,
+  "num_epochs": 100,
   "patience": 5,
   "architecture": "MalConv",
   "embedding_size": 8,
