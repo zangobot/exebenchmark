@@ -7,6 +7,16 @@ from torch.utils.data import DataLoader
 import multiprocessing
 import os
 
+
+# Check if a GPU is available
+print("Is CUDA available?:", torch.cuda.is_available())
+# Check the number of GPUs
+print("Number of GPUs:", torch.cuda.device_count())
+# Check the name of the GPU
+if torch.cuda.is_available():
+    print("GPU Name:", torch.cuda.get_device_name(0))
+else:
+    print("No GPU detected.")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def read_json_file(filepath: str)-> dict:
@@ -99,7 +109,8 @@ if __name__ == "__main__":
         collate_fn=training_dataset.pad_collate_func
     )
     model = build_model(configuration)
-
+    model = model.to(device)
+    
     criterion = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(model.parameters())
 
