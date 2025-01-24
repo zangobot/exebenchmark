@@ -53,6 +53,17 @@ def build_model(configuration: dict) -> torch.nn.Module:
     else:
         raise ValueError(f"Model {architecture_name} not found")
 
+def save_results(trainer: EarlyStoppingPyTorchTrainer, configuration: dict):
+    results = {
+        "training_losses": trainer.training_losses,
+        "training_accuracies": trainer.training_accuracies,
+        "validation_losses": trainer.validation_losses,
+        "validation_accuracies": trainer.validation_accuracies
+    }
+    with open(os.path.join(configuration["model_path"], "results.json"), "w") as output_file:
+        json.dump(results, output_file)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Train end2end malware detector')
     parser.add_argument("configuration_file",
@@ -106,6 +117,7 @@ if __name__ == "__main__":
     if not os.path.exists(configuration["model_path"]):
         os.makedirs(configuration["model_path"])
     torch.save(model.state_dict(), os.path.join(configuration["model_path"],"model.pth"))
+    save_results(trainer, configuration)
 
 
 
