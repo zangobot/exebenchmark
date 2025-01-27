@@ -11,6 +11,7 @@ from maltorch.trainers.early_stopping_pytorch_trainer import EarlyStoppingPyTorc
 from torch.utils.data import DataLoader
 import multiprocessing
 import os
+from utils import read_json_file
 
 
 # Check if a GPU is available
@@ -24,9 +25,6 @@ else:
     print("No GPU detected.")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def read_json_file(filepath: str)-> dict:
-    with open(filepath, "r") as input_file:
-        return json.load(input_file)
 
 def build_model(configuration: dict) -> torch.nn.Module:
     architecture_name = configuration["architecture"]
@@ -34,37 +32,37 @@ def build_model(configuration: dict) -> torch.nn.Module:
         from maltorch.zoo.malconv import MalConv
         return MalConv(
             embedding_size=configuration["embedding_size"],
-            max_input_size=configuration["max_input_size"],
+            max_len=configuration["max_len"],
             threshold=configuration["threshold"],
-            padding_value=configuration["padding_value"]
+            padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "AvastConv":
         from maltorch.zoo.avaststyleconv import AvastStyleConv
         return AvastStyleConv(
             embedding_size=configuration["embedding_size"],
-            max_input_size=configuration["max_input_size"],
+            max_len=configuration["max_len"],
             threshold=configuration["threshold"],
-            padding_value=configuration["padding_value"]
+            padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "NGramConv":
         from maltorch.zoo.ngramconv import NGramConv
         return NGramConv(
             embedding_size=configuration["embedding_size"],
-            max_input_size=configuration["max_input_size"],
+            max_len=configuration["max_len"],
             threshold=configuration["threshold"],
-            padding_value=configuration["padding_value"]
+            padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "ShallowConv":
         from maltorch.zoo.shallowconv import ShallowConv
         return ShallowConv(
             embedding_size=configuration["embedding_size"],
-            max_input_size=configuration["max_input_size"],
+            max_len=configuration["max_len"],
             threshold=configuration["threshold"],
-            padding_value=configuration["padding_value"]
+            padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "BBDnn":
         from maltorch.zoo.bbdnn import BBDnn
-        return BBDnn() # Make sure to use padding_value = 0 for the BBDnn model
+        return BBDnn() # Make sure to use padding_idx = 0 for the BBDnn model
     else:
         raise ValueError(f"Model {architecture_name} not found")
 
@@ -73,27 +71,27 @@ def create_datasets(configuration: dict):
     if configuration["dataset_type"] == "binary":
         training_dataset = BinaryDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"]
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"]
         )
         validation_dataset = BinaryDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"]
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"]
         )
     elif configuration["dataset_type"] == "RS":
         training_dataset = RandomizedAblationDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             num_versions=configuration["num_versions"],
             pabl=configuration["pabl"],
             is_training=True
         )
         validation_dataset = RandomizedAblationDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             num_versions=configuration["num_versions"],
             pabl=configuration["pabl"],
             is_training=True
@@ -102,16 +100,16 @@ def create_datasets(configuration: dict):
     elif configuration["dataset_type"] == "RsDel":
         training_dataset = RandomizedDeletionDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             num_versions=configuration["num_versions"],
             pdel=configuration["pdel"],
             is_training=True
         )
         validation_dataset = RandomizedDeletionDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             num_versions=configuration["num_versions"],
             pdel=configuration["pdel"],
             is_training=True
@@ -120,23 +118,23 @@ def create_datasets(configuration: dict):
     elif configuration["dataset_type"] == "DRS":
         training_dataset = DeRandomizedSmoothingDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             chunk_size=configuration["chunk_size"],
             is_training=True
         )
         validation_dataset = DeRandomizedSmoothingDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             chunk_size=configuration["chunk_size"],
             is_training=True
         )
     elif configuration["dataset_type"] == "SequentialDRS":
         training_dataset = SequentialDRSDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -144,8 +142,8 @@ def create_datasets(configuration: dict):
         )
         validation_dataset = SequentialDRSDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -154,8 +152,8 @@ def create_datasets(configuration: dict):
     elif configuration["dataset_type"] == "RandomDRS":
         training_dataset = RandomDRSDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -163,8 +161,8 @@ def create_datasets(configuration: dict):
         )
         validation_dataset = RandomDRSDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_input_size"],
-            padding_value=configuration["padding_value"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -197,16 +195,8 @@ if __name__ == "__main__":
 
     configuration = read_json_file(args.configuration_file)
 
-    training_dataset = BinaryDataset(
-        csv_filepath=configuration["training_file"],
-        max_len=configuration["max_input_size"],
-        padding_value=configuration["padding_value"]
-    )
-    validation_dataset = BinaryDataset(
-        csv_filepath=configuration["validation_file"],
-        max_len=configuration["max_input_size"],
-        padding_value=configuration["padding_value"]
-    )
+    training_dataset, validation_dataset = create_datasets(configuration)
+
     num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
     train_dataloader = DataLoader(
         training_dataset,
