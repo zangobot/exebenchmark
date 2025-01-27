@@ -1,4 +1,4 @@
-torch
+dtorch
 torchvision
 scikit-learn
 foolbox

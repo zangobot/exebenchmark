@@ -2,6 +2,11 @@ import argparse
 import torch
 import json
 from maltorch.datasets.binary_dataset import BinaryDataset
+from maltorch.datasets.rs_dataset import RandomizedAblationDataset
+from maltorch.datasets.rsdel_dataset import RandomizedDeletionDataset
+from maltorch.datasets.random_drs_dataset import RandomDRSDataset
+from maltorch.datasets.sequential_drs_dataset import SequentialDRSDataset
+from maltorch.datasets.drs_dataset import DeRandomizedSmoothingDataset
 from maltorch.trainers.early_stopping_pytorch_trainer import EarlyStoppingPyTorchTrainer
 from torch.utils.data import DataLoader
 import multiprocessing
@@ -63,6 +68,114 @@ def build_model(configuration: dict) -> torch.nn.Module:
     else:
         raise ValueError(f"Model {architecture_name} not found")
 
+
+def create_datasets(configuration: dict):
+    if configuration["dataset_type"] == "binary":
+        training_dataset = BinaryDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"]
+        )
+        validation_dataset = BinaryDataset(
+            csv_filepath=configuration["validation_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"]
+        )
+    elif configuration["dataset_type"] == "RS":
+        training_dataset = RandomizedAblationDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            num_versions=configuration["num_versions"],
+            pabl=configuration["pabl"],
+            is_training=True
+        )
+        validation_dataset = RandomizedAblationDataset(
+            csv_filepath=configuration["validation_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            num_versions=configuration["num_versions"],
+            pabl=configuration["pabl"],
+            is_training=True
+        )
+
+    elif configuration["dataset_type"] == "RsDel":
+        training_dataset = RandomizedDeletionDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            num_versions=configuration["num_versions"],
+            pdel=configuration["pdel"],
+            is_training=True
+        )
+        validation_dataset = RandomizedDeletionDataset(
+            csv_filepath=configuration["validation_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            num_versions=configuration["num_versions"],
+            pdel=configuration["pdel"],
+            is_training=True
+        )
+
+    elif configuration["dataset_type"] == "DRS":
+        training_dataset = DeRandomizedSmoothingDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            chunk_size=configuration["chunk_size"],
+            is_training=True
+        )
+        validation_dataset = DeRandomizedSmoothingDataset(
+            csv_filepath=configuration["validation_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            chunk_size=configuration["chunk_size"],
+            is_training=True
+        )
+    elif configuration["dataset_type"] == "SequentialDRS":
+        training_dataset = SequentialDRSDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            file_percentage=configuration["file_percentage"],
+            num_chunks=configuration["num_chunks"],
+            min_chunk_size=configuration["min_chunk_size"],
+            is_training=True
+        )
+        validation_dataset = SequentialDRSDataset(
+            csv_filepath=configuration["validation_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            file_percentage=configuration["file_percentage"],
+            num_chunks=configuration["num_chunks"],
+            min_chunk_size=configuration["min_chunk_size"],
+            is_training=True
+        )
+    elif configuration["dataset_type"] == "RandomDRS":
+        training_dataset = RandomDRSDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            file_percentage=configuration["file_percentage"],
+            num_chunks=configuration["num_chunks"],
+            min_chunk_size=configuration["min_chunk_size"],
+            is_training=True
+        )
+        validation_dataset = RandomDRSDataset(
+            csv_filepath=configuration["validation_file"],
+            max_len=configuration["max_input_size"],
+            padding_value=configuration["padding_value"],
+            file_percentage=configuration["file_percentage"],
+            num_chunks=configuration["num_chunks"],
+            min_chunk_size=configuration["min_chunk_size"],
+            is_training=True
+        )
+
+    else:
+        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
+    return training_dataset, validation_dataset
+
+
 def save_results(trainer: EarlyStoppingPyTorchTrainer, configuration: dict):
     results = {
         "training_losses": trainer.training_losses,
@@ -110,7 +223,7 @@ if __name__ == "__main__":
     )
     model = build_model(configuration)
     model = model.to(device)
-    
+
     criterion = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(model.parameters())
 

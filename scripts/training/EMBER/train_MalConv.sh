@@ -1,3 +1,8 @@
 cd ../../../
 
-python train_end2end_detector.py configurations/malconv_ember_configuration_file_1MB.json
+python train_end2end_detector.py  configurations/EMBER/MalConv/malconv_ember_configuration_file_1MB.json
+python train_end2end_detector.py  configurations/EMBER/MalConv/rs_malconv_ember_configuration_file_1MB.json
+python train_end2end_detector.py  configurations/EMBER/MalConv/rsdel_malconv_ember_configuration_file_1MB.json
+python train_end2end_detector.py  configurations/EMBER/MalConv/drs_malconv_ember_configuration_file_1MB.json
+python train_end2end_detector.py  configurations/EMBER/MalConv/sequential_drs_malconv_ember_configuration_file_1MB.json
+python train_end2end_detector.py  configurations/EMBER/MalConv/random_drs_malconv_ember_configuration_file_1MB.json
