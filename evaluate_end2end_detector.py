@@ -1,19 +1,20 @@
 import argparse
 import torch
-import json
 import multiprocessing
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Dataset
 from maltorch.datasets.binary_dataset import BinaryDataset
-
 from tqdm import tqdm
+from maltorch.datasets.drs_dataset import DeRandomizedSmoothingDataset
+from maltorch.datasets.random_drs_dataset import RandomDRSDataset
+from maltorch.datasets.rs_dataset import RandomizedAblationDataset
+from maltorch.datasets.rsdel_dataset import RandomizedDeletionDataset
+from maltorch.datasets.sequential_drs_dataset import SequentialDRSDataset
 from maltorch.zoo.model import BaseEmbeddingPytorchClassifier
-from train_end2end_detector import read_json_file
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.avaststyleconv import AvastStyleConv
 from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.shallowconv import ShallowConv
-
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
@@ -21,18 +22,11 @@ from maltorch.data_processing.drs_preprocessing import DeRandomizedPreprocessing
 from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRandomizedPreprocessing
 from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
+from utils import read_json_file
+from utils import check_cuda
 
-# Check if a GPU is available
-print("Is CUDA available?:", torch.cuda.is_available())
-# Check the number of GPUs
-print("Number of GPUs:", torch.cuda.device_count())
-# Check the name of the GPU
-if torch.cuda.is_available():
-    print("GPU Name:", torch.cuda.get_device_name(0))
-else:
-    print("No GPU detected.")
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+device = check_cuda()
 
 def get_preprocessing(configuration: dict) -> DataProcessing:
     try:
@@ -139,7 +133,65 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
     else:
         raise ValueError(f"Model {architecture_name} not found")
 
-def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader):
+def create_dataset(configuration: dict) -> Dataset:
+    if configuration["dataset_type"] == "binary":
+        evaluation_dataset = BinaryDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"]
+        )
+
+    elif configuration["dataset_type"] == "RS":
+        evaluation_dataset = RandomizedAblationDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
+            num_versions=configuration["num_versions"],
+            pabl=configuration["pabl"],
+            is_training=False
+        )
+    elif configuration["dataset_type"] == "RsDel":
+        evaluation_dataset = RandomizedDeletionDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
+            num_versions=configuration["num_versions"],
+            pdel=configuration["pdel"],
+            is_training=False
+        )
+    elif configuration["dataset_type"] == "DRS":
+        evaluation_dataset = DeRandomizedSmoothingDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
+            chunk_size=configuration["chunk_size"],
+            is_training=False
+        )
+    elif configuration["dataset_type"] == "SequentialDRS":
+        evaluation_dataset = SequentialDRSDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
+            file_percentage=configuration["file_percentage"],
+            num_chunks=configuration["num_chunks"],
+            min_chunk_size=configuration["min_chunk_size"],
+            is_training=False
+        )
+    elif configuration["dataset_type"] == "RandomDRS":
+        evaluation_dataset = RandomDRSDataset(
+            csv_filepath=configuration["training_file"],
+            max_len=configuration["max_len"],
+            padding_idx=configuration["padding_idx"],
+            file_percentage=configuration["file_percentage"],
+            num_chunks=configuration["num_chunks"],
+            min_chunk_size=configuration["min_chunk_size"],
+            is_training=False
+        )
+    else:
+        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
+    return evaluation_dataset
+
+def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:
     eval_total = 0
     eval_trues = []
     eval_preds = []
@@ -187,7 +239,7 @@ def write_metrics(y_preds, y_trues, metrics_file):
         f.write(f"Precision: {precision}\n")
         f.write(f"Recall: {recall}\n")
         f.write(f"F1-Score: {f1_score}\n")
-        f.write(f"Confusion matrix: \n")
+        f.write("Confusion matrix: \n")
         f.write(f"[{true_negatives}, {false_positives}] \n")
         f.write(f"[{false_negatives}, {true_positives}] \n")
 
@@ -202,11 +254,7 @@ if __name__ == "__main__":
     configuration = read_json_file(args.configuration_file)
     model, preprocessing, postprocessing = build_model(configuration)
 
-    dataset = BinaryDataset(
-        csv_filepath=configuration["evaluation_file"],
-        max_len=configuration["max_len"],
-        padding_idx=configuration["padding_idx"]
-    )
+    dataset = create_dataset(configuration)
     num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
     dataloader = DataLoader(
         dataset,
