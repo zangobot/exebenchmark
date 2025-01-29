@@ -134,7 +134,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
         raise ValueError(f"Model {architecture_name} not found")
 
 def create_dataset(configuration: dict) -> Dataset:
-    if configuration["dataset_type"] == "binary":
+    if configuration["dataset_type"] == "Binary":
         evaluation_dataset = BinaryDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
@@ -188,7 +188,7 @@ def create_dataset(configuration: dict) -> Dataset:
             is_training=False
         )
     else:
-        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
+        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
     return evaluation_dataset
 
 def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:

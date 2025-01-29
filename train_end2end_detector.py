@@ -59,7 +59,7 @@ def build_model(configuration: dict) -> torch.nn.Module:
 
 
 def create_datasets(configuration: dict) -> tuple[Dataset, Dataset]:
-    if configuration["dataset_type"] == "binary":
+    if configuration["dataset_type"] == "Binary":
         training_dataset = BinaryDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
@@ -161,7 +161,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset]:
         )
 
     else:
-        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
+        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
     return training_dataset, validation_dataset
 
 

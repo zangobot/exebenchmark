@@ -10,6 +10,6 @@
   "max_len": 1000000,
   "threshold": 0.5,
   "padding_idx": 256,
-  "model_path": "models/EMBER-MalConv-1000000"
-
+  "model_path": "models/EMBER-MalConv-1000000",
+  "dataset_type": "Binary"
 }
