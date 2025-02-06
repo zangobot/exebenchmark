@@ -10,7 +10,7 @@
   "max_len": 2000000,
   "threshold": 0.5,
   "padding_idx": 256,
-  "model_path": "output/EMBER-DRS-MalConv-2000000",
+  "model_path": "output/EMBER-Sequential-DRS-MalConv-2000000",
   "dataset_type": "SequentialDRS",
   "file_percentage": 0.05,
   "num_chunks": 100,
