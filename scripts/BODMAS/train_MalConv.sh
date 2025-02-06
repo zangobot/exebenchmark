@@ -1,0 +1,8 @@
+cd ../../../
+
+python train_end2end_detector.py  configurations/malconv_bodmas_subset_configuration_file.json
+python train_end2end_detector.py  configurations/rs_malconv_bodmas_subset_configuration_file.json
+python train_end2end_detector.py  configurations/rsdel_malconv_bodmas_subset_configuration_file.json
+python train_end2end_detector.py  configurations/drs_malconv_bodmas_subset_configuration_file.json
+python train_end2end_detector.py  configurations/sequential_drs_malconv_bodmas_subset_configuration_file.json
+python train_end2end_detector.py  configurations/random_drs_malconv_bodmas_subset_configuration_file.json
