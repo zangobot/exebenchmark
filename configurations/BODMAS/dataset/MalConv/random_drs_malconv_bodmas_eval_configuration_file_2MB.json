@@ -1,0 +1,15 @@
+{
+  "evaluation_file": "training_splits/bodmas/bodmas_dataset_file.txt",
+  "batch_size": 1,
+  "architecture": "MalConv",
+  "max_len": 2000000,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-Random-DRS-MalConv-2000000/model.pth",
+  "predictions_path": "output/EMBER-Random-DRS-MalConv-2000000/bodmas_dataset_predictions.csv",
+  "metrics_path": "output/EMBER-Random-DRS-MalConv-2000000/bodmas_dataset_metrics.out",
+  "dataset_type": "RandomDRS",
+  "file_percentage": 0.05,
+  "num_chunks": 100,
+  "min_chunk_size": 512
+}

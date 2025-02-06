@@ -136,14 +136,14 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
 def create_dataset(configuration: dict) -> Dataset:
     if configuration["dataset_type"] == "Binary":
         evaluation_dataset = BinaryDataset(
-            csv_filepath=configuration["training_file"],
+            csv_filepath=configuration["evaluation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"]
         )
 
     elif configuration["dataset_type"] == "RS":
         evaluation_dataset = RandomizedAblationDataset(
-            csv_filepath=configuration["training_file"],
+            csv_filepath=configuration["evaluation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
             num_versions=configuration["num_versions"],
@@ -152,7 +152,7 @@ def create_dataset(configuration: dict) -> Dataset:
         )
     elif configuration["dataset_type"] == "RsDel":
         evaluation_dataset = RandomizedDeletionDataset(
-            csv_filepath=configuration["training_file"],
+            csv_filepath=configuration["evaluation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
             num_versions=configuration["num_versions"],
@@ -161,7 +161,7 @@ def create_dataset(configuration: dict) -> Dataset:
         )
     elif configuration["dataset_type"] == "DRS":
         evaluation_dataset = DeRandomizedSmoothingDataset(
-            csv_filepath=configuration["training_file"],
+            csv_filepath=configuration["evaluation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
             chunk_size=configuration["chunk_size"],
@@ -169,7 +169,7 @@ def create_dataset(configuration: dict) -> Dataset:
         )
     elif configuration["dataset_type"] == "SequentialDRS":
         evaluation_dataset = SequentialDRSDataset(
-            csv_filepath=configuration["training_file"],
+            csv_filepath=configuration["evaluation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
             file_percentage=configuration["file_percentage"],
@@ -179,7 +179,7 @@ def create_dataset(configuration: dict) -> Dataset:
         )
     elif configuration["dataset_type"] == "RandomDRS":
         evaluation_dataset = RandomDRSDataset(
-            csv_filepath=configuration["training_file"],
+            csv_filepath=configuration["evaluation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
             file_percentage=configuration["file_percentage"],

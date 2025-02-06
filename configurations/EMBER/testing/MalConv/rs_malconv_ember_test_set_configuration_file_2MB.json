@@ -1,0 +1,15 @@
+{
+  "evaluation_file": "training_splits/ember/ember_test_file_server.txt",
+  "batch_size": 1,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_len": 2000000,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-RS-MalConv-2000000/model.pth",
+  "predictions_path": "output/EMBER-RS-MalConv-2000000/EMBER_test_set_predictions.csv",
+  "metrics_path": "output/EMBER-RS-MalConv-2000000/EMBER_test_set_metrics.out",
+  "dataset_type": "RS",
+  "pabl": 0.20,
+  "num_versions": 100
+}
