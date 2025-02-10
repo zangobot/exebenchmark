@@ -9,5 +9,4 @@
   "predictions_path": "output/EMBER-MalConv-2000000/bodmas_dataset_predictions.csv",
   "metrics_path": "output/EMBER-MalConv-2000000/bodmas_dataset_metrics.out",
   "dataset_type": "Binary"
-
 }

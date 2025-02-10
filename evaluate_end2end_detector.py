@@ -134,61 +134,11 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
         raise ValueError(f"Model {architecture_name} not found")
 
 def create_dataset(configuration: dict) -> Dataset:
-    if configuration["dataset_type"] == "Binary":
-        evaluation_dataset = BinaryDataset(
-            csv_filepath=configuration["evaluation_file"],
-            max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"]
-        )
-
-    elif configuration["dataset_type"] == "RS":
-        evaluation_dataset = RandomizedAblationDataset(
-            csv_filepath=configuration["evaluation_file"],
-            max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"],
-            num_versions=configuration["num_versions"],
-            pabl=configuration["pabl"],
-            is_training=False
-        )
-    elif configuration["dataset_type"] == "RsDel":
-        evaluation_dataset = RandomizedDeletionDataset(
-            csv_filepath=configuration["evaluation_file"],
-            max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"],
-            num_versions=configuration["num_versions"],
-            pdel=configuration["pdel"],
-            is_training=False
-        )
-    elif configuration["dataset_type"] == "DRS":
-        evaluation_dataset = DeRandomizedSmoothingDataset(
-            csv_filepath=configuration["evaluation_file"],
-            max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"],
-            chunk_size=configuration["chunk_size"],
-            is_training=False
-        )
-    elif configuration["dataset_type"] == "SequentialDRS":
-        evaluation_dataset = SequentialDRSDataset(
-            csv_filepath=configuration["evaluation_file"],
-            max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"],
-            file_percentage=configuration["file_percentage"],
-            num_chunks=configuration["num_chunks"],
-            min_chunk_size=configuration["min_chunk_size"],
-            is_training=False
-        )
-    elif configuration["dataset_type"] == "RandomDRS":
-        evaluation_dataset = RandomDRSDataset(
-            csv_filepath=configuration["evaluation_file"],
-            max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"],
-            file_percentage=configuration["file_percentage"],
-            num_chunks=configuration["num_chunks"],
-            min_chunk_size=configuration["min_chunk_size"],
-            is_training=False
-        )
-    else:
-        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
+    evaluation_dataset = BinaryDataset(
+        csv_filepath=configuration["evaluation_file"],
+        max_len=configuration["max_len"],
+        padding_idx=configuration["padding_idx"]
+    )
     return evaluation_dataset
 
 def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:
@@ -199,13 +149,12 @@ def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tu
     with torch.no_grad():
         for x, y in tqdm(dataloader):
             x, y = x.to(device), y.to(device)
-            outputs = model.predict(x)
+            outputs = model(x)
             outputs = outputs.squeeze()
-
             y_preds = outputs.round()
             eval_trues.append(y)
             eval_preds.append(y_preds)
-            eval_total += y.size(0)
+            eval_total += configuration["batch_size"]
     return eval_preds, eval_trues
 
 def write_predictions(y_preds, y_trues, predictions_file):
