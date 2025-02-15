@@ -21,6 +21,7 @@ from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPrepr
 from maltorch.data_processing.drs_preprocessing import DeRandomizedPreprocessing
 from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRandomizedPreprocessing
 from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
+from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from utils import read_json_file
 from utils import check_cuda
@@ -60,6 +61,12 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
                 min_chunk_size=configuration["min_chunk_size"]
+            )
+        elif configuration["preprocessing"] == "Grayscale":
+            return GrayscalePreprocessing(
+                width=configuration["width"],
+                height=configuration["height"],
+                convert_to_3d_image=configuration["convert_to_3d_image"]
             )
         else:
             return None
@@ -129,6 +136,14 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
+        ), preprocessing, postprocessing
+    elif architecture_name == "ResNet18":
+        return ResNet18.create_model(
+            model_path=configuration["model_path"],
+            device="cuda" if torch.cuda.is_available() else "cpu",
+            preprocessing=preprocessing,
+            postprocessing=postprocessing,
+            threshold=configuration["threshold"]
         ), preprocessing, postprocessing
     else:
         raise ValueError(f"Model {architecture_name} not found")

@@ -1,0 +1,9 @@
+cd ../../../
+
+
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/avastconv_ember_test_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/rs_avastconv_ember_test_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/rsdel_avastconv_ember_test_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/drs_avastconv_ember_test_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/sequential_drs_avastconv_ember_test_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/random_drs_avastconv_ember_test_set_configuration_file.json

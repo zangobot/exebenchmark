@@ -1,0 +1,17 @@
+{
+  "evaluation_file": "training_splits/ember/ember_validation_file_server.txt",
+  "batch_size": 1,
+  "architecture": "AvastConv",
+  "embedding_size": 8,
+  "max_len": 512000,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-Random-DRS-AvastConv-512000/model.pth",
+  "predictions_path": "output/EMBER-Random-DRS-AvastConv-512000/EMBER_validation_set_predictions.csv",
+  "metrics_path": "output/EMBER-Random-DRS-AvastConv-512000/EMBER_validation_set_metrics.out",
+  "preprocessing": "RandomDRS",
+  "postprocessing": "MajorityVoting",
+  "file_percentage": 0.05,
+  "num_chunks": 100,
+  "min_chunk_size": 512
+}

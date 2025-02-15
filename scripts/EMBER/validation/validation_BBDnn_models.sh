@@ -1,0 +1,9 @@
+cd ../../../
+
+
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/bbdnn_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/rs_bbdnn_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/rsdel_bbdnn_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/drs_bbdnn_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/sequential_drs_bbdnn_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/random_drs_bbdnn_ember_validation_set_configuration_file.json
