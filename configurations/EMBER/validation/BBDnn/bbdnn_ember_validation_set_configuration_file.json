@@ -4,6 +4,7 @@
   "architecture": "BBDnn",
   "embedding_size": 8,
   "max_len": 102400,
+  "min_len": 4096,
   "threshold": 0.5,
   "padding_idx": 256,
   "model_path": "output/EMBER-BBDnn-102400/model.pth",
