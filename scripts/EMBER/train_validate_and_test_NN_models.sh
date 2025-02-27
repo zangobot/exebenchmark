@@ -15,7 +15,7 @@ python train_end2end_detector.py  configurations/EMBER/training/AvastConv/rsdel_
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/drs_avastconv_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/sequential_drs_avastconv_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/random_drs_avastconv_ember_configuration_file.json
-'
+
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/avastconv_ember_validation_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/rs_avastconv_ember_validation_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/rsdel_avastconv_ember_validation_set_configuration_file.json
@@ -29,6 +29,7 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/rsde
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/drs_avastconv_ember_test_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/sequential_drs_avastconv_ember_test_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/random_drs_avastconv_ember_test_set_configuration_file.json
+'
 
 !'
 # BBDnn
@@ -38,7 +39,7 @@ python train_end2end_detector.py  configurations/EMBER/training/BBDnn/rsdel_bbdn
 python train_end2end_detector.py  configurations/EMBER/training/BBDnn/drs_bbdnn_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/BBDnn/sequential_drs_bbdnn_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/BBDnn/random_drs_bbdnn_ember_configuration_file.json
-
+'
 python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/bbdnn_ember_validation_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/rs_bbdnn_ember_validation_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/rsdel_bbdnn_ember_validation_set_configuration_file.json
@@ -53,6 +54,7 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/drs_bbdn
 python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/sequential_drs_bbdnn_ember_test_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/random_drs_bbdnn_ember_test_set_configuration_file.json
 
+!'
 # NGramConv
 python train_end2end_detector.py  configurations/EMBER/training/NGramConv/ngramconv_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/NGramConv/rs_ngramconv_ember_configuration_file.json
