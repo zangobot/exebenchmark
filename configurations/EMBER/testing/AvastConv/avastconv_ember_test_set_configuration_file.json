@@ -4,6 +4,7 @@
   "architecture": "AvastConv",
   "embedding_size": 8,
   "max_len": 512000,
+  "min_len": 8196,
   "threshold": 0.5,
   "padding_idx": 256,
   "model_path": "output/EMBER-AvastConv-512000/model.pth",
