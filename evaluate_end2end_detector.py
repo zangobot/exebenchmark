@@ -15,6 +15,7 @@ from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.avaststyleconv import AvastStyleConv
 from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.shallowconv import ShallowConv
+from maltorch.zoo.resnet18 import ResNet18
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
