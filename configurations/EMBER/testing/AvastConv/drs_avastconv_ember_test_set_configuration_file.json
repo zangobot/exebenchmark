@@ -11,5 +11,5 @@
   "metrics_path": "output/EMBER-DRS-AvastConv-512000/EMBER_test_set_metrics.out",
   "preprocessing": "DRS",
   "postprocessing": "MajorityVoting",
-  "chunk_size": 10244
+  "chunk_size": 512
 }

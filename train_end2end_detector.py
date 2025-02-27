@@ -159,6 +159,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         training_dataset = DeRandomizedSmoothingDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
+            min_len=configuration["min_len"],
             padding_idx=configuration["padding_idx"],
             chunk_size=configuration["chunk_size"],
             is_training=True
