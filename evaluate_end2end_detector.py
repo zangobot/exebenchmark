@@ -153,6 +153,7 @@ def create_dataset(configuration: dict) -> Dataset:
     evaluation_dataset = BinaryDataset(
         csv_filepath=configuration["evaluation_file"],
         max_len=configuration["max_len"],
+        min_len=configuration["min_len"] if "min_len" in configuration else None,
         padding_idx=configuration["padding_idx"]
     )
     return evaluation_dataset
