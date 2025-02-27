@@ -1,12 +1,13 @@
 cd ../../
 
+!'
 # ResNet18
-#python train_end2end_detector.py  configurations/EMBER/training/ResNet18/resnet18_ember_configuration_file.json
+python train_end2end_detector.py  configurations/EMBER/training/ResNet18/resnet18_ember_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/ResNet18/resnet18_ember_validation_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/ResNet18/resnet18_ember_test_set_configuration_file.json
 
 
-!'
+
 # AvastConv
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/avastconv_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/rs_avastconv_ember_configuration_file.json
@@ -14,7 +15,7 @@ python train_end2end_detector.py  configurations/EMBER/training/AvastConv/rsdel_
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/drs_avastconv_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/sequential_drs_avastconv_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/random_drs_avastconv_ember_configuration_file.json
-
+'
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/avastconv_ember_validation_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/rs_avastconv_ember_validation_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/rsdel_avastconv_ember_validation_set_configuration_file.json
@@ -29,7 +30,7 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/drs_
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/sequential_drs_avastconv_ember_test_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/random_drs_avastconv_ember_test_set_configuration_file.json
 
-
+!'
 # BBDnn
 python train_end2end_detector.py  configurations/EMBER/training/BBDnn/bbdnn_ember_configuration_file.json
 python train_end2end_detector.py  configurations/EMBER/training/BBDnn/rs_bbdnn_ember_configuration_file.json
