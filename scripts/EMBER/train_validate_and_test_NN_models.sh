@@ -96,4 +96,3 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/rsdel_
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/drs_malconv_ember_test_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/sequential_drs_malconv_ember_test_set_configuration_file.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/random_drs_malconv_ember_test_set_configuration_file.json
-'
