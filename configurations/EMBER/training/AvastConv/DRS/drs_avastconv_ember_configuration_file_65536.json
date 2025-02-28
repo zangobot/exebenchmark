@@ -5,14 +5,12 @@
   "batch_size": 64,
   "num_epochs": 100,
   "patience": 5,
-  "architecture": "MalConv",
+  "architecture": "AvastConv",
   "embedding_size": 8,
-  "min_len": 512,
+  "min_len": 65536,
   "threshold": 0.5,
   "padding_idx": 256,
-  "model_path": "output/EMBER-Sequential-DRS-MalConv-512",
-  "dataset_type": "SequentialDRS",
-  "file_percentage": 0.05,
-  "num_chunks": 100,
-  "min_chunk_size": 512
+  "model_path": "output/EMBER-DRS-AvastConv-65536",
+  "dataset_type": "DRS",
+  "chunk_size": 65536
 }

@@ -72,13 +72,13 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
     if configuration["dataset_type"] == "Binary":
         training_dataset = BinaryDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
         )
         validation_dataset = BinaryDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
         )
@@ -98,7 +98,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
     elif configuration["dataset_type"] == "RS":
         training_dataset = RandomizedAblationDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
@@ -107,7 +107,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
         validation_dataset = RandomizedAblationDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
@@ -131,7 +131,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
     elif configuration["dataset_type"] == "RsDel":
         training_dataset = RandomizedDeletionDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
@@ -140,7 +140,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
         validation_dataset = RandomizedDeletionDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
@@ -164,7 +164,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
     elif configuration["dataset_type"] == "DRS":
         training_dataset = DeRandomizedSmoothingDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             chunk_size=configuration["chunk_size"],
@@ -172,7 +172,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
         validation_dataset = DeRandomizedSmoothingDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             chunk_size=configuration["chunk_size"],
@@ -194,7 +194,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
     elif configuration["dataset_type"] == "SequentialDRS":
         training_dataset = SequentialDRSDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
@@ -204,7 +204,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
         validation_dataset = SequentialDRSDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
@@ -228,7 +228,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
     elif configuration["dataset_type"] == "RandomDRS":
         training_dataset = RandomDRSDataset(
             csv_filepath=configuration["training_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
@@ -238,7 +238,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
         validation_dataset = RandomDRSDataset(
             csv_filepath=configuration["validation_file"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
