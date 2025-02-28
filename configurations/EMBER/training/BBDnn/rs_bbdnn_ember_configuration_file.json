@@ -8,6 +8,7 @@
   "architecture": "BBDnn",
   "embedding_size": 10,
   "max_len": 102400,
+  "min_len": 4096,
   "threshold": 0.5,
   "padding_idx": 256,
   "model_path": "output/EMBER-RS-BBDnn-102400",

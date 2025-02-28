@@ -13,5 +13,5 @@
   "padding_idx": 256,
   "model_path": "output/EMBER-DRS-BBDnn-102400",
   "dataset_type": "DRS",
-  "chunk_size": 1024
+  "chunk_size": 4096
 }

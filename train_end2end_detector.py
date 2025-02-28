@@ -73,12 +73,14 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         training_dataset = BinaryDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"]
+            padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
         )
         validation_dataset = BinaryDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"],
-            padding_idx=configuration["padding_idx"]
+            padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
         )
         training_dataloader = DataLoader(
             training_dataset,
@@ -98,6 +100,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pabl=configuration["pabl"],
             is_training=True
@@ -106,6 +109,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pabl=configuration["pabl"],
             is_training=True
@@ -129,6 +133,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pdel=configuration["pdel"],
             is_training=True
@@ -137,6 +142,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pdel=configuration["pdel"],
             is_training=True
@@ -159,8 +165,8 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         training_dataset = DeRandomizedSmoothingDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
-            min_len=configuration["min_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             chunk_size=configuration["chunk_size"],
             is_training=True
         )
@@ -168,6 +174,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             chunk_size=configuration["chunk_size"],
             is_training=True
         )
@@ -189,6 +196,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -198,6 +206,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -221,6 +230,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -230,6 +240,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"],
             padding_idx=configuration["padding_idx"],
+            min_len=configuration["min_len"] if "min_len" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -275,7 +286,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
 
     else:
-        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS")
+        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS, Grayscale")
     return training_dataset, validation_dataset, training_dataloader, validation_dataloader
 
 

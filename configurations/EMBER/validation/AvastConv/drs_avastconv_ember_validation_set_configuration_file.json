@@ -4,6 +4,7 @@
   "architecture": "AvastConv",
   "embedding_size": 8,
   "max_len": 512000,
+  "min_len": 10244,
   "threshold": 0.5,
   "padding_idx": 256,
   "model_path": "output/EMBER-DRS-AvastConv-512000/model.pth",
@@ -11,5 +12,5 @@
   "metrics_path": "output/EMBER-DRS-AvastConv-512000/EMBER_validation_set_metrics.out",
   "preprocessing": "DRS",
   "postprocessing": "MajorityVoting",
-  "chunk_size": 512
+  "chunk_size": 10244
 }
