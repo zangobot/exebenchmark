@@ -5,12 +5,12 @@
   "batch_size": 64,
   "num_epochs": 100,
   "patience": 5,
-  "architecture": "AvastConv",
-  "embedding_size": 8,
-  "min_len": 32764,
+  "architecture": "BBDnn",
+  "embedding_size": 10,
+  "min_len": 16384,
   "threshold": 0.5,
   "padding_idx": 256,
-  "model_path": "output/EMBER-DRS-AvastConv-32764",
+  "model_path": "output/EMBER-DRS-BBDnn-16384",
   "dataset_type": "DRS",
-  "chunk_size": 32764
+  "chunk_size": 16384
 }
