@@ -29,35 +29,35 @@ def build_model(configuration: dict) -> torch.nn.Module:
     if architecture_name == "MalConv":
         return MalConv(
             embedding_size=configuration["embedding_size"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "AvastConv":
         return AvastStyleConv(
             embedding_size=configuration["embedding_size"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "NGramConv":
         return NGramConv(
             embedding_size=configuration["embedding_size"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "ShallowConv":
         return ShallowConv(
             embedding_size=configuration["embedding_size"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"]
         )
     elif architecture_name == "BBDnn":
         return BBDnn(
             embedding_size=configuration["embedding_size"],
-            max_len=configuration["max_len"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
         )

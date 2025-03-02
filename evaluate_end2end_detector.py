@@ -97,7 +97,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "AvastConv":
         return AvastStyleConv.create_model(
@@ -107,7 +107,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "NGramConv":
         return NGramConv.create_model(
@@ -117,7 +117,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "ShallowConv":
         return ShallowConv.create_model(
@@ -127,7 +127,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "BBDnn":
         return BBDnn.create_model(
@@ -137,6 +137,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "ResNet18":
         return ResNet18.create_model(
