@@ -1,0 +1,6 @@
+{
+  "evaluation_file": "/home/daniel/Datasets/EMBER-2018/test_ember_features.csv",
+  "model_path": "output/EMBER-LightGBM/default_model.txt",
+  "predictions_path": "output/EMBER-LightGBM/EMBER_test_set_predictions.csv",
+  "metrics_path": "output/EMBER-LightGBM/EMBER_validation_set_metrics.out"
+}

@@ -24,8 +24,7 @@ from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRa
 from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
-from utils import read_json_file
-from utils import check_cuda
+from utils import read_json_file, write_predictions, write_metrics, check_cuda
 
 
 device = check_cuda()
@@ -175,40 +174,6 @@ def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tu
             eval_total += configuration["batch_size"]
     return eval_preds, eval_trues
 
-def write_predictions(y_preds, y_trues, predictions_file):
-    with open(predictions_file, "w") as f:
-        for y_pred, y_true in zip(y_preds, y_trues):
-            f.write(f"{y_pred.item()},{y_true.item()}\n")
-
-def write_metrics(y_preds, y_trues, metrics_file):
-    """
-    Calculate accuracy, precision, recall, and f1-score
-    """
-    true_positives = 0
-    false_positives = 0
-    true_negatives = 0
-    false_negatives = 0
-    for y_pred, y_true in zip(y_preds, y_trues):
-        if y_pred == 1 and y_true == 1:
-            true_positives += 1
-        elif y_pred == 1 and y_true == 0:
-            false_positives += 1
-        elif y_pred == 0 and y_true == 1:
-            false_negatives += 1
-        else:
-            true_negatives += 1
-    accuracy = (true_positives + true_negatives) / (true_positives + true_negatives + false_positives + false_negatives)
-    precision = true_positives / (true_positives + false_positives)
-    recall = true_positives / (true_positives + false_negatives)
-    f1_score = 2 * (precision * recall) / (precision + recall)
-    with open(metrics_file, "w") as f:
-        f.write(f"Accuracy: {accuracy}\n")
-        f.write(f"Precision: {precision}\n")
-        f.write(f"Recall: {recall}\n")
-        f.write(f"F1-Score: {f1_score}\n")
-        f.write("Confusion matrix: \n")
-        f.write(f"[{true_negatives}, {false_positives}] \n")
-        f.write(f"[{false_negatives}, {true_positives}] \n")
 
 
 if __name__ == "__main__":
