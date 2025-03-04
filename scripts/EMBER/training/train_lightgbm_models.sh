@@ -1,12 +1,12 @@
 cd ../../../
 
-
+!'
 # lr = [0.1, 0.05, 0.01, 0.005]
-#python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/default_lightgbm_configuration_file.json
-#python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/default_lightgbm_ember_validation_set_configuration_file.json
-#python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/default_lightgbm_ember_test_set_configuration_file.json
+python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/default_lightgbm_configuration_file.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/default_lightgbm_ember_validation_set_configuration_file.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/default_lightgbm_ember_test_set_configuration_file.json
 
-#python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05.json
+python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.05.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.05.json
 
@@ -18,3 +18,16 @@ python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM
 python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.005.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.005.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.005.json
+'
+
+python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05_ff_0.9_bf_0.9.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.05_ff_0.9_bf_0.9.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.05_ff_0.9_bf_0.9.json
+
+python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05_ff_0.8_bf_0.8.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.05_ff_0.8_bf_0.8.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.05_ff_0.8_bf_0.8.json
+
+python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05_ff_0.7_bf_0.7.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.05_ff_0.7_bf_0.7.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.05_ff_0.7_bf_0.7.json
