@@ -1,6 +1,6 @@
 {
-  "training_file": "/home/daniel/Datasets/EMBER-2018/training_ember_features.csv",
-  "validation_file": "/home/daniel/Datasets/EMBER-2018/validation_ember_features.csv",
+  "training_file": "training_splits/ember/training_ember_features.csv",
+  "validation_file": "training_splits/ember/validation_ember_features.csv",
   "objective": ["binary"],
   "num_iterations": 100,
   "learning_rate": 0.1,
