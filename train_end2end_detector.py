@@ -333,7 +333,7 @@ if __name__ == "__main__":
     )
     if not os.path.exists(configuration["model_path"]):
         os.makedirs(configuration["model_path"])
-    torch.save(model.state_dict(), os.path.join(configuration["model_path"],"model.pth"))
+    torch.save(model.state_dict(), os.path.join(configuration["model_path"], "model.pth"))
     save_results(trainer, configuration)
 
 
