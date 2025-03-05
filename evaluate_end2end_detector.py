@@ -4,26 +4,22 @@ import multiprocessing
 from torch.utils.data import DataLoader, Dataset
 from maltorch.datasets.binary_dataset import BinaryDataset
 from tqdm import tqdm
-from maltorch.datasets.drs_dataset import DeRandomizedSmoothingDataset
-from maltorch.datasets.random_drs_dataset import RandomDRSDataset
-from maltorch.datasets.rs_dataset import RandomizedAblationDataset
-from maltorch.datasets.rsdel_dataset import RandomizedDeletionDataset
-from maltorch.datasets.sequential_drs_dataset import SequentialDRSDataset
 from maltorch.zoo.model import BaseEmbeddingPytorchClassifier
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.avaststyleconv import AvastStyleConv
 from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.shallowconv import ShallowConv
+from maltorch.zoo.resnet18 import ResNet18
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
 from maltorch.data_processing.drs_preprocessing import DeRandomizedPreprocessing
 from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRandomizedPreprocessing
 from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
+from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
-from utils import read_json_file
-from utils import check_cuda
+from utils import read_json_file, write_predictions, write_metrics, check_cuda
 
 
 device = check_cuda()
@@ -61,6 +57,12 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 padding_idx=configuration["padding_idx"],
                 min_chunk_size=configuration["min_chunk_size"]
             )
+        elif configuration["preprocessing"] == "Grayscale":
+            return GrayscalePreprocessing(
+                width=configuration["width"],
+                height=configuration["height"],
+                convert_to_3d_image=configuration["convert_to_3d_image"]
+            )
         else:
             return None
     except KeyError:
@@ -89,7 +91,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "AvastConv":
         return AvastStyleConv.create_model(
@@ -99,7 +101,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "NGramConv":
         return NGramConv.create_model(
@@ -109,7 +111,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "ShallowConv":
         return ShallowConv.create_model(
@@ -119,7 +121,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"]
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "BBDnn":
         return BBDnn.create_model(
@@ -129,6 +131,15 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
+            max_len=configuration["max_len"] if "max_len" in configuration else None,
+        ), preprocessing, postprocessing
+    elif architecture_name == "ResNet18":
+        return ResNet18.create_model(
+            model_path=configuration["model_path"],
+            device="cuda" if torch.cuda.is_available() else "cpu",
+            preprocessing=preprocessing,
+            postprocessing=postprocessing,
+            threshold=configuration["threshold"]
         ), preprocessing, postprocessing
     else:
         raise ValueError(f"Model {architecture_name} not found")
@@ -136,7 +147,8 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
 def create_dataset(configuration: dict) -> Dataset:
     evaluation_dataset = BinaryDataset(
         csv_filepath=configuration["evaluation_file"],
-        max_len=configuration["max_len"],
+        max_len=configuration["max_len"] if "max_len" in configuration else None,
+        min_len=configuration["min_len"] if "min_len" in configuration else None,
         padding_idx=configuration["padding_idx"]
     )
     return evaluation_dataset
@@ -157,40 +169,6 @@ def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tu
             eval_total += configuration["batch_size"]
     return eval_preds, eval_trues
 
-def write_predictions(y_preds, y_trues, predictions_file):
-    with open(predictions_file, "w") as f:
-        for y_pred, y_true in zip(y_preds, y_trues):
-            f.write(f"{y_pred.item()},{y_true.item()}\n")
-
-def write_metrics(y_preds, y_trues, metrics_file):
-    """
-    Calculate accuracy, precision, recall, and f1-score
-    """
-    true_positives = 0
-    false_positives = 0
-    true_negatives = 0
-    false_negatives = 0
-    for y_pred, y_true in zip(y_preds, y_trues):
-        if y_pred == 1 and y_true == 1:
-            true_positives += 1
-        elif y_pred == 1 and y_true == 0:
-            false_positives += 1
-        elif y_pred == 0 and y_true == 1:
-            false_negatives += 1
-        else:
-            true_negatives += 1
-    accuracy = (true_positives + true_negatives) / (true_positives + true_negatives + false_positives + false_negatives)
-    precision = true_positives / (true_positives + false_positives)
-    recall = true_positives / (true_positives + false_negatives)
-    f1_score = 2 * (precision * recall) / (precision + recall)
-    with open(metrics_file, "w") as f:
-        f.write(f"Accuracy: {accuracy}\n")
-        f.write(f"Precision: {precision}\n")
-        f.write(f"Recall: {recall}\n")
-        f.write(f"F1-Score: {f1_score}\n")
-        f.write("Confusion matrix: \n")
-        f.write(f"[{true_negatives}, {false_positives}] \n")
-        f.write(f"[{false_negatives}, {true_positives}] \n")
 
 
 if __name__ == "__main__":

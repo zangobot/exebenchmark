@@ -1,0 +1,14 @@
+{
+  "training_file": "training_splits/ember/training_ember_features.csv",
+  "validation_file": "training_splits/ember/validation_ember_features.csv",
+  "objective": ["binary"],
+  "num_iterations": 5000,
+  "learning_rate": 0.005,
+  "max_bin": 255,
+  "num_leaves": 31,
+  "feature_fraction": 1.0,
+  "bagging_fraction": 1.0,
+  "max_depth": -1,
+  "boosting": "gbdt",
+  "model_path": "output/EMBER-LightGBM/model_lr_0.005.txt"
+}

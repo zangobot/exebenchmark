@@ -1,0 +1,9 @@
+cd ../../../
+
+
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/ngramconv_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/rs_ngramconv_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/rsdel_ngramconv_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/drs_ngramconv_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/sequential_drs_ngramconv_ember_validation_set_configuration_file.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/random_drs_ngramconv_ember_validation_set_configuration_file.json

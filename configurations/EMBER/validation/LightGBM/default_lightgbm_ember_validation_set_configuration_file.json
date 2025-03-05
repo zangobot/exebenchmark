@@ -1,0 +1,6 @@
+{
+  "evaluation_file": "training_splits/ember/validation_ember_features.csv",
+  "model_path": "output/EMBER-LightGBM/default_model.txt",
+  "predictions_path": "output/EMBER-LightGBM/EMBER_validation_set_predictions.csv",
+  "metrics_path": "output/EMBER-LightGBM/EMBER_validation_set_metrics.out"
+}

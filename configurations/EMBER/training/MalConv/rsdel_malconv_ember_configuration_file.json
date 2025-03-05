@@ -1,0 +1,18 @@
+{
+  "training_file": "training_splits/ember/ember_training_file_server.txt",
+  "validation_file": "training_splits/ember/ember_validation_file_server.txt",
+  "test_file": "training_splits/ember/ember_test_file_server.txt",
+  "batch_size": 64,
+  "num_epochs": 100,
+  "patience": 5,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_len": 2000000,
+  "min_len": 512,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-RsDel-MalConv-2000000",
+  "dataset_type": "RsDel",
+  "pdel": 0.03,
+  "num_versions": 100
+}
