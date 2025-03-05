@@ -32,7 +32,6 @@ def load_ember_csv(filepath: str) -> np.array:
     X, y = data[:, :-1], data[:, -1]
     return X, y
 
-
 def write_predictions(y_preds, y_trues, predictions_file):
     with open(predictions_file, "w") as f:
         for y_pred, y_true in zip(y_preds, y_trues):

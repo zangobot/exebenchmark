@@ -54,6 +54,44 @@ Various scripts are provided to train and evaluate the end-to-end and feature-ba
 - [evaluate_end2end_detector.py](evaluate_end2end_detector.py)
 
 To train/evaluate the models you need to provide a configuration file with the hyperparameters, model path, etcetera. You can find examples in the [configurations](configurations) folder.
+Example of training configuration file:
+```
+{
+  "training_file": "training_splits/ember/ember_training_file_server.txt",
+  "validation_file": "training_splits/ember/ember_validation_file_server.txt",
+  "test_file": "training_splits/ember/ember_test_file_server.txt",
+  "batch_size": 64,
+  "num_epochs": 100,
+  "patience": 5,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_len": 2000000,
+  "min_len": 512,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-MalConv-2000000",
+  "dataset_type": "Binary"
+}
+```
+
+Example of evaluation configuration file:
+```
+{
+  "evaluation_file": "training_splits/ember/ember_test_file_server.txt",
+  "batch_size": 1,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_len": 2000000,
+  "min_len": 512,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-MalConv-2000000/model.pth",
+  "predictions_path": "output/EMBER-MalConv-2000000/EMBER_test_set_predictions.csv",
+  "metrics_path": "output/EMBER-MalConv-2000000/EMBER_test_set_metrics.out"
+}
+```
+
+
 You will find the scripts used for training/evaluation the models in the [scripts](scripts) folder.
 
 

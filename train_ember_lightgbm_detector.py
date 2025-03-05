@@ -4,6 +4,7 @@ import argparse
 from utils import load_ember_csv
 import os
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Train end2end malware detector')
     parser.add_argument("configuration_file",

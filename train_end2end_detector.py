@@ -66,7 +66,6 @@ def build_model(configuration: dict) -> torch.nn.Module:
     else:
         raise ValueError(f"Model {architecture_name} not found")
 
-
 def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, DataLoader]:
     num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
     if configuration["dataset_type"] == "Binary":
@@ -127,7 +126,6 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             num_workers=num_workers,
             collate_fn=training_dataset.pad_collate_func
         )
-
     elif configuration["dataset_type"] == "RsDel":
         training_dataset = RandomizedDeletionDataset(
             csv_filepath=configuration["training_file"],
@@ -160,7 +158,6 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             num_workers=num_workers,
             collate_fn=training_dataset.pad_collate_func
         )
-
     elif configuration["dataset_type"] == "DRS":
         training_dataset = DeRandomizedSmoothingDataset(
             csv_filepath=configuration["training_file"],
@@ -288,7 +285,6 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
     else:
         raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS, Grayscale")
     return training_dataset, validation_dataset, training_dataloader, validation_dataloader
-
 
 def save_results(trainer: EarlyStoppingPyTorchTrainer, configuration: dict):
     results = {

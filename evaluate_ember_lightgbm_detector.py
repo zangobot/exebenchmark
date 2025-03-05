@@ -1,6 +1,5 @@
 import argparse
 from utils import read_json_file, load_ember_csv, write_predictions, write_metrics
-from sklearn.metrics import accuracy_score, roc_auc_score, log_loss
 import lightgbm as lgb
 
 
