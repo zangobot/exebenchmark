@@ -13,5 +13,5 @@
   "preprocessing": "RsDel",
   "postprocessing": "MajorityVoting",
   "pdel": 0.03,
-  "num_versions": 20
+  "num_versions": 100
 }
