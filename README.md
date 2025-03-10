@@ -29,9 +29,9 @@ Following you can find the machine learning-based models trained and its Google 
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-2000000/): 
   - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-BBDnn-2000000/): 
 - NGramConv
-  - Vanilla (Download to exebenchmark/output/EMBER-NGramConv-2000000/): 
-  - RS (Download to exebenchmark/output/EMBER-RS-NGramConv-2000000/): 
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-NGramConv-2000000/):
+  - Vanilla (Download to exebenchmark/output/EMBER-NGramConv-2000000/): https://drive.google.com/file/d/1JUEcRUi9m6aoFKIrzNIHiPOQ3vNb7cjO/view?usp=drive_link
+  - RS (Download to exebenchmark/output/EMBER-RS-NGramConv-2000000/): https://drive.google.com/file/d/1LPDMv--V9ij9xndGN6zIKi1zf77fDzmH/view?usp=drive_link
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-NGramConv-2000000/): https://drive.google.com/file/d/1JQi9rgIvv3aRND2BDyD2mGXlmQnkSyDx/view?usp=drive_link
   - DRS (Download to exebenchmark/output/EMBER-DRS-NGramConv-200000/): 
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-2000000/): 
   - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-NGramConv-2000000/):
