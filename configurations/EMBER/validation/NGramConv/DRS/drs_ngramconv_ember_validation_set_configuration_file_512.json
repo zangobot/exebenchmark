@@ -4,6 +4,7 @@
   "architecture": "NGramConv",
   "embedding_size": 8,
   "min_len": 512,
+  "max_len": 10000000,
   "threshold": 0.5,
   "padding_idx": 256,
   "model_path": "output/EMBER-DRS-NGramConv-512/model.pth",

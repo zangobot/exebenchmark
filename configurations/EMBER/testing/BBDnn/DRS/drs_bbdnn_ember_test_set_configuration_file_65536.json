@@ -3,6 +3,7 @@
   "batch_size": 1,
   "architecture": "BBDnn",
   "embedding_size": 8,
+  "max_len": 10000000,
   "min_len": 65536,
   "threshold": 0.5,
   "padding_idx": 256,
