@@ -216,17 +216,29 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             training_dataloader = DataLoader(
                 training_dataset,
                 batch_size=configuration["batch_size"],
-                shuffle=True,
                 num_workers=num_workers,
                 collate_fn=training_dataset.pad_collate_func,
                 sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
             validation_dataloader = DataLoader(
                 validation_dataset,
                 batch_size=configuration["batch_size"],
-                shuffle=True,
                 num_workers=num_workers,
                 collate_fn=training_dataset.pad_collate_func,
                 sampler=RandomChunkSampler(validation_dataset, configuration["batch_size"])
+            )
+        else:
+            training_dataloader = DataLoader(
+                training_dataset,
+                batch_size=configuration["batch_size"],
+                shuffle=True,
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func)
+            validation_dataloader = DataLoader(
+                validation_dataset,
+                batch_size=configuration["batch_size"],
+                shuffle=True,
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func
             )
     elif configuration["dataset_type"] == "RandomDRS":
         training_dataset = RandomDRSDataset(
@@ -255,14 +267,12 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             training_dataloader = DataLoader(
                 training_dataset,
                 batch_size=configuration["batch_size"],
-                shuffle=True,
                 num_workers=num_workers,
                 collate_fn=training_dataset.pad_collate_func,
                 sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
             validation_dataloader = DataLoader(
                 validation_dataset,
                 batch_size=configuration["batch_size"],
-                shuffle=True,
                 num_workers=num_workers,
                 collate_fn=training_dataset.pad_collate_func,
                 sampler=RandomChunkSampler(validation_dataset, configuration["batch_size"])
@@ -338,7 +348,7 @@ if __name__ == "__main__":
     model = build_model(configuration)
     model = model.to(device)
 
-    criterion = torch.nn.BCELoss()
+    criterion = torch.nn.BCELoss(weight=torch.tensor(configuration["weight"]) if "weight" in configuration else None).to(device)
     optimizer = torch.optim.Adam(model.parameters())
 
     trainer = EarlyStoppingPyTorchTrainer(

@@ -1,5 +1,6 @@
 cd ../../
 
+
 # AvastConv
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/DRS/drs_avastconv_ember_configuration_file_10244.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/DRS/drs_avastconv_ember_validation_set_configuration_file_10244.json
@@ -95,3 +96,4 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/DRS/dr
 python train_end2end_detector.py  configurations/EMBER/training/MalConv/DRS/drs_malconv_ember_configuration_file_65536.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/DRS/drs_malconv_ember_validation_set_configuration_file_65536.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/DRS/drs_malconv_ember_test_set_configuration_file_65536.json
+

@@ -99,3 +99,4 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Sequen
 python train_end2end_detector.py  configurations/EMBER/training/MalConv/Sequential-DRS/sequential_drs_malconv_ember_configuration_file_0.50.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/Sequential-DRS/sequential_drs_malconv_ember_validation_set_configuration_file_0.50.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Sequential-DRS/sequential_drs_malconv_ember_test_set_configuration_file_0.50.json
+
