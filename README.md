@@ -8,7 +8,7 @@ Clone maltorch's repository (https://github.com/zangobot/maltorch) and install t
 Following you can find the machine learning-based models trained and its Google Drive link to download them.
 
 - MalConv
-  - Vanilla (Download to exebenchmark/output/EMBER-MalConv-2000000/): 
+  - Vanilla (Download to exebenchmark/output/EMBER-MalConv-2000000/): https://drive.google.com/file/d/1PjtjfgT-xnl3Txav-6GF-vBV-s-f_ylV/view?usp=drive_link
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
