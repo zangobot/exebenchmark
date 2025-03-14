@@ -15,5 +15,6 @@
   "dataset_type": "SequentialDRS",
   "file_percentage": 0.30,
   "num_chunks": 100,
-  "min_chunk_size": 10244
+  "min_chunk_size": 10244,
+  "sort_by_size": true
 }

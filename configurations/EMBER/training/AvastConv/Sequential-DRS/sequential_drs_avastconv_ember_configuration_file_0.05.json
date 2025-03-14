@@ -16,6 +16,5 @@
   "file_percentage": 0.05,
   "num_chunks": 100,
   "min_chunk_size": 10244,
-  "sort_by_size": true,
-  "weight": 0.5
+  "sort_by_size": true
 }
