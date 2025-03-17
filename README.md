@@ -18,7 +18,7 @@ Following you can find the machine learning-based models trained and its Google 
     - preprocessing: None
     - postprocessing: None
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-MalConv-2000000/): 
+  - RS (Download to exebenchmark/output/EMBER-RS-MalConv-2000000/): https://drive.google.com/file/d/1xi-Dc758WxpuNNkfVJdpAGqEzd9Dx-rS/view?usp=drive_link
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
@@ -30,7 +30,7 @@ Following you can find the machine learning-based models trained and its Google 
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-MalConv-2000000/):
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-MalConv-2000000/): https://drive.google.com/file/d/1Ste3BBC5eONw42-tih2zjhm4Rj0ck-P6/view?usp=drive_link
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
