@@ -7,7 +7,7 @@
   "patience": 5,
   "architecture": "AvastConv",
   "embedding_size": 8,
-  "max_len": 10000000,
+  "max_len": 2000000,
   "min_len": 10244,
   "threshold": 0.5,
   "padding_idx": 256,
