@@ -10,6 +10,7 @@ from maltorch.datasets.drs_dataset import DeRandomizedSmoothingDataset
 from maltorch.datasets.grayscale_dataset import GrayscaleDataset
 from maltorch.datasets.random_chunk_sampler import RandomChunkSampler
 from maltorch.trainers.early_stopping_pytorch_trainer import EarlyStoppingPyTorchTrainer
+from maltorch.trainers.weighted_bce_pytorch_trainer import WeightedBCEPyTorchTrainer
 from torch.utils.data import DataLoader, Dataset
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.avaststyleconv import AvastStyleConv
@@ -348,14 +349,22 @@ if __name__ == "__main__":
     model = build_model(configuration)
     model = model.to(device)
 
-    criterion = torch.nn.BCELoss(weight=torch.tensor(configuration["weight"]) if "weight" in configuration else None).to(device)
     optimizer = torch.optim.Adam(model.parameters())
 
-    trainer = EarlyStoppingPyTorchTrainer(
-        optimizer,
-        configuration["num_epochs"],
-        criterion
-    )
+    if "pos_weight" in configuration:
+        trainer = WeightedBCEPyTorchTrainer(
+            optimizer,
+            configuration["num_epochs"],
+            pos_weight=configuration["pos_weight"],
+            neg_weight=configuration["neg_weight"]
+        )
+    else:
+        criterion = criterion = torch.nn.BCELoss().to(device)
+        trainer = EarlyStoppingPyTorchTrainer(
+            optimizer,
+            configuration["num_epochs"],
+            criterion
+        )
     model = trainer.train(
         model,
         training_dataloader,
