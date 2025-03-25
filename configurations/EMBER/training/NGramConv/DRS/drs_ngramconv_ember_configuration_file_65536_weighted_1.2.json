@@ -7,10 +7,12 @@
   "patience": 10,
   "architecture": "NGramConv",
   "embedding_size": 8,
-  "min_len": 2048,
+  "min_len": 65536,
   "threshold": 0.5,
   "padding_idx": 256,
-  "model_path": "output/EMBER-DRS-NGramConv-2048",
+  "model_path": "output/EMBER-DRS-NGramConv-65536-weighted-1.2",
   "dataset_type": "DRS",
-  "chunk_size": 2048
+  "chunk_size": 65536,
+  "pos_weight": 1.0,
+  "neg_weight": 1.2
 }
