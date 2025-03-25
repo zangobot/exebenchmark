@@ -10,8 +10,9 @@
   "min_len": 10244,
   "threshold": 0.5,
   "padding_idx": 256,
-  "model_path": "output/EMBER-DRS-AvastConv-10244-weighted",
+  "model_path": "output/EMBER-DRS-AvastConv-10244-weighted-1.2",
   "dataset_type": "DRS",
   "chunk_size": 10244,
-  "weight": 0.4
+  "pos_weight": 1.0,
+  "neg_weight": 1.2
 }

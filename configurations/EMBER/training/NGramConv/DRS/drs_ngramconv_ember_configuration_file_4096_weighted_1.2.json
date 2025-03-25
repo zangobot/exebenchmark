@@ -5,13 +5,14 @@
   "batch_size": 64,
   "num_epochs": 200,
   "patience": 10,
-  "architecture": "AvastConv",
+  "architecture": "NGramConv",
   "embedding_size": 8,
-  "min_len": 32768,
+  "min_len": 4096,
   "threshold": 0.5,
   "padding_idx": 256,
-  "model_path": "output/EMBER-DRS-AvastConv-32768-weighted",
+  "model_path": "output/EMBER-DRS-NGramConv-4096-weighted-1.2",
   "dataset_type": "DRS",
-  "chunk_size": 32768,
-  "weight": 0.4
+  "chunk_size": 4096,
+  "pos_weight": 1.0,
+  "neg_weight": 1.2
 }
