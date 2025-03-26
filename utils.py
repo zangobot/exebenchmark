@@ -32,10 +32,10 @@ def load_ember_csv(filepath: str) -> np.array:
     X, y = data[:, :-1], data[:, -1]
     return X, y
 
-def write_predictions(y_preds, y_trues, predictions_file):
+def write_predictions(scores, y_trues, predictions_file):
     with open(predictions_file, "w") as f:
-        for y_pred, y_true in zip(y_preds, y_trues):
-            f.write(f"{y_pred.item()},{y_true.item()}\n")
+        for score, y_true in zip(scores, y_trues):
+            f.write(f"{score.item()},{y_true.item()}\n")
 
 def write_metrics(y_preds, y_trues, metrics_file):
     """

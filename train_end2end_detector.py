@@ -359,7 +359,7 @@ if __name__ == "__main__":
             neg_weight=configuration["neg_weight"]
         )
     else:
-        criterion = criterion = torch.nn.BCELoss().to(device)
+        criterion = torch.nn.BCEWithLogitsLoss().to(device)
         trainer = EarlyStoppingPyTorchTrainer(
             optimizer,
             configuration["num_epochs"],

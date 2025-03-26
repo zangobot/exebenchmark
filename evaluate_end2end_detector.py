@@ -20,7 +20,7 @@ from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomized
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from utils import read_json_file, write_predictions, write_metrics, check_cuda
-
+import torch.nn.functional as F
 
 device = check_cuda()
 
@@ -157,17 +157,21 @@ def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tu
     eval_total = 0
     eval_trues = []
     eval_preds = []
+    scores = []
 
     with torch.no_grad():
         for x, y in tqdm(dataloader):
             x, y = x.to(device), y.to(device)
             outputs = model(x)
-            outputs = outputs.squeeze()
-            y_preds = outputs.round()
+            probs = F.sigmoid(outputs)
+            probs = probs.squeeze()
+            # Apply threshold-based classification
+            y_preds = (probs >= model.threshold).int()  # Converts to 1 if >= threshold, else 0
+            scores.append(probs)
             eval_trues.append(y)
             eval_preds.append(y_preds)
             eval_total += configuration["batch_size"]
-    return eval_preds, eval_trues
+    return eval_preds, eval_trues, scores
 
 
 
@@ -190,8 +194,8 @@ if __name__ == "__main__":
         num_workers=num_workers,
         collate_fn=dataset.pad_collate_func)
 
-    y_preds, y_trues = evaluate(model, dataloader)
-    write_predictions(y_preds, y_trues, configuration["predictions_path"])
+    y_preds, y_trues, scores = evaluate(model, dataloader)
+    write_predictions(scores, y_trues, configuration["predictions_path"])
     write_metrics(y_preds, y_trues, configuration["metrics_path"])
 
 
