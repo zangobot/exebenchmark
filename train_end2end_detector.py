@@ -351,7 +351,7 @@ if __name__ == "__main__":
 
     optimizer = torch.optim.Adam(model.parameters())
     criterion = torch.nn.BCEWithLogitsLoss(
-        pos_weight=configuration["pos_weight"] if "pos_weight" in configuration else 1.0).to(device)
+        pos_weight=torch.Tensor(configuration["pos_weight"]) if "pos_weight" in configuration else torch.Tensor(1.0)).to(device)
     trainer = EarlyStoppingPyTorchTrainer(
         optimizer,
         configuration["num_epochs"],
