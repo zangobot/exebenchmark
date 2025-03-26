@@ -1,0 +1,17 @@
+{
+  "evaluation_file": "training_splits/ember/ember_test_file_server.txt",
+  "batch_size": 1,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_len": 2000000,
+  "min_len": 512,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-RsDel-MalConv-2000000-pos-weight-0.875/model.pth",
+  "predictions_path": "output/EMBER-RsDel-MalConv-2000000-pos-weight-0.875/EMBER_test_set_predictions.csv",
+  "metrics_path": "output/EMBER-RsDel-MalConv-2000000-pos-weight-0.875/EMBER_test_set_metrics.out",
+  "preprocessing": "RsDel",
+  "postprocessing": "MajorityVoting",
+  "pdel": 0.03,
+  "num_versions": 100
+}
