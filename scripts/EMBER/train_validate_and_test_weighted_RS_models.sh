@@ -1,0 +1,22 @@
+cd ../../
+
+# AvastConv
+python train_end2end_detector.py  configurations/EMBER/training/AvastConv/rs_avastconv_ember_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/rs_avastconv_ember_validation_set_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/rs_avastconv_ember_test_set_configuration_file_pos_weight_0.875.json
+
+# BBDnn
+python train_end2end_detector.py  configurations/EMBER/training/BBDnn/rs_bbdnn_ember_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/rs_bbdnn_ember_validation_set_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/rs_bbdnn_ember_test_set_configuration_file_pos_weight_0.875.json
+
+# NGramConv
+python train_end2end_detector.py  configurations/EMBER/training/NGramConv/rs_ngramconv_ember_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/rs_ngramconv_ember_validation_set_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/rs_ngramconv_ember_test_set_configuration_file_pos_weight_0.875.json
+
+# MalConv
+python train_end2end_detector.py  configurations/EMBER/training/MalConv/rs_malconv_ember_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/rs_malconv_ember_validation_set_configuration_file_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/rs_malconv_ember_test_set_configuration_file_pos_weight_0.875.json
+
