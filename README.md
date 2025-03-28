@@ -166,18 +166,20 @@ Following you can find the machine learning-based models trained and its Google 
   - width = height = 256
   - convert_to_3d_image: true
   - threshold: 0.5
-- EMBER LightGBM: (Download to exebenchmark/output/EMBER-LightGBM/): https://drive.google.com/file/d/1vqS7v_BC0-J8_Z7QbjJwBil39y864dyV/view?usp=drive_link
+- EMBER LightGBM: (Download to exebenchmark/output/EMBER-LightGBM/): https://drive.google.com/file/d/1RWvr3yD8M90EXcTozK2TwW2JEExQ9qDW/view?usp=drive_link
   - objective: binary
   - num_iterations: 5000
   - learning_rate: 0.05
   - max_bin: 255
   - num_leaves: 31
+  - pos_weight: 0.875
   - feature_fraction: 0.7
   - bagging_fraction: 0.7
   - max_depth: -1
   - boosting: gbdt
 ## EMBER Dataset
-The EMBER dataset has been split into three sets: training, validation, and test. The original EMBER dataset contains 400,000 benign and 400,000 malicious samples. Unfortunately, I have only been able to retrieve 349,994/400,000 benign samples.
+The EMBER dataset has been split into three sets: training, validation, and test. The original EMBER dataset contains 400,000 benign and 400,000 malicious samples. 
+Unfortunately, I have only been able to retrieve 349,994/400,000 benign samples and 399,992/400,000 malicious samples.
 The training set contains 599,998 samples, the validation set contains 74,997 samples, and the test set contains 74,999 samples. 
 The training splits are available at:
 - [ember_training_file_server.txt](training_splits/ember/ember_training_file_server.txt)
