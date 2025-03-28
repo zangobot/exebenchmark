@@ -1,9 +1,0 @@
-cd ../../../
-
-
-python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/ngramconv_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/rs_ngramconv_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/rsdel_ngramconv_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/drs_ngramconv_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/sequential_drs_ngramconv_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/random_drs_ngramconv_ember_test_set_configuration_file.json
