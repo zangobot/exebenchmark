@@ -158,13 +158,13 @@ def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tu
     eval_trues = []
     eval_preds = []
     scores = []
-
+    model = model.model.eval()
     with torch.no_grad():
         for x, y in tqdm(dataloader):
             x, y = x.to(device), y.to(device)
             outputs = model(x)
-            probs = F.sigmoid(outputs)
-            probs = probs.squeeze()
+            outputs = outputs.squeeze()
+            probs = torch.sigmoid(outputs)
             # Apply threshold-based classification
             y_preds = (probs >= model.threshold).int()  # Converts to 1 if >= threshold, else 0
             scores.append(probs)
