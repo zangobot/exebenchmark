@@ -18,7 +18,7 @@ python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM
 python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.005.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.005.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.005.json
-'
+
 
 python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05_ff_0.9_bf_0.9.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.05_ff_0.9_bf_0.9.json
@@ -31,3 +31,8 @@ python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM
 python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05_ff_0.7_bf_0.7.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.05_ff_0.7_bf_0.7.json
 python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.05_ff_0.7_bf_0.7.json
+'
+
+python train_ember_lightgbm_detector.py configurations/EMBER/training/LightGBM/lightgbm_configuration_file_lr_0.05_ff_0.7_bf_0.7_pos_weight_0.875.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/validation/LightGBM/lightgbm_ember_validation_set_configuration_file_lr_0.05_ff_0.7_bf_0.7_pos_weight_0.875.json
+python evaluate_ember_lightgbm_detector.py configurations/EMBER/testing/LightGBM/lightgbm_ember_test_set_configuration_file_lr_0.05_ff_0.7_bf_0.7_pos_weight_0.875.json
