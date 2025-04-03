@@ -8,7 +8,9 @@ from maltorch.datasets.random_drs_dataset import RandomDRSDataset
 from maltorch.datasets.sequential_drs_dataset import SequentialDRSDataset
 from maltorch.datasets.drs_dataset import DeRandomizedSmoothingDataset
 from maltorch.datasets.grayscale_dataset import GrayscaleDataset
+from maltorch.datasets.random_chunk_sampler import RandomChunkSampler
 from maltorch.trainers.early_stopping_pytorch_trainer import EarlyStoppingPyTorchTrainer
+from maltorch.trainers.weighted_bce_pytorch_trainer import WeightedBCEPyTorchTrainer
 from torch.utils.data import DataLoader, Dataset
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.avaststyleconv import AvastStyleConv
@@ -194,6 +196,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
+            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -204,30 +207,47 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
+            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
             is_training=True
         )
-        training_dataloader = DataLoader(
-            training_dataset,
-            batch_size=configuration["batch_size"],
-            shuffle=True,
-            num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func)
-        validation_dataloader = DataLoader(
-            validation_dataset,
-            batch_size=configuration["batch_size"],
-            shuffle=True,
-            num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func
-        )
+        if configuration["sort_by_size"] is True:
+            training_dataloader = DataLoader(
+                training_dataset,
+                batch_size=configuration["batch_size"],
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func,
+                sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
+            validation_dataloader = DataLoader(
+                validation_dataset,
+                batch_size=configuration["batch_size"],
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func,
+                sampler=RandomChunkSampler(validation_dataset, configuration["batch_size"])
+            )
+        else:
+            training_dataloader = DataLoader(
+                training_dataset,
+                batch_size=configuration["batch_size"],
+                shuffle=True,
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func)
+            validation_dataloader = DataLoader(
+                validation_dataset,
+                batch_size=configuration["batch_size"],
+                shuffle=True,
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func
+            )
     elif configuration["dataset_type"] == "RandomDRS":
         training_dataset = RandomDRSDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
+            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
@@ -238,24 +258,40 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
+            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
             is_training=True
         )
-        training_dataloader = DataLoader(
-            training_dataset,
-            batch_size=configuration["batch_size"],
-            shuffle=True,
-            num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func)
-        validation_dataloader = DataLoader(
-            validation_dataset,
-            batch_size=configuration["batch_size"],
-            shuffle=True,
-            num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func
-        )
+        if configuration["sort_by_size"] is True:
+            training_dataloader = DataLoader(
+                training_dataset,
+                batch_size=configuration["batch_size"],
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func,
+                sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
+            validation_dataloader = DataLoader(
+                validation_dataset,
+                batch_size=configuration["batch_size"],
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func,
+                sampler=RandomChunkSampler(validation_dataset, configuration["batch_size"])
+            )
+        else:
+            training_dataloader = DataLoader(
+                training_dataset,
+                batch_size=configuration["batch_size"],
+                shuffle=True,
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func)
+            validation_dataloader = DataLoader(
+                validation_dataset,
+                batch_size=configuration["batch_size"],
+                shuffle=True,
+                num_workers=num_workers,
+                collate_fn=training_dataset.pad_collate_func
+            )
     elif configuration["dataset_type"] == "Grayscale":
         training_dataset = GrayscaleDataset(
             csv_filepath=configuration["training_file"],
@@ -313,9 +349,9 @@ if __name__ == "__main__":
     model = build_model(configuration)
     model = model.to(device)
 
-    criterion = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(model.parameters())
-
+    criterion = torch.nn.BCEWithLogitsLoss(
+        pos_weight=torch.Tensor([configuration["pos_weight"]]) if "pos_weight" in configuration else torch.Tensor([1.0])).to(device)
     trainer = EarlyStoppingPyTorchTrainer(
         optimizer,
         configuration["num_epochs"],

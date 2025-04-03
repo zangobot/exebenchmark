@@ -1,9 +1,0 @@
-cd ../../../
-
-
-python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/bbdnn_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/rs_bbdnn_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/rsdel_bbdnn_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/drs_bbdnn_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/sequential_drs_bbdnn_ember_test_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/random_drs_bbdnn_ember_test_set_configuration_file.json

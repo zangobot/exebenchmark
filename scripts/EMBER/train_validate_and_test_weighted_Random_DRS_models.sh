@@ -1,0 +1,55 @@
+cd ../../
+
+# AvastConv
+#python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Random-DRS/random_drs_avastconv_ember_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/Random-DRS/random_drs_avastconv_ember_validation_set_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/Random-DRS/random_drs_avastconv_ember_test_set_configuration_file_0.05_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Random-DRS/random_drs_avastconv_ember_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/Random-DRS/random_drs_avastconv_ember_validation_set_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/Random-DRS/random_drs_avastconv_ember_test_set_configuration_file_0.10_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Random-DRS/random_drs_avastconv_ember_configuration_file_0.20_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/Random-DRS/random_drs_avastconv_ember_validation_set_configuration_file_0.20_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/Random-DRS/random_drs_avastconv_ember_test_set_configuration_file_0.20_pos_weight_0.875.json
+
+
+# BBDnn
+#python train_end2end_detector.py  configurations/EMBER/training/BBDnn/Random-DRS/random_drs_bbdnn_ember_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/Random-DRS/random_drs_bbdnn_ember_validation_set_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/Random-DRS/random_drs_bbdnn_ember_test_set_configuration_file_0.05_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/BBDnn/Random-DRS/random_drs_bbdnn_ember_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/Random-DRS/random_drs_bbdnn_ember_validation_set_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/Random-DRS/random_drs_bbdnn_ember_test_set_configuration_file_0.10_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/BBDnn/Random-DRS/random_drs_bbdnn_ember_configuration_file_0.20_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/Random-DRS/random_drs_bbdnn_ember_validation_set_configuration_file_0.20_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/Random-DRS/random_drs_bbdnn_ember_test_set_configuration_file_0.20_pos_weight_0.875.json
+
+
+# NGramConv
+#python train_end2end_detector.py  configurations/EMBER/training/NGramConv/Random-DRS/random_drs_ngramconv_ember_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/Random-DRS/random_drs_ngramconv_ember_validation_set_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/Random-DRS/random_drs_ngramconv_ember_test_set_configuration_file_0.05_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/NGramConv/Random-DRS/random_drs_ngramconv_ember_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/Random-DRS/random_drs_ngramconv_ember_validation_set_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/Random-DRS/random_drs_ngramconv_ember_test_set_configuration_file_0.10_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/NGramConv/Random-DRS/random_drs_ngramconv_ember_configuration_file_0.20_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/Random-DRS/random_drs_ngramconv_ember_validation_set_configuration_file_0.20_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/Random-DRS/random_drs_ngramconv_ember_test_set_configuration_file_0.20_pos_weight_0.875.json
+
+# MalConv
+#python train_end2end_detector.py  configurations/EMBER/training/MalConv/Random-DRS/random_drs_malconv_ember_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/Random-DRS/random_drs_malconv_ember_validation_set_configuration_file_0.05_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Random-DRS/random_drs_malconv_ember_test_set_configuration_file_0.05_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/MalConv/Random-DRS/random_drs_malconv_ember_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/Random-DRS/random_drs_malconv_ember_validation_set_configuration_file_0.10_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Random-DRS/random_drs_malconv_ember_test_set_configuration_file_0.10_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/MalConv/Random-DRS/random_drs_malconv_ember_configuration_file_0.20_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/Random-DRS/random_drs_malconv_ember_validation_set_configuration_file_0.20_pos_weight_0.875.json
+#python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Random-DRS/random_drs_malconv_ember_test_set_configuration_file_0.20_pos_weight_0.875.json

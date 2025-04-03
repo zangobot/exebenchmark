@@ -2,6 +2,7 @@ import argparse
 from ember.features import PEFeatureExtractor
 import csv
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Train end2end malware detector')
     parser.add_argument("hashes_filepath",
