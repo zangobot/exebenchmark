@@ -4,7 +4,7 @@ import multiprocessing
 from torch.utils.data import DataLoader, Dataset
 from maltorch.datasets.binary_dataset import BinaryDataset
 from tqdm import tqdm
-from maltorch.zoo.model import BaseEmbeddingPytorchClassifier
+from maltorch.zoo.model import BaseEmbeddingPytorchClassifier, BasePytorchClassifier
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.avaststyleconv import AvastStyleConv
@@ -20,7 +20,7 @@ from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomized
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from utils import read_json_file, write_predictions, write_metrics, check_cuda
-import torch.nn.functional as F
+
 
 device = check_cuda()
 
@@ -79,7 +79,7 @@ def get_postprocessing(configuration: dict) -> DataProcessing:
     except KeyError:
         return None
 
-def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, DataProcessing, DataProcessing]:
+def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcessing, DataProcessing]:
     preprocessing = get_preprocessing(configuration)
     postprocessing = get_postprocessing(configuration)
     architecture_name = configuration["architecture"]
@@ -92,6 +92,8 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
+            kernel_size=configuration["kernel_size"],
+            stride=configuration["stride"]
         ), preprocessing, postprocessing
     elif architecture_name == "AvastConv":
         return AvastStyleConv.create_model(
@@ -142,7 +144,7 @@ def build_model(configuration: dict) -> tuple[BaseEmbeddingPytorchClassifier, Da
             threshold=configuration["threshold"]
         ), preprocessing, postprocessing
     else:
-        raise ValueError(f"Model {architecture_name} not found")
+        raise ValueError(f"classifier {architecture_name} not found")
 
 def create_dataset(configuration: dict) -> Dataset:
     evaluation_dataset = BinaryDataset(
@@ -153,37 +155,28 @@ def create_dataset(configuration: dict) -> Dataset:
     )
     return evaluation_dataset
 
-def evaluate(model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:
-    eval_total = 0
+def evaluate(classifier: BasePytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:
     eval_trues = []
     eval_preds = []
-    scores = []
-    model = model.model.eval()
     with torch.no_grad():
         for x, y in tqdm(dataloader):
             x, y = x.to(device), y.to(device)
-            outputs = model(x)
-            outputs = outputs.squeeze()
-            probs = torch.sigmoid(outputs)
-            # Apply threshold-based classification
-            y_preds = (probs >= model.threshold).int()  # Converts to 1 if >= threshold, else 0
-            scores.append(probs)
+            y_preds = classifier.predict(x)
             eval_trues.append(y)
             eval_preds.append(y_preds)
-            eval_total += configuration["batch_size"]
-    return eval_preds, eval_trues, scores
-
+    return eval_preds, eval_trues
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Evaluate end2end malware detector')
     parser.add_argument("configuration_file",
                         type=str,
-                        help="JSON-like file including the training and model configuration hyperparameters")
+                        help="JSON-like file including the training and classifier configuration hyperparameters")
     args = parser.parse_args()
 
     configuration = read_json_file(args.configuration_file)
-    model, preprocessing, postprocessing = build_model(configuration)
+    classifier, preprocessing, postprocessing = build_model(configuration)
+    print("Classifier type: ", type(classifier))
 
     dataset = create_dataset(configuration)
     num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
@@ -194,8 +187,8 @@ if __name__ == "__main__":
         num_workers=num_workers,
         collate_fn=dataset.pad_collate_func)
 
-    y_preds, y_trues, scores = evaluate(model, dataloader)
-    write_predictions(scores, y_trues, configuration["predictions_path"])
+    y_preds, y_trues = evaluate(classifier, dataloader)
+    write_predictions(y_preds, y_trues, configuration["predictions_path"])
     write_metrics(y_preds, y_trues, configuration["metrics_path"])
 
 
