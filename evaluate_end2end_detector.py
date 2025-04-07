@@ -176,7 +176,6 @@ if __name__ == "__main__":
 
     configuration = read_json_file(args.configuration_file)
     classifier, preprocessing, postprocessing = build_model(configuration)
-    print("Classifier type: ", type(classifier))
 
     dataset = create_dataset(configuration)
     num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
