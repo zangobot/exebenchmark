@@ -10,5 +10,6 @@
   "preprocessing": "Grayscale",
   "width": 256,
   "height": 256,
-  "convert_to_3d_image": true
+  "convert_to_3d_image": true,
+  "postprocessing": "Sigmoid"
 }

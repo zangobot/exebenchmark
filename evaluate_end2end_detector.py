@@ -19,6 +19,7 @@ from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRa
 from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
+from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
 from utils import read_json_file, write_predictions, write_metrics, check_cuda
 
 
@@ -73,9 +74,11 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
 def get_postprocessing(configuration: dict) -> DataProcessing:
     try:
         if configuration["postprocessing"] == "MajorityVoting":
-            return MajorityVotingPostprocessing()
+            return MajorityVotingPostprocessing(apply_sigmoid=True)
+        elif configuration["postprocessing"] == "Sigmoid":
+            return SigmoidPostprocessor()
         else:
-            return None
+            raise ValueError(f"postprocessing {configuration['postprocessing']} not found")
     except KeyError:
         return None
 
@@ -92,8 +95,8 @@ def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcess
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
-            kernel_size=configuration["kernel_size"],
-            stride=configuration["stride"]
+            kernel_size=configuration["kernel_size"] if "kernel_size" in configuration else None,
+            stride=configuration["stride"] if "stride" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "AvastConv":
         return AvastStyleConv.create_model(

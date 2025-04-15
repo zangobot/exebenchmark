@@ -11,5 +11,6 @@
   "stride": 512,
   "model_path": "output/EMBER-MalConv-2000000/model.pth",
   "predictions_path": "output/EMBER-MalConv-2000000/EMBER_test_set_predictions.csv",
-  "metrics_path": "output/EMBER-MalConv-2000000/EMBER_test_set_metrics.out"
+  "metrics_path": "output/EMBER-MalConv-2000000/EMBER_test_set_metrics.out",
+  "postprocessing": "Sigmoid"
 }
