@@ -10,7 +10,6 @@ from maltorch.datasets.drs_dataset import DeRandomizedSmoothingDataset
 from maltorch.datasets.grayscale_dataset import GrayscaleDataset
 from maltorch.datasets.random_chunk_sampler import RandomChunkSampler
 from maltorch.trainers.early_stopping_pytorch_trainer import EarlyStoppingPyTorchTrainer
-from maltorch.trainers.weighted_bce_pytorch_trainer import WeightedBCEPyTorchTrainer
 from torch.utils.data import DataLoader, Dataset
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.avaststyleconv import AvastStyleConv

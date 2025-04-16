@@ -58,6 +58,8 @@ def write_metrics(y_preds, y_trues, metrics_file):
     precision = true_positives / (true_positives + false_positives)
     recall = true_positives / (true_positives + false_negatives)
     f1_score = 2 * (precision * recall) / (precision + recall)
+    TPR = true_positives / (true_positives + false_negatives)
+    FPR = false_positives / (false_positives + true_negatives)
     with open(metrics_file, "w") as f:
         f.write(f"Accuracy: {accuracy}\n")
         f.write(f"Precision: {precision}\n")
@@ -66,3 +68,6 @@ def write_metrics(y_preds, y_trues, metrics_file):
         f.write("Confusion matrix: \n")
         f.write(f"[{true_negatives}, {false_positives}] \n")
         f.write(f"[{false_negatives}, {true_positives}] \n")
+        f.write(f"True Positive Rate: {TPR}\n")
+        f.write(f"False Positive Rate: {FPR}\n")
+
