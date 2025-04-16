@@ -32,7 +32,9 @@ def build_model(configuration: dict) -> torch.nn.Module:
             embedding_size=configuration["embedding_size"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"]
+            padding_idx=configuration["padding_idx"],
+            kernel_size=configuration["kernel_size"] if "kernel_size" in configuration else None,
+            stride=configuration["stride"] if "stride" in configuration else None,
         )
     elif architecture_name == "AvastConv":
         return AvastStyleConv(
