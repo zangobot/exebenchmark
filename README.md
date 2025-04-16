@@ -19,7 +19,7 @@ Following you can find the machine learning-based models trained and its Google 
     - padding_idx: 256
     - pos_weight: 0.875
     - preprocessing: None
-    - postprocessing: None
+    - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
   - RS (Download to exebenchmark/output/EMBER-RS-MalConv-2000000/): https://drive.google.com/file/d/1xi-Dc758WxpuNNkfVJdpAGqEzd9Dx-rS/view?usp=sharing
     - architecture: MalConv
@@ -58,7 +58,7 @@ Following you can find the machine learning-based models trained and its Google 
     - padding_idx: 256
     - pos_weight: 0.875
     - preprocessing: None
-    - postprocessing: None
+    - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
   - RS (Download to exebenchmark/output/EMBER-RS-AvastConv-512000/): Needs To be Retrained
     - architecture: AvastConv
@@ -97,7 +97,7 @@ Following you can find the machine learning-based models trained and its Google 
     - padding_idx: 256
     - pos_weight: 0.875
     - preprocessing: None
-    - postprocessing: None
+    - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
   - RS (Download to exebenchmark/output/EMBER-RS-BBDnn-102400/): https://drive.google.com/file/d/1lpsnFz7hFSrLXrguxRuu5Mrmarp9uNod/view?usp=sharing
     - architecture: BBDnn
@@ -135,7 +135,7 @@ Following you can find the machine learning-based models trained and its Google 
     - threshold: 0.5
     - padding_idx: 256
     - preprocessing: None
-    - postprocessing: None
+    - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
   - RS (Download to exebenchmark/output/EMBER-RS-NGramConv-512000/): https://drive.google.com/file/d/1Zth04spqwN5ouxuTq6MzGdngiYrYXzLc/view?usp=sharing
     - architecture: BBDnn
@@ -166,7 +166,7 @@ Following you can find the machine learning-based models trained and its Google 
   - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-NGramConv-2000000/):
 - ResNet18 (Download to exebenchmark/output/EMBER-ResNet18/): https://drive.google.com/file/d/1N1uK8bsfJvB88ryZcbRfxkzerblXqMqg/view?usp=sharing
   - preprocessing: Grayscale
-  - postprocessing: None
+  - postprocessing: Sigmoid
   - dataset_type: Grayscale (for training only)
   - width = height = 256
   - convert_to_3d_image: true
