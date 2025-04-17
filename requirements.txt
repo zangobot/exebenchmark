@@ -1,11 +1,4 @@
-dtorch
-torchvision
-scikit-learn
-foolbox
-secml-torch
-lightgbm==3.3.5
-lief
+maltorch
 git+https://github.com/zangobot/ember.git
-nevergrad
-joblib>=1.3.2
 tqdm
+ruff

@@ -8,14 +8,10 @@ from maltorch.zoo.ember_gbdt import EmberGBDT
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.resnet18 import ResNet18
-from utils import check_cuda, read_json_file
-from pathlib import Path
 
-# model_path = Path(__file__).parent.parent / 'maltorch' / 'models' / 'zoo' / 'MalConv'
-#
-# print(model_path)
-#
-# model = MalConv().create_model()
+import utils
+from config import ZOO_PATH
+from utils import read_json_file
 
 
 class Evaluator:
@@ -26,136 +22,141 @@ class Evaluator:
     @staticmethod
     def build_model(config):
         architecture_name = config["architecture"]
+        device = utils.check_cuda()
+
+        ablation_preprocessing = RandomizedAblationPreprocessing(pabl=0.20, num_versions=100, padding_idx=256)
+        voting_postprocessing = MajorityVotingPostprocessing()
 
         if architecture_name == "Malconv":
             return (
                 MalConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models'  / architecture_name,
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device
+                )
+            )
+        if architecture_name == "EmberGBDT":
+            return (
+                EmberGBDT().create_model(
+                    model_path=ZOO_PATH / architecture_name
                 )
             )
         if architecture_name == "AvastStyleConv":
             return (
                 AvastStyleConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
+                    model_path=ZOO_PATH / architecture_name, device=device
                 )
             )
         if architecture_name == "BBDnn":
             return (
                 BBDnn().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' /  architecture_name,
+                    model_path=ZOO_PATH / architecture_name, device=device
                 )
             )
         if architecture_name == "NGramConv":
             return (
                 NGramConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
+                    model_path=ZOO_PATH / architecture_name, device=device
                 )
             )
         if architecture_name == "ResNet18":
             return (
                 ResNet18().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
                     preprocessing=GrayscalePreprocessing(
                         width=256,
                         height=256,
-                        convert_to_3d_image=True
+                        convert_to_3d_image=True,
                     )
                 )
             )
+
         if architecture_name == "MalConvRS":
             return (
                 MalConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
-                    preprocessing=RandomizedAblationPreprocessing(
-                        pabl=0.20,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
+                    preprocessing=ablation_preprocessing,
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "AvastStyleConvRS":
             return (
                 AvastStyleConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
-                    preprocessing=RandomizedAblationPreprocessing(
-                        pabl=0.20,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
+                    preprocessing=ablation_preprocessing,
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "BBDnnRS":
             return (
                 BBDnn().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
-                    preprocessing=RandomizedAblationPreprocessing(
-                        pabl=0.20,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
+                    preprocessing=ablation_preprocessing,
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "NGramConvRS":
             return (
                 NGramConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
-                    preprocessing=RandomizedAblationPreprocessing(
-                        pabl=0.20,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
+                    preprocessing=ablation_preprocessing,
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "MalConvRsDel":
             return (
                 MalConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
                     preprocessing=RandomizedDeletionPreprocessing(
                         pdel=0.03,
                         num_versions=100,
                         padding_idx=256
                     ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "AvastStyleConvRsDel":
             return (
                 AvastStyleConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
                     preprocessing=RandomizedDeletionPreprocessing(
                         pdel=0.03,
                         num_versions=100,
                         padding_idx=256
                     ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "BBDnnRsDel":
             return (
                 BBDnn().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
                     preprocessing=RandomizedDeletionPreprocessing(
                         pdel=0.03,
                         num_versions=100,
                         padding_idx=256
                     ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "NGramConvRsDel":
             return (
                 NGramConv().create_model(
-                    model_path = Path(__file__).parent.parent / 'maltorch' / 'zoo' / 'models' / architecture_name,
+                    model_path=ZOO_PATH / architecture_name,
+                    device=device,
                     preprocessing=RandomizedDeletionPreprocessing(
                         pdel=0.03,
                         num_versions=100,
                         padding_idx=256
                     ),
-                    postprocessing=MajorityVotingPostprocessing()
+                    postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "MalConvDRS":

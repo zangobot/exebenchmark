@@ -4,7 +4,7 @@ import csv
 import torch
 
 from maltorch.zoo.ember_gbdt import EmberGBDT
-from maltorch.zoo.model import BaseEmbeddingPytorchClassifier, Model
+from maltorch.zoo.model import Model
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.avaststyleconv import AvastStyleConv
