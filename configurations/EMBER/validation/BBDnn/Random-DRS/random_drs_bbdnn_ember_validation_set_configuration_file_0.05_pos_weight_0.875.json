@@ -2,7 +2,7 @@
   "evaluation_file": "training_splits/ember/ember_validation_file_server.txt",
   "batch_size": 1,
   "architecture": "BBDnn",
-  "embedding_size": 8,
+  "embedding_size": 10,
   "max_len": 1000000,
   "min_len": 4096,
   "threshold": 0.5,
