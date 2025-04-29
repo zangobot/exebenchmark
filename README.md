@@ -90,7 +90,7 @@ Following you can find the machine learning-based models trained and its Google 
 - BBDnn
   - Vanilla (Download to exebenchmark/output/EMBER-BBDnn-102400/): https://drive.google.com/file/d/1c_9lVHT9zYpBCwQfnUW6ZbCF6SaVabRZ/view?usp=sharing
     - architecture: BBDnn
-    - embedding_size: 8
+    - embedding_size: 10
     - max_len: 102400
     - min_len: 4096
     - threshold: 0.5
@@ -240,3 +240,7 @@ Example of evaluation configuration file:
 You will find the scripts used for training/evaluation the models in the [scripts](scripts) folder.
 
 
+## Adversarial Evaluation
+You can download a subset of nonpacked malicious executables from https://drive.google.com/file/d/1qiShG-WUp-0itBPTAo8vvfUWF5dnJoE4/view?usp=sharing
+
+In https://drive.google.com/file/d/1FgAojUDswwFpLvNypwJ9iaDk-C8XGKrz/view?usp=sharing you will find the families associated to each sample.
