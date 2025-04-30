@@ -92,10 +92,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             collate_fn=training_dataset.pad_collate_func)
         validation_dataloader = DataLoader(
             validation_dataset,
-            batch_size=configuration["batch_size"],
+            batch_size=1,
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func
+            collate_fn=validation_dataset.pad_collate_func
         )
     elif configuration["dataset_type"] == "RS":
         training_dataset = RandomizedAblationDataset(
@@ -124,10 +124,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             collate_fn=training_dataset.pad_collate_func)
         validation_dataloader = DataLoader(
             validation_dataset,
-            batch_size=configuration["batch_size"],
+            batch_size=1,
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func
+            collate_fn=validation_dataset.pad_collate_func
         )
     elif configuration["dataset_type"] == "RsDel":
         training_dataset = RandomizedDeletionDataset(
@@ -156,10 +156,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             collate_fn=training_dataset.pad_collate_func)
         validation_dataloader = DataLoader(
             validation_dataset,
-            batch_size=configuration["batch_size"],
+            batch_size=1,
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func
+            collate_fn=validation_dataset.pad_collate_func
         )
     elif configuration["dataset_type"] == "DRS":
         training_dataset = DeRandomizedSmoothingDataset(
@@ -186,10 +186,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             collate_fn=training_dataset.pad_collate_func)
         validation_dataloader = DataLoader(
             validation_dataset,
-            batch_size=configuration["batch_size"],
+            batch_size=1,
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func
+            collate_fn=validation_dataset.pad_collate_func
         )
     elif configuration["dataset_type"] == "SequentialDRS":
         training_dataset = SequentialDRSDataset(
@@ -223,10 +223,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
             validation_dataloader = DataLoader(
                 validation_dataset,
-                batch_size=configuration["batch_size"],
+                batch_size=1,
                 num_workers=num_workers,
                 collate_fn=training_dataset.pad_collate_func,
-                sampler=RandomChunkSampler(validation_dataset, configuration["batch_size"])
+                sampler=RandomChunkSampler(validation_dataset, 1)
             )
         else:
             training_dataloader = DataLoader(
@@ -237,10 +237,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 collate_fn=training_dataset.pad_collate_func)
             validation_dataloader = DataLoader(
                 validation_dataset,
-                batch_size=configuration["batch_size"],
+                batch_size=1,
                 shuffle=True,
                 num_workers=num_workers,
-                collate_fn=training_dataset.pad_collate_func
+                collate_fn=validation_dataset.pad_collate_func
             )
     elif configuration["dataset_type"] == "RandomDRS":
         training_dataset = RandomDRSDataset(
@@ -274,9 +274,9 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
             validation_dataloader = DataLoader(
                 validation_dataset,
-                batch_size=configuration["batch_size"],
+                batch_size=1,
                 num_workers=num_workers,
-                collate_fn=training_dataset.pad_collate_func,
+                collate_fn=validation_dataset.pad_collate_func,
                 sampler=RandomChunkSampler(validation_dataset, configuration["batch_size"])
             )
         else:
@@ -288,10 +288,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 collate_fn=training_dataset.pad_collate_func)
             validation_dataloader = DataLoader(
                 validation_dataset,
-                batch_size=configuration["batch_size"],
+                batch_size=1,
                 shuffle=True,
                 num_workers=num_workers,
-                collate_fn=training_dataset.pad_collate_func
+                collate_fn=validation_dataset.pad_collate_func
             )
     elif configuration["dataset_type"] == "Grayscale":
         training_dataset = GrayscaleDataset(
@@ -314,7 +314,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
         validation_dataloader = DataLoader(
             validation_dataset,
-            batch_size=configuration["batch_size"],
+            batch_size=1,
             shuffle=True,
             num_workers=num_workers,
         )

@@ -27,6 +27,7 @@ device = check_cuda()
 
 def get_preprocessing(configuration: dict) -> DataProcessing:
     try:
+        print("Preprocessing: ", configuration["preprocessing"])
         if configuration["preprocessing"] == "RS":
             return RandomizedAblationPreprocessing(
                 pabl=configuration["pabl"],
@@ -67,12 +68,14 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
         else:
             return None
     except KeyError:
+        print("Preprocessing: None")
         return None
 
 
 
 def get_postprocessing(configuration: dict) -> DataProcessing:
     try:
+        print("Postprocessing: ", configuration["postprocessing"])
         if configuration["postprocessing"] == "MajorityVoting":
             return MajorityVotingPostprocessing(apply_sigmoid=True)
         elif configuration["postprocessing"] == "Sigmoid":
@@ -80,12 +83,14 @@ def get_postprocessing(configuration: dict) -> DataProcessing:
         else:
             raise ValueError(f"postprocessing {configuration['postprocessing']} not found")
     except KeyError:
+        print("Postprocessing: None")
         return None
 
 def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcessing, DataProcessing]:
     preprocessing = get_preprocessing(configuration)
     postprocessing = get_postprocessing(configuration)
     architecture_name = configuration["architecture"]
+    print("Architecture: ", architecture_name)
     if architecture_name == "MalConv":
         return MalConv.create_model(
             model_path=configuration["model_path"],

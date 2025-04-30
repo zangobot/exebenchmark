@@ -18,6 +18,9 @@ python train_end2end_detector.py  configurations/EMBER/training/AvastConv/DRS/dr
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/DRS/drs_avastconv_ember_validation_set_configuration_file_65536_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/DRS/drs_avastconv_ember_test_set_configuration_file_65536_pos_weight_0.875.json
 
+python train_end2end_detector.py  configurations/EMBER/training/AvastConv/DRS/drs_avastconv_ember_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/DRS/drs_avastconv_ember_validation_set_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/DRS/drs_avastconv_ember_test_set_configuration_file_131072_pos_weight_0.875.json
 
 # BBDnn
 python train_end2end_detector.py  configurations/EMBER/training/BBDnn/DRS/drs_bbdnn_ember_configuration_file_4096_pos_weight_0.875.json
@@ -39,6 +42,10 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/DRS/drs_
 python train_end2end_detector.py  configurations/EMBER/training/BBDnn/DRS/drs_bbdnn_ember_configuration_file_65536_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/DRS/drs_bbdnn_ember_validation_set_configuration_file_65536_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/DRS/drs_bbdnn_ember_test_set_configuration_file_65536_pos_weight_0.875.json
+
+python train_end2end_detector.py  configurations/EMBER/training/BBDnn/DRS/drs_bbdnn_ember_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/BBDnn/DRS/drs_bbdnn_ember_validation_set_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/DRS/drs_bbdnn_ember_test_set_configuration_file_131072_pos_weight_0.875.json
 
 # NGramConv
 python train_end2end_detector.py  configurations/EMBER/training/NGramConv/DRS/drs_ngramconv_ember_configuration_file_512_pos_weight_0.875.json
@@ -69,8 +76,11 @@ python train_end2end_detector.py  configurations/EMBER/training/NGramConv/DRS/dr
 python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/DRS/drs_ngramconv_ember_validation_set_configuration_file_65536_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/DRS/drs_ngramconv_ember_test_set_configuration_file_65536_pos_weight_0.875.json
 
-# MalConv
+python train_end2end_detector.py  configurations/EMBER/training/NGramConv/DRS/drs_ngramconv_ember_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/DRS/drs_ngramconv_ember_validation_set_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/DRS/drs_ngramconv_ember_test_set_configuration_file_131072_pos_weight_0.875.json
 
+# MalConv
 python train_end2end_detector.py  configurations/EMBER/training/MalConv/DRS/drs_malconv_ember_configuration_file_512_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/DRS/drs_malconv_ember_validation_set_configuration_file_512_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/DRS/drs_malconv_ember_test_set_configuration_file_512_pos_weight_0.875.json
@@ -98,4 +108,8 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/DRS/dr
 python train_end2end_detector.py  configurations/EMBER/training/MalConv/DRS/drs_malconv_ember_configuration_file_65536_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/DRS/drs_malconv_ember_validation_set_configuration_file_65536_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/DRS/drs_malconv_ember_test_set_configuration_file_65536_pos_weight_0.875.json
+
+python train_end2end_detector.py  configurations/EMBER/training/MalConv/DRS/drs_malconv_ember_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/DRS/drs_malconv_ember_validation_set_configuration_file_131072_pos_weight_0.875.json
+python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/DRS/drs_malconv_ember_test_set_configuration_file_131072_pos_weight_0.875.json
 
