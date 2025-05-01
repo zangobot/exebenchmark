@@ -8,7 +8,7 @@ Clone maltorch's repository (https://github.com/zangobot/maltorch) and install t
 Following you can find the machine learning-based models trained and its Google Drive link to download them.
 
 - MalConv
-  - Vanilla (Download to exebenchmark/output/EMBER-MalConv-2000000/): https://drive.google.com/file/d/1Uk7QHjjXMEy-RADX5kHD9vIYk6UT2nii/view?usp=sharing
+  - Vanilla (Download to exebenchmark/output/EMBER-MalConv-2000000-pos-weight-0.875/): https://drive.google.com/file/d/1Uk7QHjjXMEy-RADX5kHD9vIYk6UT2nii/view?usp=sharing
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
@@ -21,25 +21,27 @@ Following you can find the machine learning-based models trained and its Google 
     - preprocessing: None
     - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-MalConv-2000000/): https://drive.google.com/file/d/1xi-Dc758WxpuNNkfVJdpAGqEzd9Dx-rS/view?usp=sharing
+  - RS (Download to exebenchmark/output/EMBER-RS-MalConv-2000000-pos-weight-0.875/): https://drive.google.com/file/d/1xi-Dc758WxpuNNkfVJdpAGqEzd9Dx-rS/view?usp=sharing
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-MalConv-2000000/): Needs To be Retrained
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-MalConv-2000000-pos-weight-0.875/): https://drive.google.com/file/d/1Ste3BBC5eONw42-tih2zjhm4Rj0ck-P6/view?usp=sharing
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pdel: 0.03
     - num_versions: 100
@@ -49,7 +51,7 @@ Following you can find the machine learning-based models trained and its Google 
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-2000000/): 
   - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-MalConv-2000000/): 
 - AvastConv
-  - Vanilla (Download to exebenchmark/output/EMBER-AvastConv-512000/): Needs To be Retrained
+  - Vanilla (Download to exebenchmark/output/EMBER-AvastConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1THfGkbWemzhdzv6HESbwd9qY_bQ0_sub/view?usp=sharing
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
@@ -60,25 +62,27 @@ Following you can find the machine learning-based models trained and its Google 
     - preprocessing: None
     - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-AvastConv-512000/): Needs To be Retrained
+  - RS (Download to exebenchmark/output/EMBER-RS-AvastConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1KJ4dKIjJeIRX5Th4mUxh2sV5xtctwpPk/view?usp=sharing
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
     - min_len: 10244
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-AvastConv-512000/): Needs To be Retrained
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-AvastConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1RUvXAGzbPRfWrI1Bg-N-ZVAYoo3tTDv1/view?usp=sharing
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
     - min_len: 10244
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pabl: 0.03
     - num_versions: 100
@@ -88,7 +92,7 @@ Following you can find the machine learning-based models trained and its Google 
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-2000000/): Needs To be Retrained
   - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-AvastConv-2000000/): Needs To be Retrained
 - BBDnn
-  - Vanilla (Download to exebenchmark/output/EMBER-BBDnn-102400/): https://drive.google.com/file/d/1c_9lVHT9zYpBCwQfnUW6ZbCF6SaVabRZ/view?usp=sharing
+  - Vanilla (Download to exebenchmark/output/EMBER-BBDnn-102400-pos-weight-0.875/): https://drive.google.com/file/d/1c_9lVHT9zYpBCwQfnUW6ZbCF6SaVabRZ/view?usp=sharing
     - architecture: BBDnn
     - embedding_size: 10
     - max_len: 102400
@@ -99,25 +103,27 @@ Following you can find the machine learning-based models trained and its Google 
     - preprocessing: None
     - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-BBDnn-102400/): https://drive.google.com/file/d/1lpsnFz7hFSrLXrguxRuu5Mrmarp9uNod/view?usp=sharing
+  - RS (Download to exebenchmark/output/EMBER-RS-BBDnn-102400-pos-weight-0.875/): https://drive.google.com/file/d/1lpsnFz7hFSrLXrguxRuu5Mrmarp9uNod/view?usp=sharing
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 102400
     - min_len: 4096
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-BBDnn-102400/): https://drive.google.com/file/d/1Kq7HngMv4cVD0HjpaqHctqEpQlicOjW_/view?usp=sharing
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-BBDnn-102400-pos-weight-0.875/): https://drive.google.com/file/d/1Kq7HngMv4cVD0HjpaqHctqEpQlicOjW_/view?usp=sharing
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 102400
     - min_len: 4096
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pabl: 0.03
     - num_versions: 100
@@ -134,28 +140,31 @@ Following you can find the machine learning-based models trained and its Google 
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: None
     - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-NGramConv-512000/): https://drive.google.com/file/d/1Zth04spqwN5ouxuTq6MzGdngiYrYXzLc/view?usp=sharing
+  - RS (Download to exebenchmark/output/EMBER-RS-NGramConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1Zth04spqwN5ouxuTq6MzGdngiYrYXzLc/view?usp=sharing
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 512000
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-NGramConv-512000/): https://drive.google.com/file/d/1JQi9rgIvv3aRND2BDyD2mGXlmQnkSyDx/view?usp=sharing
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-NGramConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1JQi9rgIvv3aRND2BDyD2mGXlmQnkSyDx/view?usp=sharing
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 512000
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pabl: 0.03
     - num_versions: 100
@@ -164,13 +173,14 @@ Following you can find the machine learning-based models trained and its Google 
   - DRS (Download to exebenchmark/output/EMBER-DRS-NGramConv-200000/): 
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-2000000/): 
   - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-NGramConv-2000000/):
-- ResNet18 (Download to exebenchmark/output/EMBER-ResNet18/): https://drive.google.com/file/d/1N1uK8bsfJvB88ryZcbRfxkzerblXqMqg/view?usp=sharing
+- ResNet18 (Download to exebenchmark/output/EMBER-ResNet18-pos-weight-0.875/): https://drive.google.com/file/d/1N1uK8bsfJvB88ryZcbRfxkzerblXqMqg/view?usp=sharing
   - preprocessing: Grayscale
   - postprocessing: Sigmoid
   - dataset_type: Grayscale (for training only)
   - width = height = 256
   - convert_to_3d_image: true
   - threshold: 0.5
+  - pos_weight: 0.875
 - EMBER LightGBM: (Download to exebenchmark/output/EMBER-LightGBM/): https://drive.google.com/file/d/1RWvr3yD8M90EXcTozK2TwW2JEExQ9qDW/view?usp=sharing
   - objective: binary
   - num_iterations: 5000
@@ -182,6 +192,7 @@ Following you can find the machine learning-based models trained and its Google 
   - bagging_fraction: 0.7
   - max_depth: -1
   - boosting: gbdt
+  - pos_weight: 0.875
 ## EMBER Dataset
 The EMBER dataset has been split into three sets: training, validation, and test. The original EMBER dataset contains 400,000 benign and 400,000 malicious samples. 
 Unfortunately, I have only been able to retrieve 349,994/400,000 benign samples and 399,992/400,000 malicious samples.
