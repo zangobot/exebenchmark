@@ -6,8 +6,8 @@ from maltorch.datasets.rs_dataset import RandomizedAblationDataset
 from maltorch.datasets.rsdel_dataset import RandomizedDeletionDataset
 from maltorch.datasets.random_drs_dataset import RandomDRSDataset
 from maltorch.datasets.sequential_drs_dataset import SequentialDRSDataset
-from maltorch.datasets.drs_dataset import DeRandomizedSmoothingDataset
-from maltorch.datasets.drsm_dataset import DeRandomizedSmoothingDataset as ICLRDRSMDataset
+from maltorch.datasets.aisec_drs_dataset import DeRandomizedSmoothingDataset as AISECDRSDataset
+from maltorch.datasets.iclr_drs_dataset import DeRandomizedSmoothingDataset as ICLRDRSDataset
 from maltorch.datasets.grayscale_dataset import GrayscaleDataset
 from maltorch.datasets.random_chunk_sampler import RandomChunkSampler
 from maltorch.trainers.early_stopping_pytorch_trainer import EarlyStoppingPyTorchTrainer
@@ -163,7 +163,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             collate_fn=validation_dataset.pad_collate_func
         )
     elif configuration["dataset_type"] == "DRS":
-        training_dataset = DeRandomizedSmoothingDataset(
+        training_dataset = AISECDRSDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -171,7 +171,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             chunk_size=configuration["chunk_size"],
             is_training=True
         )
-        validation_dataset = DeRandomizedSmoothingDataset(
+        validation_dataset = AISECDRSDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -295,7 +295,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 collate_fn=validation_dataset.pad_collate_func
             )
     elif configuration["dataset_type"] == "DRSM":
-        training_dataset = ICLRDRSMDataset(
+        training_dataset = ICLRDRSDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -305,7 +305,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_chunk_size=configuration["min_chunk_size"],
             is_training=True
         )
-        validation_dataset = ICLRDRSMDataset(
+        validation_dataset = ICLRDRSDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],

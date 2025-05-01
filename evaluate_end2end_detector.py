@@ -14,10 +14,10 @@ from maltorch.zoo.resnet18 import ResNet18
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
-from maltorch.data_processing.drs_preprocessing import DeRandomizedPreprocessing
+from maltorch.data_processing.aisec_drs_preprocessing import DeRandomizedPreprocessing as AISECDeRandomizedPreprocessing
 from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRandomizedPreprocessing
 from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
-from maltorch.data_processing.drsm_preprocessing import DeRandomizedPreprocessing as ICLRDeRandomizedPreprocessing
+from maltorch.data_processing.iclr_drs_preprocessing import DeRandomizedPreprocessing as ICLRDeRandomizedPreprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
@@ -42,7 +42,7 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 padding_idx=configuration["padding_idx"]
             )
         elif configuration["preprocessing"] == "DRS":
-            return DeRandomizedPreprocessing(
+            return AISECDeRandomizedPreprocessing(
                 chunk_size=configuration["chunk_size"],
                 padding_idx=configuration["padding_idx"]
             )
