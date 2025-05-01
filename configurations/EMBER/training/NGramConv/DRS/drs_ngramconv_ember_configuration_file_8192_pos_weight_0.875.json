@@ -8,6 +8,7 @@
   "architecture": "NGramConv",
   "embedding_size": 8,
   "min_len": 8192,
+  "max_len": 2000000,
   "threshold": 0.5,
   "padding_idx": 256,
   "model_path": "output/EMBER-DRS-NGramConv-8192-pos-weight_0.875",

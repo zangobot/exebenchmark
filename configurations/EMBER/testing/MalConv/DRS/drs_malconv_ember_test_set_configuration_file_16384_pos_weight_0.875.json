@@ -3,7 +3,7 @@
   "batch_size": 1,
   "architecture": "MalConv",
   "embedding_size": 8,
-  "max_len": 10000000,
+  "max_len": 2000000,
   "min_len": 16384,
   "threshold": 0.5,
   "padding_idx": 256,

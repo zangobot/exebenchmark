@@ -7,6 +7,7 @@
   "patience": 10,
   "architecture": "BBDnn",
   "embedding_size": 10,
+  "max_len": 2000000,
   "min_len": 4096,
   "threshold": 0.5,
   "padding_idx": 256,

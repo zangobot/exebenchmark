@@ -17,6 +17,7 @@ from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPrepr
 from maltorch.data_processing.drs_preprocessing import DeRandomizedPreprocessing
 from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRandomizedPreprocessing
 from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
+from maltorch.data_processing.drsm_preprocessing import DeRandomizedPreprocessing as ICLRDeRandomizedPreprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
@@ -58,6 +59,12 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
                 min_chunk_size=configuration["min_chunk_size"]
+            )
+        elif configuration["preprocessing"] == "DRSM":
+            return ICLRDeRandomizedPreprocessing(
+                num_chunks=configuration["num_chunks"],
+                min_chunk_size=configuration["min_chunk_size"],
+                padding_idx=configuration["padding_idx"]
             )
         elif configuration["preprocessing"] == "Grayscale":
             return GrayscalePreprocessing(
