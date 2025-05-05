@@ -7,7 +7,7 @@ Clone maltorch's repository (https://github.com/zangobot/maltorch) and install t
 ## ML-based Models
 Following you can find the machine learning-based models trained and its Google Drive link to download them.
 
-- MalConv
+- MalConv (https://cdn.aaai.org/ocs/ws/ws0432/16422-75958-1-PB.pdf)
   - Vanilla (Download to exebenchmark/output/EMBER-MalConv-2000000-pos-weight-0.875/): https://drive.google.com/file/d/1Uk7QHjjXMEy-RADX5kHD9vIYk6UT2nii/view?usp=sharing
     - architecture: MalConv
     - embedding_size: 8
@@ -105,7 +105,7 @@ Following you can find the machine learning-based models trained and its Google 
       - dataset_type: RandomDRS (for training only)
   - DRS (Download to exebenchmark/output/EMBER-DRS-MalConv-200000/): 
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-2000000/): 
-- AvastConv
+- AvastConv (https://openreview.net/pdf?id=HkHrmM1PM)
   - Vanilla (Download to exebenchmark/output/EMBER-AvastConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1THfGkbWemzhdzv6HESbwd9qY_bQ0_sub/view?usp=sharing
     - architecture: AvastConv
     - embedding_size: 8
@@ -191,7 +191,7 @@ Following you can find the machine learning-based models trained and its Google 
       - dataset_type: RandomDRS (for training only)
   - DRS (Download to exebenchmark/output/EMBER-DRS-AvastConv-200000/): Needs To be Retrained
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-2000000/): Needs To be Retrained
-- BBDnn
+- BBDnn (https://ieeexplore.ieee.org/document/8844623)
   - Vanilla (Download to exebenchmark/output/EMBER-BBDnn-102400-pos-weight-0.875/): https://drive.google.com/file/d/1c_9lVHT9zYpBCwQfnUW6ZbCF6SaVabRZ/view?usp=sharing
     - architecture: BBDnn
     - embedding_size: 10
@@ -277,7 +277,7 @@ Following you can find the machine learning-based models trained and its Google 
       - dataset_type: RandomDRS (for training only)
   - DRS (Download to exebenchmark/output/EMBER-DRS-BBDnn-200000/): 
   - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-2000000/): 
-- NGramConv
+- NGramConv (https://www.sciencedirect.com/science/article/pii/S0167404820304326, https://ebooks.iospress.nl/doi/10.3233/978-1-61499-806-8-221)
   - Vanilla (Download to exebenchmark/output/EMBER-NGramConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1uTflFZSM1xE_Q_dDZ-n77Ud4CbtYFtlB/view?usp=sharing
     - architecture: NGramConv
     - embedding_size: 8
@@ -383,6 +383,22 @@ Following you can find the machine learning-based models trained and its Google 
   - max_depth: -1
   - boosting: gbdt
   - pos_weight: 0.875
+
+Papers describing the defenses:
+- Randomized Smoothing (RS). This approach trains a malware detector by randomly masking bytes with probability p. Then, at inference time, it generates N masked versions, independently classifies each version, and aggregates the results through majority voting.
+  - Link: https://link.springer.com/chapter/10.1007/978-3-031-54129-2_40
+- Randomized Deletions (RsDel).
+This approach trains a malware detector by randomly deleting bytes with probability p. Then, at inference time, it generates N masked versions, independently classifies each version, and aggregates the results through majority voting.
+  - Link: https://arxiv.org/pdf/2302.01757
+- (De)Randomized Smoothing (AISEC-DRS and ICLR-DRS). These approaches split the executable into chunks, independently classify each chunk, and aggregate results through majoirty voting. The approaches differ in the way the chunks are generated. 
+AISEC-DRS specifies a fixed chunk size, e.g. 2048 bytes. ICLR-DRS specifies the number of chunks to extract per file, e.g., 4. 
+  - AISEC-DRS link: https://dl.acm.org/doi/abs/10.1145/3605764.3623914
+  - ICLR-DRS link: https://arxiv.org/pdf/2303.13372
+- (De)Randomized Smoothing with Random Chunks (Random-DRS). During training, this chunk-based smoothing scheme trains a base classifier to make classifications on a subset of contiguous bytes or chunk of bytes. At test time, a large number of chunks are then classified by a base classifier and the consensus among these classifications is then reported as the final prediction. The random strategy randomly selects the locations of the chunks. The size of the chunks are defined as a percentage of the file size, e.g., 20%.
+  - Link: https://ieeexplore.ieee.org/abstract/document/10506708 
+- (De)Randomized Smoothing with Sequential Chunks (Sequential-DRS). Similar to Random-DRS, but it selects contiguous adjacent chunks instead of random chunks.
+  - Link: https://ieeexplore.ieee.org/abstract/document/10506708
+
 ## EMBER Dataset
 The EMBER dataset has been split into three sets: training, validation, and test. The original EMBER dataset contains 400,000 benign and 400,000 malicious samples. 
 Unfortunately, I have only been able to retrieve 349,994/400,000 benign samples and 399,992/400,000 malicious samples.
