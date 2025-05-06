@@ -103,8 +103,60 @@ Following you can find the machine learning-based models trained and its Google 
       - sort_by_size: true,
       - postprocessing: MajorityVoting
       - dataset_type: RandomDRS (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-MalConv-200000/): 
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-2000000/): 
+  - Sequential-DRS. 
+    - Sequential-DRS-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-pos-weight-0.05): https://drive.google.com/file/d/1v9WovYCcnB5v4KbiS7Asi3QF_sy2qqym/view?usp=sharing
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-pos-weight-0.10): https://drive.google.com/file/d/1Ghi1W58bGurs7-t9gAXAI2C4WfWRbgK1/view?usp=sharing
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-pos-weight-0.20): https://drive.google.com/file/d/1s-b1l-rX-C1bD5Q2w3UAh90StYmnY0El/view?usp=sharing
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - AISEC-DRS
+  - ICLR-DRS
 - AvastConv (https://openreview.net/pdf?id=HkHrmM1PM)
   - Vanilla (Download to exebenchmark/output/EMBER-AvastConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1THfGkbWemzhdzv6HESbwd9qY_bQ0_sub/view?usp=sharing
     - architecture: AvastConv
@@ -189,8 +241,54 @@ Following you can find the machine learning-based models trained and its Google 
       - sort_by_size: true,
       - postprocessing: MajorityVoting
       - dataset_type: RandomDRS (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-AvastConv-200000/): Needs To be Retrained
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-2000000/): Needs To be Retrained
+  - Sequential-DRS. 
+    - Sequential-DRS-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-pos-weight-0.05): https://drive.google.com/file/d/1_0clnKD1tmGsi7BRjlrV-CIRHbaKlcE4/view?usp=sharing
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-pos-weight-0.10): 
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-pos-weight-0.20): 
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - AISEC-DRS
+  - ICLR-DRS
 - BBDnn (https://ieeexplore.ieee.org/document/8844623)
   - Vanilla (Download to exebenchmark/output/EMBER-BBDnn-102400-pos-weight-0.875/): https://drive.google.com/file/d/1c_9lVHT9zYpBCwQfnUW6ZbCF6SaVabRZ/view?usp=sharing
     - architecture: BBDnn
@@ -275,8 +373,54 @@ Following you can find the machine learning-based models trained and its Google 
       - sort_by_size: true,
       - postprocessing: MajorityVoting
       - dataset_type: RandomDRS (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-BBDnn-200000/): 
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-2000000/): 
+  - Sequential-DRS. 
+    - Sequential-DRS-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-pos-weight-0.05): https://drive.google.com/file/d/1C70E_ILWcQKVEEn7pVIojLxCsRPtxiZG/view?usp=sharing
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-pos-weight-0.10): https://drive.google.com/file/d/1NMPXuiYhCJ_DNIQEHlD-NAl9-FcctGlw/view?usp=sharing
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-pos-weight-0.20): https://drive.google.com/file/d/1m-AYC9Lmp2B7xF5bzD410hIHYMZBOGLh/view?usp=sharing
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - AISEC-DRS
+  - ICLR-DRS
 - NGramConv (https://www.sciencedirect.com/science/article/pii/S0167404820304326, https://ebooks.iospress.nl/doi/10.3233/978-1-61499-806-8-221)
   - Vanilla (Download to exebenchmark/output/EMBER-NGramConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1uTflFZSM1xE_Q_dDZ-n77Ud4CbtYFtlB/view?usp=sharing
     - architecture: NGramConv
@@ -361,8 +505,54 @@ Following you can find the machine learning-based models trained and its Google 
       - sort_by_size: true,
       - postprocessing: MajorityVoting
       - dataset_type: RandomDRS (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-NGramConv-200000/): 
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-2000000/): 
+  - Sequential-DRS. 
+    - Sequential-DRS-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-pos-weight-0.05): https://drive.google.com/file/d/1xO8Y0YWgKxcCDC0IN2MimtOaUN847HQ_/view?usp=sharing
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-pos-weight-0.10): https://drive.google.com/file/d/1tNPoLYdYcFcWldc2QIOqBJzCjMND6EAy/view?usp=sharing
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-pos-weight-0.20): https://drive.google.com/file/d/1A1W_7kg0aBgGKyUh4iJ6N1Gq2Hw0jJGz/view?usp=sharing
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - AISEC-DRS
+  - ICLR-DRS
 - ResNet18 (Download to exebenchmark/output/EMBER-ResNet18-pos-weight-0.875/): https://drive.google.com/file/d/1N1uK8bsfJvB88ryZcbRfxkzerblXqMqg/view?usp=sharing
   - preprocessing: Grayscale
   - postprocessing: Sigmoid
