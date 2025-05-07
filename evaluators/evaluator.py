@@ -1,10 +1,16 @@
 import abc
 
+import torch
+
+import maltorch.data.loader
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
+from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
+from maltorch.data_processing.aisec_drs_preprocessing import DeRandomizedPreprocessing
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
+from maltorch.datasets.binary_dataset import BinaryDataset
 from maltorch.zoo.avaststyleconv import AvastStyleConv
 from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.ember_gbdt import EmberGBDT
@@ -14,29 +20,33 @@ from maltorch.zoo.resnet18 import ResNet18
 from torch.utils.data import DataLoader
 
 import utils
+# all models should be downloaded in ZOO_PATH folder of exebenchmark
 from config import ZOO_PATH
 from utils import read_json_file
 
 
-class Evaluator(abc.ABC):
+class Evaluator:
     def __init__(self, config_path):
         self.config = read_json_file(config_path)
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = self.build_model(self.config)
 
-    @staticmethod
-    def build_model(config):
+
+    def build_model(self, config):
         architecture_name = config["architecture"]
-        device = utils.check_cuda()
 
         ablation_preprocessing = RandomizedAblationPreprocessing(pabl=0.20, num_versions=100, padding_idx=256)
+        deletion_preprocessing = RandomizedDeletionPreprocessing(pdel=0.03, num_versions=100, padding_idx=256)
+        rdrs_preprocessing = RandomDeRandomizedPreprocessing(file_percentage=0.05, num_chunks=100, padding_idx=256, min_chunk_size=500)
+        drs_preprocessing = DeRandomizedPreprocessing(chunk_size=512, padding_idx=256)
         voting_postprocessing = MajorityVotingPostprocessing(apply_sigmoid=True)
         sigmoid_postprocessor = SigmoidPostprocessor()
 
-        if architecture_name == "Malconv":
+        if architecture_name == "MalConv":
             return (
                 MalConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
+                    device=self.device,
                     postprocessing=sigmoid_postprocessor
                 )
             )
@@ -49,21 +59,21 @@ class Evaluator(abc.ABC):
         if architecture_name == "AvastStyleConv":
             return (
                 AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name, device=device,
+                    model_path=ZOO_PATH / architecture_name, device=self.device,
                     postprocessing=sigmoid_postprocessor
                 )
             )
         if architecture_name == "BBDnn":
             return (
                 BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name, device=device,
+                    model_path=ZOO_PATH / architecture_name, device=self.device,
                     postprocessing=sigmoid_postprocessor
                 )
             )
         if architecture_name == "NGramConv":
             return (
                 NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name, device=device,
+                    model_path=ZOO_PATH / architecture_name, device=self.device,
                     postprocessing=sigmoid_postprocessor
                 )
             )
@@ -71,7 +81,7 @@ class Evaluator(abc.ABC):
             return (
                 ResNet18().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
+                    device=self.device,
                     preprocessing=GrayscalePreprocessing(
                         width=256,
                         height=256,
@@ -84,7 +94,7 @@ class Evaluator(abc.ABC):
             return (
                 MalConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
+                    device=self.device,
                     preprocessing=ablation_preprocessing,
                     postprocessing=voting_postprocessing
                 )
@@ -93,7 +103,7 @@ class Evaluator(abc.ABC):
             return (
                 AvastStyleConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
+                    device=self.device,
                     preprocessing=ablation_preprocessing,
                     postprocessing=voting_postprocessing
                 )
@@ -102,7 +112,7 @@ class Evaluator(abc.ABC):
             return (
                 BBDnn().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
+                    device=self.device,
                     preprocessing=ablation_preprocessing,
                     postprocessing=voting_postprocessing
                 )
@@ -111,7 +121,7 @@ class Evaluator(abc.ABC):
             return (
                 NGramConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
+                    device=self.device,
                     preprocessing=ablation_preprocessing,
                     postprocessing=voting_postprocessing
                 )
@@ -120,12 +130,8 @@ class Evaluator(abc.ABC):
             return (
                 MalConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
-                    preprocessing=RandomizedDeletionPreprocessing(
-                        pdel=0.03,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
+                    device=self.device,
+                    preprocessing=deletion_preprocessing,
                     postprocessing=voting_postprocessing
                 )
             )
@@ -133,12 +139,8 @@ class Evaluator(abc.ABC):
             return (
                 AvastStyleConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
-                    preprocessing=RandomizedDeletionPreprocessing(
-                        pdel=0.03,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
+                    device=self.device,
+                    preprocessing=deletion_preprocessing,
                     postprocessing=voting_postprocessing
                 )
             )
@@ -146,12 +148,8 @@ class Evaluator(abc.ABC):
             return (
                 BBDnn().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
-                    preprocessing=RandomizedDeletionPreprocessing(
-                        pdel=0.03,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
+                    device=self.device,
+                    preprocessing=deletion_preprocessing,
                     postprocessing=voting_postprocessing
                 )
             )
@@ -159,22 +157,124 @@ class Evaluator(abc.ABC):
             return (
                 NGramConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
-                    device=device,
-                    preprocessing=RandomizedDeletionPreprocessing(
-                        pdel=0.03,
-                        num_versions=100,
-                        padding_idx=256
-                    ),
+                    device=self.device,
+                    preprocessing=deletion_preprocessing,
                     postprocessing=voting_postprocessing
                 )
             )
         if architecture_name == "MalConvDRS":
-            pass
+            return (
+                MalConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=drs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "AvastStyleConvDRS":
+            return (
+                AvastStyleConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=drs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "BBDnnDRS":
+            return (
+                BBDnn().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=drs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "NGramConvDRS":
+            return (
+                NGramConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=drs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "MalConvRDRS":
+            return (
+                MalConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=rdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "AvastStyleConvRDRS":
+            return (
+                AvastStyleConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=rdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "BBDnnRDRS":
+            return (
+                BBDnn().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=rdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "NGramConvRDRS":
+            return (
+                NGramConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=rdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
-    @abc.abstractmethod
     def load_data(self) -> DataLoader:
-        ...
+        max_date = self.config["max_date"]
+        metadata_path = self.config["metadata_path"]
 
-    @abc.abstractmethod
-    def evaluate(self, data_loader: DataLoader) -> DataLoader:
-        ...
+        if max_date is None:
+            dataset = BinaryDataset(
+                csv_filepath=metadata_path
+            )
+            return DataLoader(
+                dataset,
+                shuffle=False,
+                batch_size=1
+            )
+        else:
+            dataset = BinaryDataset(
+                csv_filepath=metadata_path,
+                max_date=max_date
+            )
+            return DataLoader(
+                dataset,
+                shuffle=False,
+                batch_size=1,
+            )
+
+    def evaluate(self, output_path: str) -> None:
+
+        data_loader = self.load_data()
+
+        with open(output_path, "a") as f:
+            with torch.no_grad():
+                for batch in data_loader:
+                    x, y = batch
+                    x = x.to(self.device)
+                    y = y.to(self.device)
+                    pred = self.model(x)
+                    pred = pred.cpu().numpy()
+                    y = y.cpu().numpy()
+                    for i in range(len(pred)):
+                        f.write(f"{pred[i]},{y[i]}\n")
+
+
+

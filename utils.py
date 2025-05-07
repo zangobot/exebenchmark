@@ -14,7 +14,7 @@ from maltorch.zoo.resnet18 import ResNet18
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
-from maltorch.data_processing.drs_preprocessing import DeRandomizedPreprocessing
+from maltorch.data_processing.iclr_drs_preprocessing import DeRandomizedPreprocessing
 from maltorch.data_processing.sequential_drs_preprocessing import (
     SequentialDeRandomizedPreprocessing,
 )

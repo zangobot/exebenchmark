@@ -1,8 +1,0 @@
-{
-  "architecture": "Model class name",
-  "preprocessing": "Preprocessing name",
-  "predictions_path": "path_to_predictions",
-  "goodware": "True",
-  "max_date": "MM-YYYY"
-}
-
