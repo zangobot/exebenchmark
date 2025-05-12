@@ -13,11 +13,12 @@ if __name__ == "__main__":
 
     with open(args.input_filepath, "r") as input_file:
         lines = input_file.readlines()
-        for line in lines:
-            line = line.strip()
+        for line in lines[1:]:
+            line = line.strip().split(",")
             filepath = line[0]
             gdrive_link = line[1]
             directory = "/".join(filepath.split("/")[:-1])
+            print("Downloading model into: ", filepath)
             if not os.path.exists(directory):
                 os.makedirs(directory)
             download_gdrive(gdrive_id=gdrive_link, fname_save=filepath)
