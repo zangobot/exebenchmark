@@ -1,16 +1,16 @@
 cd ../../
 
 # AvastConv
-!'
-python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_configuration_file_0.05_pos_weight_0.875.json
+
+#python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_configuration_file_0.05_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_validation_set_configuration_file_0.05_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_test_set_configuration_file_0.05_pos_weight_0.875.json
 
-python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_configuration_file_0.10_pos_weight_0.875.json
+#python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_configuration_file_0.10_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_validation_set_configuration_file_0.10_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_test_set_configuration_file_0.10_pos_weight_0.875.json
 
-python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_configuration_file_0.20_pos_weight_0.875.json
+#python train_end2end_detector.py  configurations/EMBER/training/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_configuration_file_0.20_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_validation_set_configuration_file_0.20_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/AvastConv/Sequential-DRS/sequential_drs_avastconv_ember_test_set_configuration_file_0.20_pos_weight_0.875.json
 
@@ -40,17 +40,17 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/Sequ
 python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/Sequential-DRS/sequential_drs_ngramconv_ember_validation_set_configuration_file_0.20_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/Sequential-DRS/sequential_drs_ngramconv_ember_test_set_configuration_file_0.20_pos_weight_0.875.json
 
-'
+
 # MalConv
-python train_end2end_detector.py  configurations/EMBER/training/MalConv/Sequential-DRS/sequential_drs_malconv_ember_configuration_file_0.05_pos_weight_0.875.json
+#python train_end2end_detector.py  configurations/EMBER/training/MalConv/Sequential-DRS/sequential_drs_malconv_ember_configuration_file_0.05_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/Sequential-DRS/sequential_drs_malconv_ember_validation_set_configuration_file_0.05_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Sequential-DRS/sequential_drs_malconv_ember_test_set_configuration_file_0.05_pos_weight_0.875.json
 
-python train_end2end_detector.py  configurations/EMBER/training/MalConv/Sequential-DRS/sequential_drs_malconv_ember_configuration_file_0.10_pos_weight_0.875.json
+#python train_end2end_detector.py  configurations/EMBER/training/MalConv/Sequential-DRS/sequential_drs_malconv_ember_configuration_file_0.10_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/Sequential-DRS/sequential_drs_malconv_ember_validation_set_configuration_file_0.10_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Sequential-DRS/sequential_drs_malconv_ember_test_set_configuration_file_0.10_pos_weight_0.875.json
 
-python train_end2end_detector.py  configurations/EMBER/training/MalConv/Sequential-DRS/sequential_drs_malconv_ember_configuration_file_0.20_pos_weight_0.875.json
+#python train_end2end_detector.py  configurations/EMBER/training/MalConv/Sequential-DRS/sequential_drs_malconv_ember_configuration_file_0.20_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/Sequential-DRS/sequential_drs_malconv_ember_validation_set_configuration_file_0.20_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/Sequential-DRS/sequential_drs_malconv_ember_test_set_configuration_file_0.20_pos_weight_0.875.json
 
