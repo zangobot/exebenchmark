@@ -1,0 +1,18 @@
+{
+  "training_file": "training_splits/ember/ember_training_file_server.txt",
+  "validation_file": "training_splits/ember/ember_validation_file_server.txt",
+  "test_file": "training_splits/ember/ember_test_file_server.txt",
+  "batch_size": 64,
+  "num_epochs": 200,
+  "patience": 10,
+  "architecture": "BBDnn",
+  "embedding_size": 10,
+  "max_len": 2000000,
+  "min_len": 131072,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "model_path": "output/EMBER-F-DRS-BBDnn-131072-pos-weight-0.875",
+  "dataset_type": "F-DRS",
+  "chunk_size": 131072,
+  "pos_weight": 0.875
+}

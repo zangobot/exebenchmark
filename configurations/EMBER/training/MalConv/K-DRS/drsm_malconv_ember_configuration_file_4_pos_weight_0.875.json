@@ -1,0 +1,22 @@
+{
+  "training_file": "training_splits/ember/ember_training_file_server.txt",
+  "validation_file": "training_splits/ember/ember_validation_file_server.txt",
+  "test_file": "training_splits/ember/ember_test_file_server.txt",
+  "batch_size": 64,
+  "num_epochs": 100,
+  "patience": 10,
+  "architecture": "MalConv",
+  "embedding_size": 8,
+  "max_len": 2000000,
+  "min_len": 512,
+  "threshold": 0.5,
+  "padding_idx": 256,
+  "kernel_size": 512,
+  "stride": 512,
+  "model_path": "output/EMBER-K-DRS-MalConv-4-pos-weight-0.875",
+  "dataset_type": "K-DRS",
+  "num_chunks": 4,
+  "pos_weight": 0.875,
+  "sort_by_size": true,
+  "min_chunk_size": 512
+}
