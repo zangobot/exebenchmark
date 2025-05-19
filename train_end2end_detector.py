@@ -4,10 +4,10 @@ import json
 from maltorch.datasets.binary_dataset import BinaryDataset
 from maltorch.datasets.rs_dataset import RandomizedAblationDataset
 from maltorch.datasets.rsdel_dataset import RandomizedDeletionDataset
-from maltorch.datasets.random_drs_dataset import RandomDRSDataset
-from maltorch.datasets.sequential_drs_dataset import SequentialDRSDataset
-from maltorch.datasets.aisec_drs_dataset import DeRandomizedSmoothingDataset as AISECDRSDataset
-from maltorch.datasets.iclr_drs_dataset import DeRandomizedSmoothingDataset as ICLRDRSDataset
+from maltorch.datasets.dynamic_random_drs_dataset import DynamicRandomDRSDataset
+from maltorch.datasets.dynamic_sequential_drs_dataset import DynamicSequentialDRSDataset
+from maltorch.datasets.fixed_size_chunk_drs_dataset import FixedSizeChunkDeRandomizedSmoothingDataset
+from maltorch.datasets.k_partition_drs_dataset import KPartitionDeRandomizedSmoothingDataset
 from maltorch.datasets.grayscale_dataset import GrayscaleDataset
 from maltorch.datasets.random_chunk_sampler import RandomChunkSampler
 from maltorch.trainers.early_stopping_pytorch_trainer import EarlyStoppingPyTorchTrainer
@@ -162,8 +162,8 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             num_workers=num_workers,
             collate_fn=validation_dataset.pad_collate_func
         )
-    elif configuration["dataset_type"] == "DRS":
-        training_dataset = AISECDRSDataset(
+    elif configuration["dataset_type"] == "F-DRS":
+        training_dataset = FixedSizeChunkDeRandomizedSmoothingDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -171,7 +171,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             chunk_size=configuration["chunk_size"],
             is_training=True
         )
-        validation_dataset = AISECDRSDataset(
+        validation_dataset = FixedSizeChunkDeRandomizedSmoothingDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -193,7 +193,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             collate_fn=validation_dataset.pad_collate_func
         )
     elif configuration["dataset_type"] == "SequentialDRS":
-        training_dataset = SequentialDRSDataset(
+        training_dataset = DynamicSequentialDRSDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -204,7 +204,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_chunk_size=configuration["min_chunk_size"],
             is_training=True
         )
-        validation_dataset = SequentialDRSDataset(
+        validation_dataset = DynamicSequentialDRSDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -244,7 +244,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 collate_fn=validation_dataset.pad_collate_func
             )
     elif configuration["dataset_type"] == "RandomDRS":
-        training_dataset = RandomDRSDataset(
+        training_dataset = DynamicRandomDRSDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -255,7 +255,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_chunk_size=configuration["min_chunk_size"],
             is_training=True
         )
-        validation_dataset = RandomDRSDataset(
+        validation_dataset = DynamicRandomDRSDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -294,8 +294,8 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 num_workers=num_workers,
                 collate_fn=validation_dataset.pad_collate_func
             )
-    elif configuration["dataset_type"] == "DRSM":
-        training_dataset = ICLRDRSDataset(
+    elif configuration["dataset_type"] == "K-DRS":
+        training_dataset = KPartitionDeRandomizedSmoothingDataset(
             csv_filepath=configuration["training_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
@@ -305,7 +305,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_chunk_size=configuration["min_chunk_size"],
             is_training=True
         )
-        validation_dataset = ICLRDRSDataset(
+        validation_dataset = KPartitionDeRandomizedSmoothingDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],

@@ -14,10 +14,10 @@ from maltorch.zoo.resnet18 import ResNet18
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
-from maltorch.data_processing.aisec_drs_preprocessing import DeRandomizedPreprocessing as AISECDeRandomizedPreprocessing
-from maltorch.data_processing.sequential_drs_preprocessing import SequentialDeRandomizedPreprocessing
-from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
-from maltorch.data_processing.iclr_drs_preprocessing import DeRandomizedPreprocessing as ICLRDeRandomizedPreprocessing
+from maltorch.data_processing.fixed_size_chunk_drs_preprocessing import FixedSizeChunkDeRandomizedPreprocessing
+from maltorch.data_processing.dynamic_sequential_drs_preprocessing import DynamicSequentialDeRandomizedPreprocessing
+from maltorch.data_processing.dynamic_random_drs_preprocessing import DynamicRandomDeRandomizedPreprocessing
+from maltorch.data_processing.k_partition_drs_preprocessing import KPartitionDeRandomizedPreprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
@@ -41,27 +41,27 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 num_versions=configuration["num_versions"],
                 padding_idx=configuration["padding_idx"]
             )
-        elif configuration["preprocessing"] == "DRS":
-            return AISECDeRandomizedPreprocessing(
+        elif configuration["preprocessing"] == "F-DRS":
+            return FixedSizeChunkDeRandomizedPreprocessing(
                 chunk_size=configuration["chunk_size"],
                 padding_idx=configuration["padding_idx"]
             )
         elif configuration["preprocessing"] == "SequentialDRS":
-            return SequentialDeRandomizedPreprocessing(
+            return DynamicSequentialDeRandomizedPreprocessing(
                 file_percentage=configuration["file_percentage"],
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
                 min_chunk_size=configuration["min_chunk_size"]
             )
         elif configuration["preprocessing"] == "RandomDRS":
-            return RandomDeRandomizedPreprocessing(
+            return DynamicRandomDeRandomizedPreprocessing(
                 file_percentage=configuration["file_percentage"],
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
                 min_chunk_size=configuration["min_chunk_size"]
             )
-        elif configuration["preprocessing"] == "DRSM":
-            return ICLRDeRandomizedPreprocessing(
+        elif configuration["preprocessing"] == "K-DRS":
+            return KPartitionDeRandomizedPreprocessing(
                 num_chunks=configuration["num_chunks"],
                 min_chunk_size=configuration["min_chunk_size"],
                 padding_idx=configuration["padding_idx"]
