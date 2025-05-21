@@ -2,6 +2,7 @@
   "architecture": "MalConv",
   "predictions_path": "output/example.csv",
   "max_date": "None",
+  "min_date": "None",
   "metadata_path": "training_splits/ember/test_ember_features.txt"
 }
 

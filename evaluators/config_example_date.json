@@ -1,6 +1,7 @@
 {
   "architecture": "MalConv",
   "predictions_path": "output/example.csv",
-  "max_date": "2020-12",
+  "max_date": "2023-10",
+  "min_date": "None",
   "metadata_path": "configurations/SPEAKEASY/all_metadata.csv"
 }

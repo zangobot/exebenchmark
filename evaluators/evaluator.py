@@ -7,8 +7,9 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
-from maltorch.data_processing.random_drs_preprocessing import RandomDeRandomizedPreprocessing
-from maltorch.data_processing.aisec_drs_preprocessing import DeRandomizedPreprocessing
+from maltorch.data_processing.dynamic_random_drs_preprocessing import DynamicRandomDeRandomizedPreprocessing
+from maltorch.data_processing.fixed_size_chunk_drs_preprocessing import FixedSizeChunkDeRandomizedPreprocessing
+from maltorch.data_processing.k_partition_drs_preprocessing import KPartitionDeRandomizedPreprocessing
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
 from maltorch.datasets.binary_dataset import BinaryDataset
 from maltorch.zoo.avaststyleconv import AvastStyleConv
@@ -37,8 +38,9 @@ class Evaluator:
 
         ablation_preprocessing = RandomizedAblationPreprocessing(pabl=0.20, num_versions=100, padding_idx=256)
         deletion_preprocessing = RandomizedDeletionPreprocessing(pdel=0.03, num_versions=100, padding_idx=256)
-        rdrs_preprocessing = RandomDeRandomizedPreprocessing(file_percentage=0.05, num_chunks=100, padding_idx=256, min_chunk_size=500)
-        drs_preprocessing = DeRandomizedPreprocessing(chunk_size=512, padding_idx=256)
+        dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(file_percentage=0.05, num_chunks=100, padding_idx=256, min_chunk_size=500) #check
+        fsc_drs_preprocessing = FixedSizeChunkDeRandomizedPreprocessing(chunk_size=512, padding_idx=256) #check
+        kp_drs_preprocessing = KPartitionDeRandomizedPreprocessing(num_chunks=4, min_chunk_size=500, padding_idx=256) #check
         voting_postprocessing = MajorityVotingPostprocessing(apply_sigmoid=True)
         sigmoid_postprocessor = SigmoidPostprocessor()
 
@@ -237,10 +239,17 @@ class Evaluator:
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
     def load_data(self) -> DataLoader:
-        max_date = self.config["max_date"]
+        max_date = self.config.get("max_date")
+        min_date = self.config.get("min_date")
+
+        if not max_date or max_date.lower() == "none":
+            max_date = None
+        if not min_date or min_date.lower() == "none":
+            min_date = None
+
         metadata_path = self.config["metadata_path"]
 
-        if max_date is None:
+        if max_date is None and min_date is None:
             dataset = BinaryDataset(
                 csv_filepath=metadata_path
             )
@@ -252,7 +261,8 @@ class Evaluator:
         else:
             dataset = BinaryDataset(
                 csv_filepath=metadata_path,
-                max_date=max_date
+                max_date=max_date,
+                min_date=min_date
             )
             return DataLoader(
                 dataset,
