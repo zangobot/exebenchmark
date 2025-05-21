@@ -367,7 +367,7 @@ Following you can find the machine learning-based models trained and its Google 
       - postprocessing: MajorityVoting
 - AvastConv (https://openreview.net/pdf?id=HkHrmM1PM)
   - Vanilla (Download to exebenchmark/output/EMBER-AvastConv-512000-pos-weight-0.875/): 
-    - Google Drive ID: 1THfGkbWemzhdzv6HESbwd9qY_bQ0_sub
+    - Google Drive ID: 1KOB-o-2avfPtsQaGuguRW-b1HDbX8r8v
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
@@ -393,7 +393,7 @@ Following you can find the machine learning-based models trained and its Google 
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
   - RsDel (Download to exebenchmark/output/EMBER-RsDel-AvastConv-512000-pos-weight-0.875/): 
-    - Google Drive ID: 1KJ4dKIjJeIRX5Th4mUxh2sV5xtctwpPk
+    - Google Drive ID: 1RUvXAGzbPRfWrI1Bg-N-ZVAYoo3tTDv1
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
@@ -848,7 +848,7 @@ Following you can find the machine learning-based models trained and its Google 
       - postprocessing: MajorityVoting
       - dataset_type: F-DRS (for training only)
     - F-DRS-BBDnn-131072
-      - Google Drive ID: 
+      - Google Drive ID: 1K0Ht3ieUZ9Uc-ppAISiu_ANTOsf9VliU
       - architecture: BBDnn
       - embedding_size: 10
       - max_len: 2000000
