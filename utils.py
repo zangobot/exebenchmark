@@ -25,6 +25,7 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 from maltorch.data_processing.majority_voting_postprocessing import (
     MajorityVotingPostprocessing,
 )
+import pandas as pd
 
 
 def read_json_file(filepath: str) -> dict:
@@ -46,7 +47,7 @@ def check_cuda():
     return device
 
 
-def load_ember_csv(filepath: str) -> np.array:
+def load_ember_csv(filepath: str, max_date: str =  None, min_date: str = None) -> np.array:
     with open(filepath, "r") as f:
         reader = csv.reader(f)
         data = list(reader)

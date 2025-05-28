@@ -26,6 +26,10 @@ from pathlib import Path
 # all models should be downloaded in ZOO_PATH folder of exebenchmark
 from config import ZOO_PATH
 from utils import read_json_file
+from utils import load_ember_csv
+from typing import Union
+import numpy as np
+import pandas as pd
 
 
 class Evaluator:
@@ -276,7 +280,7 @@ class Evaluator:
             )
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
-    def load_data(self, batch_size: int = 32) -> DataLoader:
+    def load_data(self, batch_size) -> Union[DataLoader, np.array]:
         max_date = self.config["max_date"]
         min_date = self.config["min_date"]
 
@@ -288,54 +292,69 @@ class Evaluator:
         metadata_path = self.config["metadata_path"]
 
         if max_date is None and min_date is None:
-            dataset = BinaryDataset(
-                csv_filepath=metadata_path, 
-                max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
-                min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
-            )
-            return DataLoader(
-                dataset,
-                shuffle=False,
-                batch_size=batch_size, 
-                collate_fn=dataset.pad_collate_func
-            )
+            if self.config["architecture"] == "EmberGBDT":
+                X, y = load_ember_csv(metadata_path)
+                return X, y
+            else:
+                dataset = BinaryDataset(
+                    csv_filepath=metadata_path, 
+                    max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
+                    min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+                )
+                return DataLoader(
+                    dataset,
+                    shuffle=False,
+                    batch_size=batch_size, 
+                    collate_fn=dataset.pad_collate_func
+                )
         else:
-            dataset = BinaryDataset(
-                csv_filepath=metadata_path,
-                max_date=max_date,
-                min_date=min_date,
-                max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
-                min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
-            )
-            return DataLoader(
-                dataset,
-                shuffle=False,
-                batch_size=batch_size,
-                collate_fn=dataset.pad_collate_func
-            )
+            if self.config["architecture"] == "EmberGBDT":
+                X, y = load_ember_csv(metadata_path, max_date, min_date)
+                return X, y
+            else:
+                dataset = BinaryDataset(
+                    csv_filepath=metadata_path,
+                    max_date=max_date,
+                    min_date=min_date,
+                    max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
+                    min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+                )
+                return DataLoader(
+                    dataset,
+                    shuffle=False,
+                    batch_size=batch_size,
+                    collate_fn=dataset.pad_collate_func
+                )
 
-    def evaluate(self, batch_size: int = 32) -> None:
-
-        data_loader = self.load_data(batch_size)
-
-        predictions_folder = self.config.get("predictions_folder")
-
-        if predictions_folder is None:
-            raise ValueError("Output path for predictions is not specified in the config.")
+    def evaluate(self, batch_size: int = None) -> None:
 
         predictions_path = Path(predictions_folder) / f"{self.config['architecture']}.csv"
 
-        with open(predictions_path, "a") as f:
-            with torch.no_grad():
-                for batch in data_loader:
-                    x, y = batch
-                    x = x.to(self.device)
-                    y = y.to(self.device)
-                    pred = self.model(x)
-                    pred = pred.cpu().numpy()
-                    y = y.cpu().numpy()
-                    for i in range(len(pred)):
-                        f.write(f"{pred[i][0]},{y[i]}\n")
+
+        if self.config["architecture"] == "EmberGBDT":
+            X, y = self.load_data()
+            y_pred = self.model.predict(X)
+            df = pd.DataFrame(list(zip(y_pred, y)))
+            df.to_csv(predictions_path, index=False)
+        
+        else:
+            data_loader = self.load_data(batch_size)
+            predictions_folder = self.config.get("predictions_folder")
+
+            if predictions_folder is None:
+                raise ValueError("Output path for predictions is not specified in the config.")
+
+            with open(predictions_path, "a") as f:
+                with torch.no_grad():
+                    for batch in data_loader:
+                        x, y = batch
+                        x = x.to(self.device)
+                        y = y.to(self.device)
+                        pred = self.model(x)
+                        pred = pred.cpu().numpy()
+                        y = y.cpu().numpy()
+                        for i in range(len(pred)):
+                            f.write(f"{pred[i][0]},{y[i]}\n")
 
     
 
