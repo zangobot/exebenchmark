@@ -306,9 +306,11 @@ class Evaluator:
                 batch_size=1,
             )
 
-    def evaluate(self, output_path: str) -> None:
+    def evaluate(self) -> None:
 
         data_loader = self.load_data()
+
+        output_path = self.config.get("predictions_path")
 
         with open(output_path, "a") as f:
             with torch.no_grad():
