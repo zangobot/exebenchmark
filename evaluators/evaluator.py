@@ -275,7 +275,7 @@ class Evaluator:
             )
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
-    def load_data(self) -> DataLoader:
+    def load_data(self, batch_size: int = 32) -> DataLoader:
         max_date = self.config.get("max_date")
         min_date = self.config.get("min_date")
 
@@ -295,7 +295,7 @@ class Evaluator:
             return DataLoader(
                 dataset,
                 shuffle=False,
-                batch_size=32, 
+                batch_size=batch_size, 
                 collate_fn=dataset.pad_collate_func
             )
         else:
@@ -309,13 +309,13 @@ class Evaluator:
             return DataLoader(
                 dataset,
                 shuffle=False,
-                batch_size=32,
+                batch_size=batch_size,
                 collate_fn=dataset.pad_collate_func
             )
 
-    def evaluate(self) -> None:
+    def evaluate(self, batch_size: int = 32) -> None:
 
-        data_loader = self.load_data()
+        data_loader = self.load_data(batch_size)
 
         output_path = self.config.get("predictions_path")
 
