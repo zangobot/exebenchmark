@@ -20,6 +20,7 @@ from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.resnet18 import ResNet18
 from torch.utils.data import DataLoader
+from pathlib import Path
 
 # import utils
 # all models should be downloaded in ZOO_PATH folder of exebenchmark
@@ -276,8 +277,8 @@ class Evaluator:
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
     def load_data(self, batch_size: int = 32) -> DataLoader:
-        max_date = self.config.get("max_date")
-        min_date = self.config.get("min_date")
+        max_date = self.config["max_date"]
+        min_date = self.config["min_date"]
 
         if not max_date or max_date.lower() == "none":
             max_date = None
@@ -317,12 +318,14 @@ class Evaluator:
 
         data_loader = self.load_data(batch_size)
 
-        output_path = self.config.get("predictions_path")
+        predictions_folder = self.config.get("predictions_folder")
 
-        if output_path is None:
+        if predictions_folder is None:
             raise ValueError("Output path for predictions is not specified in the config.")
 
-        with open(output_path, "a") as f:
+        predictions_path = Path(predictions_folder) / f"{self.config['architecture']}.csv"
+
+        with open(predictions_path, "a") as f:
             with torch.no_grad():
                 for batch in data_loader:
                     x, y = batch
@@ -333,6 +336,8 @@ class Evaluator:
                     y = y.cpu().numpy()
                     for i in range(len(pred)):
                         f.write(f"{pred[i][0]},{y[i]}\n")
+
+    
 
 
 
