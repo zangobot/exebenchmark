@@ -26,6 +26,7 @@ from maltorch.data_processing.majority_voting_postprocessing import (
     MajorityVotingPostprocessing,
 )
 import pandas as pd
+import os
 
 
 def read_json_file(filepath: str) -> dict:
@@ -48,15 +49,50 @@ def check_cuda():
 
 
 def load_ember_csv(filepath: str, max_date: str =  None, min_date: str = None) -> np.array:
-    with open(filepath, "r") as f:
-        reader = csv.reader(f)
-        data = list(reader)
 
-    # Convert to numpy array (assuming all values are numerical)
-    data = np.array(data, dtype=float)
+    if max_date is not None or min_date is not None:
+            
+            rows = pd.read_csv(filepath)
 
-    # Separate features and labels
-    X, y = data[:, :-1], data[:, -1]
+            # Ensure required columns are present
+            required_columns = {"timestamp", "hash", "path", "label"}
+            if not required_columns.issubset(rows.columns):
+                raise ValueError(f"CSV file must contain the following columns: {required_columns}")
+            if min_date is not None and max_date is None:
+                rows = rows[
+                    (pd.to_datetime(rows["timestamp"], format="%Y-%m") >= pd.to_datetime(min_date, format="%Y-%m"))]
+            # if two data boundaries are provided, the data will be filtered to only include samples within the range
+            elif min_date is not None and max_date is not None:
+                rows = rows[
+                    (pd.to_datetime(rows["timestamp"], format="%Y-%m") >= pd.to_datetime(min_date, format="%Y-%m")) &
+                    (pd.to_datetime(rows["timestamp"], format="%Y-%m") <= pd.to_datetime(max_date, format="%Y-%m"))
+                ]
+            elif max_date is not None and min_date is None:
+                rows = rows[pd.to_datetime(rows["timestamp"], format="%Y-%m") <= pd.to_datetime(max_date, format="%Y-%m")]
+            else:
+                raise ValueError("max_date or/and min_date must be specified to filter the dataset by timestamp")
+            
+
+            # Create a DataFrame with [os.path.join(row["path"], row["hash"]), row["label"]]
+            df = pd.DataFrame({
+                "filepath": [os.path.join(row["path"], row["hash"]) for _, row in rows.iterrows()],
+                "label": rows["label"].values
+            })
+            X = np.array(df["filepath"].values)
+            y = np.array(df["label"].values)
+ 
+    else: 
+    
+        with open(filepath, "r") as f:
+            reader = csv.reader(f)
+            data = list(reader)
+
+        # Convert to numpy array (assuming all values are numerical)
+        data = np.array(data, dtype=float)
+
+        # Separate features and labels
+        X, y = data[:, :-1], data[:, -1]
+        
     return X, y
 
 
