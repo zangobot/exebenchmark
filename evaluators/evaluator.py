@@ -1,8 +1,9 @@
 import abc
+import os 
+import sys
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'maltorch', 'src')))
 
 import torch
-
-import maltorch.data.loader
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
@@ -20,7 +21,7 @@ from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.resnet18 import ResNet18
 from torch.utils.data import DataLoader
 
-import utils
+# import utils
 # all models should be downloaded in ZOO_PATH folder of exebenchmark
 from config import ZOO_PATH
 from utils import read_json_file
@@ -287,23 +288,29 @@ class Evaluator:
 
         if max_date is None and min_date is None:
             dataset = BinaryDataset(
-                csv_filepath=metadata_path
+                csv_filepath=metadata_path, 
+                max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
+                min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
             )
             return DataLoader(
                 dataset,
                 shuffle=False,
-                batch_size=1
+                batch_size=32, 
+                collate_fn=dataset.pad_collate_func
             )
         else:
             dataset = BinaryDataset(
                 csv_filepath=metadata_path,
                 max_date=max_date,
-                min_date=min_date
+                min_date=min_date,
+                max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
+                min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
             )
             return DataLoader(
                 dataset,
                 shuffle=False,
-                batch_size=1,
+                batch_size=32,
+                collate_fn=dataset.pad_collate_func
             )
 
     def evaluate(self) -> None:
@@ -311,6 +318,9 @@ class Evaluator:
         data_loader = self.load_data()
 
         output_path = self.config.get("predictions_path")
+
+        if output_path is None:
+            raise ValueError("Output path for predictions is not specified in the config.")
 
         with open(output_path, "a") as f:
             with torch.no_grad():
@@ -322,7 +332,7 @@ class Evaluator:
                     pred = pred.cpu().numpy()
                     y = y.cpu().numpy()
                     for i in range(len(pred)):
-                        f.write(f"{pred[i]},{y[i]}\n")
+                        f.write(f"{pred[i][0]},{y[i]}\n")
 
 
 
