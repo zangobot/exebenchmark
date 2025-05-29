@@ -21,6 +21,8 @@ from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.resnet18 import ResNet18
 from torch.utils.data import DataLoader
 from pathlib import Path
+import lightgbm as lgb
+
 
 # import utils
 # all models should be downloaded in ZOO_PATH folder of exebenchmark
@@ -280,7 +282,7 @@ class Evaluator:
             )
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
-    def load_data(self, batch_size) -> Union[DataLoader, np.array]:
+    def load_data(self, batch_size = None) -> Union[DataLoader, np.array]:
         max_date = self.config["max_date"]
         min_date = self.config["min_date"]
 
@@ -292,9 +294,16 @@ class Evaluator:
         metadata_path = self.config["metadata_path"]
 
         if max_date is None and min_date is None:
+
             if self.config["architecture"] == "EmberGBDT":
-                X, y = load_ember_csv(metadata_path)
-                return X, y
+                dataset = BinaryDataset(
+                    csv_filepath=metadata_path, 
+                )
+                return DataLoader(
+                    dataset,
+                    shuffle=False,
+                    batch_size=1, 
+                )
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path, 
@@ -309,8 +318,17 @@ class Evaluator:
                 )
         else:
             if self.config["architecture"] == "EmberGBDT":
-                X, y = load_ember_csv(metadata_path, max_date, min_date)
-                return X, y
+                dataset = BinaryDataset(
+                    csv_filepath=metadata_path, 
+                    max_date=max_date,
+                    min_date=min_date,
+                )
+                return DataLoader(
+                    dataset,
+                    shuffle=False,
+                    batch_size=1,
+                ) 
+            
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
@@ -328,18 +346,26 @@ class Evaluator:
 
     def evaluate(self, batch_size: int = None) -> None:
 
+        predictions_folder = self.config.get("predictions_folder")
         predictions_path = Path(predictions_folder) / f"{self.config['architecture']}.csv"
 
 
         if self.config["architecture"] == "EmberGBDT":
-            X, y = self.load_data()
-            y_pred = self.model.predict(X)
-            df = pd.DataFrame(list(zip(y_pred, y)))
-            df.to_csv(predictions_path, index=False)
-        
+            data_loader = self.load_data()
+            with open(predictions_path, "a") as f:
+                for batch in data_loader:
+                    x, y = batch
+                    x = x.to(torch.device("cpu"))
+                    y = y.to(torch.device("cpu"))
+                    pred = self.model(x)
+                    pred = pred.numpy()
+                    y = y.numpy()
+                    for i in range(len(pred)):
+                        f.write(f"{pred[i][0]},{y[i]}\n")
+
         else:
+
             data_loader = self.load_data(batch_size)
-            predictions_folder = self.config.get("predictions_folder")
 
             if predictions_folder is None:
                 raise ValueError("Output path for predictions is not specified in the config.")
