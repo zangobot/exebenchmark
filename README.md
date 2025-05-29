@@ -7,47 +7,367 @@ Clone maltorch's repository (https://github.com/zangobot/maltorch) and install t
 ## ML-based Models
 Following you can find the machine learning-based models trained and its Google Drive link to download them.
 
-- MalConv
-  - Vanilla (Download to exebenchmark/output/EMBER-MalConv-2000000-pos-weight-0.875/): https://drive.google.com/file/d/1Uk7QHjjXMEy-RADX5kHD9vIYk6UT2nii/view?usp=sharing
+- MalConv (https://cdn.aaai.org/ocs/ws/ws0432/16422-75958-1-PB.pdf)
+  - Vanilla-MalConv (Download to exebenchmark/output/EMBER-MalConv-2000000-pos-weight-0.875/): 
+    - Google Drive ID: 1Uk7QHjjXMEy-RADX5kHD9vIYk6UT2nii
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
     - min_len: 512
+    - kernel_size: 512,
+    - stride: 512,
     - threshold: 0.5
     - padding_idx: 256
     - pos_weight: 0.875
     - preprocessing: None
-    - postprocessing: None
+    - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-MalConv-2000000/): https://drive.google.com/file/d/1xi-Dc758WxpuNNkfVJdpAGqEzd9Dx-rS/view?usp=drive_link
+  - RS-MalConv (Download to exebenchmark/output/EMBER-RS-MalConv-2000000-pos-weight-0.875/): 
+    - Google Drive ID: 1xi-Dc758WxpuNNkfVJdpAGqEzd9Dx-rS
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
     - min_len: 512
+    - kernel_size: 512,
+    - stride: 512,
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-MalConv-2000000/): https://drive.google.com/file/d/1Ste3BBC5eONw42-tih2zjhm4Rj0ck-P6/view?usp=drive_link
+  - RsDel-MalConv (Download to exebenchmark/output/EMBER-RsDel-MalConv-2000000-pos-weight-0.875/): 
+    - Google Drive ID: 1Ste3BBC5eONw42-tih2zjhm4Rj0ck-P6
     - architecture: MalConv
     - embedding_size: 8
     - max_len: 2000000
     - min_len: 512
+    - kernel_size: 512,
+    - stride: 512,
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pdel: 0.03
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RsDel (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-MalConv-200000/): 
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-2000000/): 
-  - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-MalConv-2000000/): 
-- AvastConv
-  - Vanilla (Download to exebenchmark/output/EMBER-AvastConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/14wSZQ-Drns9G8CEqvfbAZjmMVt_ToUbp/view?usp=sharing
+  - Random-DRS-MalConv. 
+    - Random-DRS-MalConv-0.05 (Download to exebenchmark/output/EMBER-Random-DRS-MalConv-pos-weight-0.05): 
+      - Google Drive ID: 1F8xYABy67-7NQjy5IRrm6WjLf_pAEppF
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-MalConv-0.10: (Download to exebenchmark/output/EMBER-Random-DRS-MalConv-pos-weight-0.10): 
+      - Google Drive ID: 1npB96W3HE4aM8LtEHqOGXI9QRrpTJMoK
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-MalConv-0.20: (Download to exebenchmark/output/EMBER-Random-DRS-MalConv-pos-weight-0.20):
+      - Google Drive ID: 15p5ggmbmO315lvR452i_cQC7iPXqk5bL
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+  - Sequential-DRS-MalConv. 
+    - Sequential-DRS-MalConv-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-pos-weight-0.05): 
+      - Google Drive ID: 1XJXGny_snGGA3wPjM9Hi8Ex87cBBVgjv
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-MalConv-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-pos-weight-0.10): 
+      - Google Drive ID: 1X5L5Wt2vZrM_MVkBmFcjXEFVtYNP5i1d
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-MalConv-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-MalConv-pos-weight-0.20): 
+      - Google Drive ID: 1s-b1l-rX-C1bD5Q2w3UAh90StYmnY0El
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - F-DRS-MalConv
+    - F-DRS-MalConv-512
+      - Google Drive ID: 1DPc0k6OznKzt0z1eQfwqsl0ynmEwJ7fQ
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-MalConv-2048
+      - Google Drive ID: 1NoSDBHnrYypatOUFw4vBBKkuULxEkxZa
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 2048
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 2048,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-MalConv-4096
+      - Google Drive ID: 1Cw5dxJYsageAJWI_ZGR0-_5y72lN7KH0
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 4096
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-MalConv-8192
+      - Google Drive ID: 1x3iig3pO9IfHKHSWC9zSdL2sFSXBvOZT
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 8192
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 8192,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-MalConv-16384
+      - Google Drive ID: 1k481FK_015L9OmZLr7-4jsfi3I0ATiuB
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 16384
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 16384,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-MalConv-32768
+      - Google Drive ID: 1JDJNGjMjuJQ9wMqT_eu4Z8DMmUlCYqmh
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 32768
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 32768,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-MalConv-65536
+      - Google Drive ID: 1INUmaCYaK_pAsvR4hA0LKj1w0GF8rIMq
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 65536
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 65536,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-MalConv-131072
+      - Google Drive ID: 1R4pu-OfDKDOYLIG71pwLLyxc2ViZUfoC
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 131072
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 131072,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+  - K-DRS-MalConv 
+    - K-DRS-MalConv-4
+      - Google Drive ID: 1MEx02ibru-dcxi7x34lJ12cYPE-T3GoL
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 4
+      - postprocessing: MajorityVoting
+      - dataset_type: K-DRS (for training only)
+    - K-DRS-MalConv-8
+      - Google Drive ID: 1PosJtRyy4b7odcE0uyFH-f7_B9Xcu9KK
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 8
+      - postprocessing: MajorityVoting
+    - K-DRS-MalConv-12
+      - Google Drive ID: 1WenoLadUblWfEIan-2n9l-lBk79cK7IA
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 12
+      - postprocessing: MajorityVoting
+    - K-DRS-MalConv-16
+      - Google Drive ID: 1Avy0Gd9tgEZD0WOYq54gPxO-pcBv6J5y
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 16
+      - postprocessing: MajorityVoting
+    - K-DRS-MalConv-20
+      - Google Drive ID: 1zIZD38P1X7JtGc_JcT0q1p7BmriJu27D
+      - architecture: MalConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - kernel_size: 512,
+      - stride: 512,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 20
+      - postprocessing: MajorityVoting
+- AvastConv (https://openreview.net/pdf?id=HkHrmM1PM)
+  - Vanilla (Download to exebenchmark/output/EMBER-AvastConv-512000-pos-weight-0.875/): 
+    - Google Drive ID: 1KOB-o-2avfPtsQaGuguRW-b1HDbX8r8v
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
@@ -56,37 +376,282 @@ Following you can find the machine learning-based models trained and its Google 
     - padding_idx: 256
     - pos_weight: 0.875
     - preprocessing: None
-    - postprocessing: None
+    - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-AvastConv-512000/): https://drive.google.com/file/d/1KJ4dKIjJeIRX5Th4mUxh2sV5xtctwpPk/view?usp=drive_link
+  - RS (Download to exebenchmark/output/EMBER-RS-AvastConv-512000-pos-weight-0.875/): 
+    - Google Drive ID: 1KJ4dKIjJeIRX5Th4mUxh2sV5xtctwpPk
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
     - min_len: 10244
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-AvastConv-512000/): https://drive.google.com/file/d/1RUvXAGzbPRfWrI1Bg-N-ZVAYoo3tTDv1/view?usp=drive_link
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-AvastConv-512000-pos-weight-0.875/): 
+    - Google Drive ID: 1RUvXAGzbPRfWrI1Bg-N-ZVAYoo3tTDv1
     - architecture: AvastConv
     - embedding_size: 8
     - max_len: 512000
     - min_len: 10244
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pabl: 0.03
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RsDel (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-AvastConv-200000/): 
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-2000000/): 
-  - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-AvastConv-2000000/): 
-- BBDnn
-  - Vanilla (Download to exebenchmark/output/EMBER-BBDnn-102400-pos-weight-0.875/): https://drive.google.com/file/d/1c_9lVHT9zYpBCwQfnUW6ZbCF6SaVabRZ/view?usp=sharing
+  - Random-DRS. 
+    - Random-DRS-0.05 (Download to exebenchmark/output/EMBER-Random-DRS-AvastConv-pos-weight-0.05): 
+      - Google Drive ID: 1F5KK84SGlgX-5Rf90XVTIaYtzdeDfh1i
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-0.10: (Download to exebenchmark/output/EMBER-Random-DRS-AvastConv-pos-weight-0.10): 
+      - Google Drive ID: 1Q-y7SBhzH0BhUbAi9AjFxiMgWiKs7Zpo
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-0.20: (Download to exebenchmark/output/EMBER-Random-DRS-AvastConv-pos-weight-0.20): 
+      - Google Drive ID: 15-Xs4zIhMgIyhR_WSzHwAmjVnS4oF6aL
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+  - Sequential-DRS. 
+    - Sequential-DRS-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-pos-weight-0.05): 
+      - Google Drive ID: 1_0clnKD1tmGsi7BRjlrV-CIRHbaKlcE4
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-pos-weight-0.10): 
+      - Google Drive ID: 1Z35C4nZdJ4PKVj46YsOGU8rcrw89LCzc
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-AvastConv-pos-weight-0.20): 
+      - Google Drive ID: 1lbwmr5bSk_2ey1i16LllfgjlxOGXeivD
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - F-DRS-AvastConv
+    - F-DRS-AvastConv-10244
+      - Google Drive ID: 11DDL3lGZrG7DgS29n9CGOeshpbzJAD6s
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 512000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 10244,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-AvastConv-16384
+      - Google Drive ID: 1iGYQAmvmILHWpqd0XBioYaa13AvAwBKF
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 16384
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 16384,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-AvastConv-32768
+      - Google Drive ID: 1y3ZDhwIuMyszTRgp-0BLaB7ty3LVVsJT
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 32768
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 32768,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-AvastConv-65536
+      - Google Drive ID: 1Z37v9rIqvSti404ila_BVorjbLn8VPuF
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 65536
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 65536,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-AvastConv-131072
+      - Google Drive ID: 13zqCwpn1HAucdPYXzd7gytDnMv6edLbY
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 131072
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 131072,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+  - K-DRS-AvastConv 
+    - K-DRS-AvastConv-4
+      - Google Drive ID: 1zpK4Z5s2GaKl3NGz-8n532EpBmNHyz_4
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 512000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 4
+      - postprocessing: MajorityVoting
+      - dataset_type: K-DRS (for training only)
+    - K-DRS-AvastConv-8
+      - Google Drive ID: 1Lvl_wEXwMYyMK6Er-pO2ItEIVP-wGaSc
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 512000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 8
+      - postprocessing: MajorityVoting
+    - K-DRS-AvastConv-12
+      - Google Drive ID: 1_lsE6RYo0ZNq4lxYXMtQHEPvAbioI116
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 512000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 12
+      - postprocessing: MajorityVoting
+    - K-DRS-AvastConv-16
+      - Google Drive ID: 1AaXYJmrsrkwIANpVCNpWxAmhk8l9Zvbi
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 512000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 16
+      - postprocessing: MajorityVoting
+    - K-DRS-AvastConv-20
+      - Google Drive ID: 1vcdQHYVkz5XI1_rPrsqqg3QyyIb24sAK
+      - architecture: AvastConv
+      - embedding_size: 8
+      - max_len: 512000
+      - min_len: 10244
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 20
+      - postprocessing: MajorityVoting
+- BBDnn (https://ieeexplore.ieee.org/document/8844623)
+  - Vanilla (Download to exebenchmark/output/EMBER-BBDnn-102400-pos-weight-0.875/): 
+    - Google Drive ID: 1c_9lVHT9zYpBCwQfnUW6ZbCF6SaVabRZ
+    - architecture: BBDnn
+    - embedding_size: 10
+    - max_len: 102400
+    - min_len: 4096
+    - threshold: 0.5
+    - padding_idx: 256
+    - pos_weight: 0.875
+    - preprocessing: None
+    - postprocessing: Sigmoid
+    - dataset_type: Binary (for training only)
+  - RS (Download to exebenchmark/output/EMBER-RS-BBDnn-102400-pos-weight-0.875/): 
+    - Google Drive ID: 1lpsnFz7hFSrLXrguxRuu5Mrmarp9uNod
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 102400
@@ -94,82 +659,595 @@ Following you can find the machine learning-based models trained and its Google 
     - threshold: 0.5
     - padding_idx: 256
     - pos_weight: 0.875
-    - preprocessing: None
-    - postprocessing: None
-    - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-BBDnn-102400/): https://drive.google.com/file/d/1lv53kNIIACWRPD8ncEY8To0S2JNN_AY8/view?usp=drive_link
-    - architecture: BBDnn
-    - embedding_size: 8
-    - max_len: 102400
-    - min_len: 4096
-    - threshold: 0.5
-    - padding_idx: 256
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-BBDnn-102400/): https://drive.google.com/file/d/1Fl5DN6QxKWmO9JxNNFIiQI5FzhP6qC4y/view?usp=drive_link
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-BBDnn-102400-pos-weight-0.875/): 
+    - Google Drive ID: 1Kq7HngMv4cVD0HjpaqHctqEpQlicOjW_
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 102400
     - min_len: 4096
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pabl: 0.03
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RsDel (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-BBDnn-200000/): 
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-2000000/): 
-  - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-BBDnn-2000000/): 
-- NGramConv
-  - Vanilla (Download to exebenchmark/output/EMBER-NGramConv-512000-pos-weight-0.875/): https://drive.google.com/file/d/1uTflFZSM1xE_Q_dDZ-n77Ud4CbtYFtlB/view?usp=sharing
+  - Random-DRS. 
+    - Random-DRS-0.05 (Download to exebenchmark/output/EMBER-Random-DRS-BBDnn-pos-weight-0.05): 
+      - Google Drive ID: 1JkNTB0M4qJIN_4R-Bbm7mjyD-EMBzSgw
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-0.10: (Download to exebenchmark/output/EMBER-Random-DRS-BBDnn-pos-weight-0.10): 
+      - Google Drive ID: 1qnN_EZS_j5pxbfP_p-O27peUesLCj7OX
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-0.20: (Download to exebenchmark/output/EMBER-Random-DRS-BBDnn-pos-weight-0.20): 
+      - Google Drive ID: 1ECB7VC8T8EmpKDn2sPU_nWZXsZ24SwEl
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+  - Sequential-DRS. 
+    - Sequential-DRS-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-pos-weight-0.05): 
+      - Google Drive ID: 1C70E_ILWcQKVEEn7pVIojLxCsRPtxiZG
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-pos-weight-0.10): 
+      - Google Drive ID: 1NMPXuiYhCJ_DNIQEHlD-NAl9-FcctGlw
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-BBDnn-pos-weight-0.20): 
+      - Google Drive ID: 1m-AYC9Lmp2B7xF5bzD410hIHYMZBOGLh
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - F-DRS-BBDnn
+    - F-DRS-BBDnn-4096
+      - Google Drive ID: 1br4yCTAHfMwAnB7MzuwF-AohQ0VxJGG_
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 2000000,
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-BBDnn-8192
+      - Google Drive ID: 1_TMm-YUIa5z8AwyyELHirEkfPXjD1p6Z
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 2000000
+      - min_len: 8192
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 8192,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-BBDnn-16384
+      - Google Drive ID: 1WsIS2pqYdaTH-WaHOBceV-PVTQBDaysE
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 2000000
+      - min_len: 16384
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 16384,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-BBDnn-32768
+      - Google Drive ID: 1ge_AB1_4CeAi6g0W38XtUlJAlHLDKrIv
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 2000000
+      - min_len: 32768
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 32768,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-BBDnn-65536
+      - Google Drive ID: 18G0-VOmU7PUomr6cPHcAI2vA1qweVnvP
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 2000000
+      - min_len: 65536
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 65536,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-BBDnn-131072
+      - Google Drive ID: 1K0Ht3ieUZ9Uc-ppAISiu_ANTOsf9VliU
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 2000000
+      - min_len: 131072
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 131072,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+  - K-DRS-BBDnn 
+    - K-DRS-BBDnn-4
+      - Google Drive ID: 1ZXItmFr4v-GzwO2evt1FBEByNiMdpKkZ
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 4
+      - postprocessing: MajorityVoting
+      - dataset_type: K-DRS (for training only)
+    - K-DRS-BBDnn-8
+      - Google Drive ID: 11AbfiCQMaDlqr4qtM1Ij9PZ44vJAh25X
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 8
+      - postprocessing: MajorityVoting
+    - K-DRS-BBDnn-12
+      - Google Drive ID: 1v4LAaP_k2DFL8pjWwsexdlNmQLRDDJes
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 12
+      - postprocessing: MajorityVoting
+    - K-DRS-BBDnn-16
+      - Google Drive ID: 1mIcVaiC5CQi4MpC-r6qJYWtK0DsNJY7A
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 16
+      - postprocessing: MajorityVoting
+    - K-DRS-BBDnn-20
+      - Google Drive ID: 1KW57CgS7pZi4tVDRW9u7HMxAYRdc7b1f
+      - architecture: BBDnn
+      - embedding_size: 10
+      - max_len: 512000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 20
+      - postprocessing: MajorityVoting
+- NGramConv (https://www.sciencedirect.com/science/article/pii/S0167404820304326, https://ebooks.iospress.nl/doi/10.3233/978-1-61499-806-8-221)
+  - Vanilla (Download to exebenchmark/output/EMBER-NGramConv-512000-pos-weight-0.875/): 
+    - Google Drive ID: 1uTflFZSM1xE_Q_dDZ-n77Ud4CbtYFtlB
     - architecture: NGramConv
     - embedding_size: 8
     - max_len: 512000
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: None
-    - postprocessing: None
+    - postprocessing: Sigmoid
     - dataset_type: Binary (for training only)
-  - RS (Download to exebenchmark/output/EMBER-RS-NGramConv-512000/): https://drive.google.com/file/d/1LPDMv--V9ij9xndGN6zIKi1zf77fDzmH/view?usp=drive_link
+  - RS (Download to exebenchmark/output/EMBER-RS-NGramConv-512000-pos-weight-0.875/): 
+    - Google Drive ID: 1Zth04spqwN5ouxuTq6MzGdngiYrYXzLc
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 512000
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RS
     - pabl: 0.20
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RS (for training only)
-  - RsDel (Download to exebenchmark/output/EMBER-RsDel-NGramConv-512000/): https://drive.google.com/file/d/1JQi9rgIvv3aRND2BDyD2mGXlmQnkSyDx/view?usp=drive_link
+  - RsDel (Download to exebenchmark/output/EMBER-RsDel-NGramConv-512000-pos-weight-0.875/): 
+    - Google Drive ID: 1Ste3BBC5eONw42-tih2zjhm4Rj0ck-P6
     - architecture: BBDnn
     - embedding_size: 8
     - max_len: 512000
     - min_len: 512
     - threshold: 0.5
     - padding_idx: 256
+    - pos_weight: 0.875
     - preprocessing: RsDel
     - pabl: 0.03
     - num_versions: 100
     - postprocessing: MajorityVoting
     - dataset_type: RsDel (for training only)
-  - DRS (Download to exebenchmark/output/EMBER-DRS-NGramConv-200000/): 
-  - Sequential-DRS (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-2000000/): 
-  - Random-DRS (Download to exebenchmark/output/EMBER-Random-DRS-NGramConv-2000000/):
-- ResNet18 (Download to exebenchmark/output/EMBER-ResNet18/): https://drive.google.com/file/d/1N1uK8bsfJvB88ryZcbRfxkzerblXqMqg/view?usp=drive_link
+  - Random-DRS. 
+    - Random-DRS-0.05 (Download to exebenchmark/output/EMBER-Random-DRS-NGramConv-pos-weight-0.05): 
+      - Google Drive ID: 1F8xYABy67-7NQjy5IRrm6WjLf_pAEppF
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-0.10: (Download to exebenchmark/output/EMBER-Random-DRS-NGramConv-pos-weight-0.10):
+      - Google Drive ID: 1npB96W3HE4aM8LtEHqOGXI9QRrpTJMoK
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+    - Random-DRS-0.20: (Download to exebenchmark/output/EMBER-Random-DRS-NGramConv-pos-weight-0.20): 
+      - Google Drive ID: 15p5ggmbmO315lvR452i_cQC7iPXqk5bL
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: RandomDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: RandomDRS (for training only)
+  - Sequential-DRS. 
+    - Sequential-DRS-0.05 (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-pos-weight-0.05): 
+      - Google Drive ID: 1D0zqs7lhoIcZN2GGzKLpql8rwh0uBZuB
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.05,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.10: (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-pos-weight-0.10):
+      - Google Drive ID: 1tNPoLYdYcFcWldc2QIOqBJzCjMND6EAy
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.10,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+    - Sequential-DRS-0.20: (Download to exebenchmark/output/EMBER-Sequential-DRS-NGramConv-pos-weight-0.20): 
+      - Google Drive ID: 1uBsCnB--8iDB6pN2Jd_uYkbsve5yzgzS
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: SequentialDRS
+      - file_percentage: 0.20,
+      - num_chunks: 100,
+      - min_chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: SequentialDRS (for training only)
+  - F-DRS-NGramConv
+    - F-DRS-NGramConv-512
+      - Google Drive ID: 1ObtbCHAlzuhFU3G9LfFacCfcywlwncTk
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 512,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-NGramConv-2048
+      - Google Drive ID: 1a-XIlg3pX4AvZVSUQE3NxnDXFJxscXIU
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 2048
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 2048,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-NGramConv-4096
+      - Google Drive ID: 1YZbrTCAZKC8sMSbSrMrnZGttDD3R-b-y
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 4096
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 4096,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-NGramConv-8192
+      - Google Drive ID: 1heG05ZTErI70sPgcAqKWidNHzGSxu-d7
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 8192
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 8192,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-NGramConv-16384
+      - Google Drive ID: 1mcqfbHRY7F_CCKvlNExue1P5PeY-imE1
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 16384
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 16384,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-NGramConv-32768
+      - Google Drive ID: 1DHa-Od-MPJUYSafSH6gybrX83T8xcQX_
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 32768
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 32768,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-NGramConv-65536
+      - Google Drive ID: 19pcX45nuWytr5Q5FGGyPrUhl3VwuI8-5
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 65536
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 65536,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+    - F-DRS-NGramConv-131072
+      - Google Drive ID: 1s-bVWQEFeOAFKhtFue5GNM4GhX2RnU_l
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 131072
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: F-DRS
+      - chunk_size: 131072,
+      - sort_by_size: true,
+      - postprocessing: MajorityVoting
+      - dataset_type: F-DRS (for training only)
+  - K-DRS-NGramConv 
+    - K-DRS-NGramConv-4
+      - Google Drive ID: 1tGvJ8LdwlEkfgryE3An20_S40qM8G3e-
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 4
+      - postprocessing: MajorityVoting
+      - dataset_type: K-DRS (for training only)
+    - K-DRS-NGramConv-8
+      - Google Drive ID: 1-FTlNyDjSrx_SHG3q4pJj654IwOnSqfB
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 8
+      - postprocessing: MajorityVoting
+    - K-DRS-NGramConv-12
+      - Google Drive ID: 1eVIu-2kD6UX_UmCOuVZa9pLeLOYWfK16
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512 ,
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 12
+      - postprocessing: MajorityVoting
+    - K-DRS-NGramConv-16
+      - Google Drive ID: 1P1djlWa1AhG8tV8GGfgRfgd3hX9HKSOg
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 16
+      - postprocessing: MajorityVoting
+    - K-DRS-NGramConv-20
+      - Google Drive ID: ,1rLdu3CnIhIQpOyUC5cEETT-SaeXEX_mB
+      - architecture: NGramConv
+      - embedding_size: 8
+      - max_len: 2000000
+      - min_len: 512
+      - threshold: 0.5
+      - padding_idx: 256
+      - pos_weight: 0.875
+      - preprocessing: K-DRS
+      - num_chunks: 20
+      - postprocessing: MajorityVoting
+- ResNet18 (Download to exebenchmark/output/EMBER-ResNet18-pos-weight-0.875/):
+  - Google Drive ID: 1N1uK8bsfJvB88ryZcbRfxkzerblXqMqg
   - preprocessing: Grayscale
-  - postprocessing: None
+  - postprocessing: Sigmoid
   - dataset_type: Grayscale (for training only)
   - width = height = 256
   - convert_to_3d_image: true
   - threshold: 0.5
-- EMBER LightGBM: (Download to exebenchmark/output/EMBER-LightGBM/): https://drive.google.com/file/d/1RWvr3yD8M90EXcTozK2TwW2JEExQ9qDW/view?usp=drive_link
+  - pos_weight: 0.875
+- EMBER LightGBM: (Download to exebenchmark/output/EMBER-LightGBM/): 
+  - Google Drive ID: 1RWvr3yD8M90EXcTozK2TwW2JEExQ9qDW
   - objective: binary
   - num_iterations: 5000
   - learning_rate: 0.05
@@ -180,6 +1258,23 @@ Following you can find the machine learning-based models trained and its Google 
   - bagging_fraction: 0.7
   - max_depth: -1
   - boosting: gbdt
+  - pos_weight: 0.875
+
+Papers describing the defenses:
+- Randomized Smoothing (RS). This approach trains a malware detector by randomly masking bytes with probability p. Then, at inference time, it generates N masked versions, independently classifies each version, and aggregates the results through majority voting.
+  - Link: https://link.springer.com/chapter/10.1007/978-3-031-54129-2_40
+- Randomized Deletions (RsDel).
+This approach trains a malware detector by randomly deleting bytes with probability p. Then, at inference time, it generates N masked versions, independently classifies each version, and aggregates the results through majority voting.
+  - Link: https://arxiv.org/pdf/2302.01757
+- (De)Randomized Smoothing. Fixed-size Chunk DRS (F-DRS) and K-Partition DRS (K-DRS) approaches split the executable into chunks, independently classify each chunk, and aggregate results through majoirty voting. The approaches differ in the way the chunks are generated. 
+F-DRS specifies a fixed chunk size, e.g. 2048 bytes. K-DRS specifies the number of partitions to extract per file, e.g., 4. 
+  - F-DRS link: https://dl.acm.org/doi/abs/10.1145/3605764.3623914
+  - K-DRS link: https://arxiv.org/pdf/2303.13372
+- (De)Randomized Smoothing with Random Chunks (Random-DRS). During training, this chunk-based smoothing scheme trains a base classifier to make classifications on a subset of contiguous bytes or chunk of bytes. At test time, a large number of chunks are then classified by a base classifier and the consensus among these classifications is then reported as the final prediction. The random strategy randomly selects the locations of the chunks. The size of the chunks is defined as a percentage of the file size, e.g., 20%.
+  - Link: https://ieeexplore.ieee.org/abstract/document/10506708 
+- (De)Randomized Smoothing with Sequential Chunks (Sequential-DRS). Similar to Random-DRS, but it selects contiguous adjacent chunks instead of random chunks.
+  - Link: https://ieeexplore.ieee.org/abstract/document/10506708
+
 ## EMBER Dataset
 The EMBER dataset has been split into three sets: training, validation, and test. The original EMBER dataset contains 400,000 benign and 400,000 malicious samples. 
 Unfortunately, I have only been able to retrieve 349,994/400,000 benign samples and 399,992/400,000 malicious samples.
@@ -188,6 +1283,14 @@ The training splits are available at:
 - [ember_training_file_server.txt](training_splits/ember/ember_training_file_server.txt)
 - [ember_validation_file_server.txt](training_splits/ember/ember_validation_file_server.txt)
 - [ember_test_file_server.txt](training_splits/ember/ember_test_file_server.txt)
+
+## Downloading all models
+A script is provided in [download_models.py](output/download_models.py) to download all the models into their corresponding directories. All models are stored in Google Drive. You can find each model ID in [models_links.csv](output/models_links.csv) 
+To download the models execute the following lines:
+```
+cd exebenchmark/output/
+python download_models.py model_links.csv
+```
 
 ## Training and Evaluation Scripts
 Various scripts are provided to train and evaluate the end-to-end and feature-based models as follows:
@@ -238,3 +1341,7 @@ Example of evaluation configuration file:
 You will find the scripts used for training/evaluation the models in the [scripts](scripts) folder.
 
 
+## Adversarial Evaluation
+You can download a subset of nonpacked malicious executables from https://drive.google.com/file/d/1qiShG-WUp-0itBPTAo8vvfUWF5dnJoE4/view?usp=sharing
+
+In https://drive.google.com/file/d/1FgAojUDswwFpLvNypwJ9iaDk-C8XGKrz/view?usp=sharing you will find the families associated to each sample.

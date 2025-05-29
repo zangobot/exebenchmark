@@ -5,3 +5,5 @@ F1-Score: 0.964438341397056
 Confusion matrix: 
 [34651, 387] 
 [2384, 37575] 
+True Positive Rate: 0.9403388473185015
+False Positive Rate: 0.011045150978937154

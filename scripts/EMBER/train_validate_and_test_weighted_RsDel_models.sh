@@ -1,5 +1,6 @@
 cd ../../
 
+
 # AvastConv
 python train_end2end_detector.py  configurations/EMBER/training/AvastConv/rsdel_avastconv_ember_configuration_file_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/AvastConv/rsdel_avastconv_ember_validation_set_configuration_file_pos_weight_0.875.json
@@ -14,7 +15,6 @@ python evaluate_end2end_detector.py  configurations/EMBER/testing/BBDnn/rsdel_bb
 python train_end2end_detector.py  configurations/EMBER/training/NGramConv/rsdel_ngramconv_ember_configuration_file_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/validation/NGramConv/rsdel_ngramconv_ember_validation_set_configuration_file_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/NGramConv/rsdel_ngramconv_ember_test_set_configuration_file_pos_weight_0.875.json
-
 
 # MalConv
 python train_end2end_detector.py  configurations/EMBER/training/MalConv/rsdel_malconv_ember_configuration_file_pos_weight_0.875.json

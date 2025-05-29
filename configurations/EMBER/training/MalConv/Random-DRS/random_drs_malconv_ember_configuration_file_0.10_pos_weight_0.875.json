@@ -11,6 +11,8 @@
   "min_len": 512,
   "threshold": 0.5,
   "padding_idx": 256,
+  "kernel_size": 512,
+  "stride": 512,
   "model_path": "output/EMBER-Random-DRS-MalConv-0.10-pos-weight-0.875",
   "dataset_type": "RandomDRS",
   "file_percentage": 0.10,
