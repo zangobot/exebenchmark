@@ -1,7 +1,6 @@
 import abc
 import os 
 import sys
-# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'maltorch', 'src')))
 
 import torch
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
@@ -24,7 +23,6 @@ from pathlib import Path
 import lightgbm as lgb
 
 
-# import utils
 # all models should be downloaded in ZOO_PATH folder of exebenchmark
 from config import ZOO_PATH
 from utils import read_json_file
@@ -96,7 +94,8 @@ class Evaluator:
                         width=256,
                         height=256,
                         convert_to_3d_image=True,
-                    )
+                    ),
+                    postprocessing=sigmoid_postprocessor
                 )
             )
 
@@ -312,11 +311,14 @@ class Evaluator:
                 )
                 return DataLoader(
                     dataset,
+                    num_workers= 4 if self.config["architecture"] == "ResNet18" else 1,
                     shuffle=False,
                     batch_size=batch_size, 
                     collate_fn=dataset.pad_collate_func
                 )
+            
         else:
+
             if self.config["architecture"] == "EmberGBDT":
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path, 
@@ -340,6 +342,7 @@ class Evaluator:
                 return DataLoader(
                     dataset,
                     shuffle=False,
+                    num_workers= 4 if self.config["architecture"] == "ResNet18" else 1,
                     batch_size=batch_size,
                     collate_fn=dataset.pad_collate_func
                 )
