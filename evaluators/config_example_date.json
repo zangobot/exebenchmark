@@ -1,7 +1,7 @@
 {
-  "architecture": "MalConv",
-  "predictions_path": "output/example.csv",
-  "max_date": "2022-12",
+  "architecture": "ResNet18",
+  "predictions_folder": "output/",
+  "max_date": "2019-12",
   "min_date": "2019-01",
   "metadata_path": "configurations/SPEAKEASY/all_metadata.csv"
 }
