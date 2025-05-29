@@ -282,6 +282,10 @@ class Evaluator:
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
     def load_data(self, batch_size = None) -> Union[DataLoader, np.array]:
+
+        if self.model._preprocessing is not None:
+            batch_size = 1
+
         max_date = self.config["max_date"]
         min_date = self.config["min_date"]
 
@@ -311,7 +315,6 @@ class Evaluator:
                 )
                 return DataLoader(
                     dataset,
-                    num_workers= 4 if self.config["architecture"] == "ResNet18" else 1,
                     shuffle=False,
                     batch_size=batch_size, 
                     collate_fn=dataset.pad_collate_func
@@ -342,7 +345,6 @@ class Evaluator:
                 return DataLoader(
                     dataset,
                     shuffle=False,
-                    num_workers= 4 if self.config["architecture"] == "ResNet18" else 1,
                     batch_size=batch_size,
                     collate_fn=dataset.pad_collate_func
                 )

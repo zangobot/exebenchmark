@@ -6,5 +6,5 @@ if __name__ == "__main__":
     config_path = "evaluators/config_example_date.json"  # Replace with your actual config path
     evaluator = Evaluator(config_path)
     # data_loader = evaluator.load_data()  # to load a Dataloader for the dataset indicated in the config
-    evaluator.evaluate(batch_size=32)  # to evaluate the dataset without explicitly load it
+    evaluator.evaluate(batch_size=16)  # to evaluate the dataset without explicitly load it
 

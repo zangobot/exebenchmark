@@ -29,6 +29,6 @@ def plot_multiple_roc(csv_paths):
     plt.show()
 
 if __name__ == "__main__":
-    paths = ["output/MalConv.csv", "output/NGramConv.csv", "output/EmberGBDT.csv"]
+    paths = ["output/MalConv.csv", "output/NGramConv.csv", "output/EmberGBDT.csv", "output/ResNet18.csv"]
     plot_multiple_roc(paths)
 # %%
