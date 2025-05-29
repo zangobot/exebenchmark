@@ -1345,3 +1345,29 @@ You will find the scripts used for training/evaluation the models in the [script
 You can download a subset of nonpacked malicious executables from https://drive.google.com/file/d/1qiShG-WUp-0itBPTAo8vvfUWF5dnJoE4/view?usp=sharing
 
 In https://drive.google.com/file/d/1FgAojUDswwFpLvNypwJ9iaDk-C8XGKrz/view?usp=sharing you will find the families associated to each sample.
+
+
+## Adversarial Defenses Configurations
+
+There are three papers implementing 4 adversarial defenses:
+- Adversarial Robustness of Deep Learning-based Malware Detectors via (De) Randomized Smoothing, IEEE Access
+  - maltorch/data_processing/dynamic_random_drs_preprocessing.py. Default: 5%. Minimum: 5%. Maximum: 20%
+  - maltorch/data_processing/dynamic_sequential_drs_preprocessing.py. Default: 5%. Minimum: 5%. Maximum: 20%
+- Certified robustness of static deep learning-based malware detectors against patch and append attacks, AISEX'23
+  - maltorch/data_processing/fixed_size_chunk_drs_preprocessing.py. 
+- DRSM: DE-RANDOMIZED SMOOTHING ON MALWARE CLASSIFIER PROVIDING CERTIFIED ROBUSTNESS, ICLR'24
+  - maltorch/data_processing/k_partition_drs_preprocessing.py. Minimum: k=4. Maximum: k=24. Here the best clean performance was when k=4 and k=8. The best certified accuracy on adversarial examples was achieved with k=24
+
+Depending on the configuration, the clean accuracy and adversarial accuracy differ by a wide margin. This is why I was considering trying a subset of configurations. For instance:
+- Dynamic Random DRS: Try 5% and 20%. 2 (configurations) * 4 (architectures) 
+- Dynamic Sequential DRS: Try 5% and 20%. 2 (configurations) * 4 (architectures) 
+- Fixed chunk DRS: Try minimum, maximum and some value in between. The minimum size of the chunk varies between architectures. For MalConv and NGramConv is 512, for BBDnn is 4096 and for AvastConv is 10244. This will result in the following experiments:
+  - Fixed-DRS MalConv: 512, 16384 (or 32768), 65536 (or 131072)
+  - Fixed-DRS NGramConv: 512, 16384 (or 32768), 65536 (or 131072)
+  - Fixed-DRS BBDnn: 4096, 16384 (or 32768), 65536 (or 131072)
+  - Fixed-DRS AvastConv: 10244, 16384 (or 32768), 65536 (or 131072)
+  - 3 (configurations) * 4 (architectures) 
+- K-partition DRS: K in {4, 8, 12, 16, 20, 24} 
+  - I would evaluate a subset k \in {4, 12, 24}. 3 (configurations) * 4 (architectures) 
+
+
