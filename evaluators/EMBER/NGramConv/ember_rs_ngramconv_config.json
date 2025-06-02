@@ -1,0 +1,7 @@
+{
+  "architecture": "NGramConvRS",
+  "predictions_folder": "../output/EMBER-RS-NGramConv-2000000-pos-weight-0.875/",
+  "max_date": "None",
+  "min_date": "None",
+  "metadata_path": "../training_splits/ember/ember_test_file_server.txt"
+}
