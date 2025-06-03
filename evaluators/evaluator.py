@@ -4,6 +4,8 @@ import argparse
 import sys
 sys.path.append("../")
 import torch
+from tqdm import tqdm
+import multiprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
@@ -375,6 +377,7 @@ class Evaluator:
             min_date = None
 
         metadata_path = self.config["metadata_path"]
+        num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
 
         if max_date is None and min_date is None:
 
@@ -397,7 +400,8 @@ class Evaluator:
                     dataset,
                     shuffle=False,
                     batch_size=batch_size,
-                    collate_fn=dataset.pad_collate_func
+                    collate_fn=dataset.pad_collate_func,
+                    num_workers=num_workers
                 )
 
         else:
@@ -412,6 +416,7 @@ class Evaluator:
                     dataset,
                     shuffle=False,
                     batch_size=1,
+                    num_workers=num_workers
                 )
 
             else:
@@ -426,7 +431,8 @@ class Evaluator:
                     dataset,
                     shuffle=False,
                     batch_size=batch_size,
-                    collate_fn=dataset.pad_collate_func
+                    collate_fn=dataset.pad_collate_func,
+                    num_workers=num_workers
                 )
 
     def evaluate(self, batch_size: int = None) -> None:
@@ -436,8 +442,8 @@ class Evaluator:
 
         if self.config["architecture"] == "EmberGBDT":
             data_loader = self.load_data()
-            with open(predictions_path, "a") as f:
-                for batch in data_loader:
+            with open(predictions_path, "w") as f:
+                for batch in tqdm(data_loader):
                     x, y = batch
                     x = x.to(torch.device("cpu"))
                     y = y.to(torch.device("cpu"))
@@ -454,9 +460,9 @@ class Evaluator:
             if predictions_folder is None:
                 raise ValueError("Output path for predictions is not specified in the config.")
 
-            with open(predictions_path, "a") as f:
+            with open(predictions_path, "w") as f:
                 with torch.no_grad():
-                    for batch in data_loader:
+                    for batch in tqdm(data_loader):
                         x, y = batch
                         x = x.to(self.device)
                         y = y.to(self.device)
