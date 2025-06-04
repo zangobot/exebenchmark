@@ -33,13 +33,13 @@ import pandas as pd
 
 
 class Evaluator:
-    def __init__(self, config_path = None, config : dict = None):
-        if config_path is not None:
-            self.config = read_json_file(config_path)
-        else:
-            if config is None:
-                raise ValueError("Either config_path or config must be provided.")
+    def __init__(self, config: Union[str, dict] = None):
+        if isinstance(config, str):
+            self.config = read_json_file(config)
+        elif isinstance(config, dict):
             self.config = config
+        else:
+            raise ValueError("config must be a str (path) or a dict.")
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = self.build_model(self.config)
 
