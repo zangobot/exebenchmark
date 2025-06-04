@@ -1,6 +1,6 @@
 {
   "architecture": "EmberGBDT",
-  "model_file": "../output/EMBER-LightGBM/model.pth",
+  "model_file": "../output/EMBER-LightGBM/model.txt",
   "predictions_folder": "../output/EMBER-LightGBM/",
   "predictions_path": "../output/EMBER-LightGBM/EMBER_test_set_scores.csv",
   "max_date": "None",

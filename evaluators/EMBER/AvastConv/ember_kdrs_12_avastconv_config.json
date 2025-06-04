@@ -7,5 +7,6 @@
   "min_date": "None",
   "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
   "num_chunks": 12,
-  "min_chunk_size": 10244
+  "min_chunk_size": 10244,
+  "min_len": 10244
 }

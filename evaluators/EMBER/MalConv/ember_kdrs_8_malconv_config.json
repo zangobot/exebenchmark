@@ -7,7 +7,7 @@
   "min_date": "None",
   "kernel_size": 512,
   "stride": 512,
-  "metadata_path": "../training_splits/bodmas/bodmas_test_file_small.txt",
+  "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
   "num_chunks": 8,
   "min_chunk_size": 512
 }

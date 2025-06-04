@@ -340,7 +340,7 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=k_drs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
                 )
             )
         if architecture_name == "BBDnnKDRS":
@@ -394,7 +394,7 @@ class Evaluator:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
                     max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
-                    min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+                    min_len=self.config.get("min_len", 512)
                 )
                 return DataLoader(
                     dataset,
@@ -438,7 +438,7 @@ class Evaluator:
     def evaluate(self, batch_size: int = None) -> None:
 
         predictions_folder = self.config.get("predictions_folder")
-        predictions_path = Path(predictions_folder) / f"{self.config['architecture']}.csv"
+        predictions_path = self.config.get("predictions_path", Path(predictions_folder) / f"{self.config['architecture']}.csv")
 
         if self.config["architecture"] == "EmberGBDT":
             data_loader = self.load_data()

@@ -5,7 +5,8 @@
   "predictions_path": "../output/EMBER-K-DRS-AvastConv-8-pos-weight-0.875/EMBER_test_set_scores.csv",
   "max_date": "None",
   "min_date": "None",
-  "metadata_path": "../training_splits/bodmas/bodmas_test_file_small.txt",
+  "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
   "num_chunks": 8,
-  "min_chunk_size": 10244
+  "min_chunk_size": 10244,
+  "min_len": 10244
 }
