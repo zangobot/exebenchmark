@@ -33,8 +33,13 @@ import pandas as pd
 
 
 class Evaluator:
-    def __init__(self, config_path):
-        self.config = read_json_file(config_path)
+    def __init__(self, config_path = None, config : dict = None):
+        if config_path is not None:
+            self.config = read_json_file(config_path)
+        else:
+            if config is None:
+                raise ValueError("Either config_path or config must be provided.")
+            self.config = config
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = self.build_model(self.config)
 
