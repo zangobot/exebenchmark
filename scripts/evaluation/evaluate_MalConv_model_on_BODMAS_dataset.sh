@@ -1,8 +1,0 @@
-cd ../../
-
-#python evaluate_end2end_detector.py configurations/BODMAS/testing/MalConv/malconv_bodmas_test_set_configuration_file_2MB.json
-#python evaluate_end2end_detector.py configurations/BODMAS/testing/MalConv/rs_malconv_bodmas_test_set_configuration_file_2MB.json
-#python evaluate_end2end_detector.py configurations/BODMAS/testing/MalConv/rsdel_malconv_bodmas_test_set_configuration_file_2MB.json
-python evaluate_end2end_detector.py configurations/BODMAS/testing/MalConv/drs_malconv_bodmas_test_set_configuration_file_2MB.json
-python evaluate_end2end_detector.py configurations/BODMAS/testing/MalConv/sequential_drs_malconv_bodmas_test_set_configuration_file_2MB.json
-python evaluate_end2end_detector.py configurations/BODMAS/testing/MalConv/random_drs_malconv_bodmas_test_set_configuration_file_2MB.json
