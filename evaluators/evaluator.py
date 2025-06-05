@@ -50,11 +50,11 @@ class Evaluator:
     def build_model(self, config):
         architecture_name = config["architecture"]
 
-        ablation_preprocessing = RandomizedAblationPreprocessing(pabl=0.20, num_versions=100, padding_idx=256)
-        deletion_preprocessing = RandomizedDeletionPreprocessing(pdel=0.03, num_versions=100, padding_idx=256)
-        dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(file_percentage=0.05, num_chunks=100, padding_idx=256, min_chunk_size=500) #check
-        f_drs_preprocessing = FixedSizeChunkDeRandomizedPreprocessing(chunk_size=512, padding_idx=256) #check
-        k_drs_preprocessing = KPartitionDeRandomizedPreprocessing(num_chunks=4, min_chunk_size=500, padding_idx=256) #check
+        ablation_preprocessing = RandomizedAblationPreprocessing(pabl=0.10, num_versions=100, padding_idx=256)
+        deletion_preprocessing = RandomizedDeletionPreprocessing(pdel=0.10, num_versions=100, padding_idx=256)
+        dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(file_percentage=0.10, num_chunks=100, padding_idx=256) # min chunk to be defined model dependently
+        f_drs_preprocessing = FixedSizeChunkDeRandomizedPreprocessing(chunk_size=32768, padding_idx=256)
+        k_drs_preprocessing = KPartitionDeRandomizedPreprocessing(num_chunks=12, padding_idx=256) # min chunk to be defined model dependently
         voting_postprocessing = MajorityVotingPostprocessing(apply_sigmoid=True)
         sigmoid_postprocessor = SigmoidPostprocessor()
 
@@ -180,6 +180,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "MalConvRDRS":
+            dynamic_rdrs_preprocessing.min_chunk_size = 500
             return (
                 MalConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
@@ -189,6 +190,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "AvastStyleConvRDRS":
+            dynamic_rdrs_preprocessing.min_chunk_size = 102400
             return (
                 AvastStyleConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
@@ -198,6 +200,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "BBDnnRDRS":
+            dynamic_rdrs_preprocessing.min_chunk_size = 4096
             return (
                 BBDnn().create_model(
                     model_path=ZOO_PATH / architecture_name,
@@ -207,6 +210,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "NGramConvRDRS":
+            dynamic_rdrs_preprocessing.min_chunk_size = 512
             return (
                 NGramConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
@@ -252,6 +256,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "MalConvKDRS":
+            k_drs_preprocessing.min_chunk_size = 500
             return (
                 MalConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
@@ -261,6 +266,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "AvastStyleConvKDRS":
+            k_drs_preprocessing.min_chunk_size = 102400
             return (
                 AvastStyleConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
@@ -270,6 +276,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "BBDnnKDRS":
+            k_drs_preprocessing.min_chunk_size = 4096
             return (
                 BBDnn().create_model(
                     model_path=ZOO_PATH / architecture_name,
@@ -279,6 +286,7 @@ class Evaluator:
                 )
             )
         if architecture_name == "NGramConvKDRS":
+            k_drs_preprocessing.min_chunk_size = 512
             return (
                 NGramConv().create_model(
                     model_path=ZOO_PATH / architecture_name,
