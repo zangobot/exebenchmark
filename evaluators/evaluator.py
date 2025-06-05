@@ -33,14 +33,17 @@ import pandas as pd
 
 
 class Evaluator:
-    def __init__(self, config: Union[str, dict] = None):
+    def __init__(self, config: Union[str, dict] = None, device : str = None):
         if isinstance(config, str):
             self.config = read_json_file(config)
         elif isinstance(config, dict):
             self.config = config
         else:
             raise ValueError("config must be a str (path) or a dict.")
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        if device is not None:
+            self.device = device
+        else:
+            self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = self.build_model(self.config)
 
 
@@ -288,8 +291,30 @@ class Evaluator:
 
     def load_data(self, batch_size = None) -> Union[DataLoader, np.array]:
 
-        if self.model._preprocessing is not None:
+        # Set batch_size=1 only if model preprocessing is set and is not one of the known preprocessing instances
+        known_preprocessings = (
+            RandomizedAblationPreprocessing,
+            RandomizedDeletionPreprocessing,
+            DynamicRandomDeRandomizedPreprocessing,
+            FixedSizeChunkDeRandomizedPreprocessing,
+            KPartitionDeRandomizedPreprocessing,
+            GrayscalePreprocessing,
+        )
+        if (
+            self.model._preprocessing is not None
+            and isinstance(self.model._preprocessing, known_preprocessings)
+        ):
             batch_size = 1
+
+        max_len = self.model.model.max_len if hasattr(self.model.model, 'max_len') else None
+        min_len = self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+
+        if "BBDnn" in self.config["architecture"]: 
+            min_len = 4096
+
+        if "AvastStyleConv" in self.config["architecture"]:
+            min_len = 10244
+ 
 
         max_date = self.config["max_date"]
         min_date = self.config["min_date"]
@@ -315,8 +340,8 @@ class Evaluator:
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path, 
-                    max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
-                    min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+                    max_len=max_len,
+                    min_len=min_len
                 )
                 return DataLoader(
                     dataset,
@@ -344,8 +369,8 @@ class Evaluator:
                     csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
-                    max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
-                    min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+                    max_len=max_len,
+                    min_len=min_len
                 )
                 return DataLoader(
                     dataset,
@@ -358,6 +383,7 @@ class Evaluator:
 
         predictions_folder = self.config.get("predictions_folder")
         predictions_path = Path(predictions_folder) / f"{self.config['architecture']}.csv"
+        Path(predictions_folder).mkdir(parents=True, exist_ok=True)
 
 
         if self.config["architecture"] == "EmberGBDT":

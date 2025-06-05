@@ -20,6 +20,9 @@ if __name__ == "__main__":
                 "metadata_path": "configurations/SPEAKEASY/all_metadata.csv"
             }
 
-            evaluator = Evaluator(config=micro_config)
+            print(f"Evaluating {micro_config['architecture']} "
+                  f"Period: {temporal_bin['temporal_bin']}")
+
+            evaluator = Evaluator(config=micro_config, device="cuda:0")
             # data_loader = evaluator.load_data()  # to load a Dataloader for the dataset indicated in the config
-            evaluator.evaluate(batch_size=32)  # to evaluate the dataset without explicitly load it
+            evaluator.evaluate(batch_size=64)  # to evaluate the dataset without explicitly load it
