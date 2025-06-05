@@ -1367,7 +1367,7 @@ Depending on the configuration, the clean accuracy and adversarial accuracy diff
   - Fixed-DRS BBDnn: 4096, 16384 (or 32768), 65536 (or 131072)
   - Fixed-DRS AvastConv: 10244, 16384 (or 32768), 65536 (or 131072)
   - 3 (configurations) * 4 (architectures) 
-- K-partition DRS: K in {4, 8, 12, 16, 20, 24} 
-  - I would evaluate a subset k \in {4, 12, 24}. 3 (configurations) * 4 (architectures) 
+- K-partition DRS: K in {4, 8, 12, 16, 20} 
+  - I would evaluate a subset k \in {4, 12, 20}. 3 (configurations) * 4 (architectures) 
 
 
