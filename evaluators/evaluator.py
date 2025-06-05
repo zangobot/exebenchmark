@@ -3,6 +3,8 @@ import os
 import sys
 
 import torch
+
+from maltorch.data_processing.dynamic_sequential_drs_preprocessing import DynamicSequentialDeRandomizedPreprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
@@ -53,6 +55,7 @@ class Evaluator:
         ablation_preprocessing = RandomizedAblationPreprocessing(pabl=0.10, num_versions=100, padding_idx=256)
         deletion_preprocessing = RandomizedDeletionPreprocessing(pdel=0.10, num_versions=100, padding_idx=256)
         dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(file_percentage=0.10, num_chunks=100, padding_idx=256) # min chunk to be defined model dependently
+        dynamic_sdrs_preprocessing = DynamicSequentialDeRandomizedPreprocessing(file_percentage=0.10, num_chunks=100, padding_idx=256)
         f_drs_preprocessing = FixedSizeChunkDeRandomizedPreprocessing(chunk_size=32768, padding_idx=256)
         k_drs_preprocessing = KPartitionDeRandomizedPreprocessing(num_chunks=12, padding_idx=256) # min chunk to be defined model dependently
         voting_postprocessing = MajorityVotingPostprocessing(apply_sigmoid=True)
@@ -216,6 +219,46 @@ class Evaluator:
                     model_path=ZOO_PATH / architecture_name,
                     device=self.device,
                     preprocessing=dynamic_rdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "MalConvSDRS":
+            dynamic_sdrs_preprocessing.min_chunk_size = 500
+            return (
+                MalConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=dynamic_sdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "AvastStyleConvSDRS":
+            dynamic_sdrs_preprocessing.min_chunk_size = 102400
+            return (
+                AvastStyleConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=dynamic_sdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "BBDnnSDRS":
+            dynamic_sdrs_preprocessing.min_chunk_size = 4096
+            return (
+                BBDnn().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=dynamic_sdrs_preprocessing,
+                    postprocessing=voting_postprocessing
+                )
+            )
+        if architecture_name == "NGramConvSDRS":
+            dynamic_sdrs_preprocessing.min_chunk_size = 512
+            return (
+                NGramConv().create_model(
+                    model_path=ZOO_PATH / architecture_name,
+                    device=self.device,
+                    preprocessing=dynamic_sdrs_preprocessing,
                     postprocessing=voting_postprocessing
                 )
             )
