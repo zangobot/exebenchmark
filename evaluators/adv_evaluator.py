@@ -1,13 +1,13 @@
 from multiprocessing import Pool
 from pathlib import Path
 
+import lief
 from torch.utils.data import DataLoader, TensorDataset
 
 from evaluators.evaluator import Evaluator
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
 from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
 from maltorch.adv.evasion.padding import Padding
-# from maltorch.data.loader_sborra import load_from_folder, create_labels
 from secmlt.metrics.classification import Accuracy
 import torch
 
@@ -25,10 +25,13 @@ def load_from_folder(
     """
     X = []
     for filepath in path.glob(f"*"):
-        x = load_single_exe(filepath)
-        X.append(x)
-        if limit is not None and len(X) >= limit:
-            break
+        if lief.is_pe(str(filepath)):
+            x = load_single_exe(filepath)
+            X.append(x)
+            if limit is not None and len(X) >= limit:
+                break
+        else:
+            continue
     X = torch.nn.utils.rnn.pad_sequence(X, padding_value=padding).transpose(0, 1).long()
     X = X.to(device)
     return X
@@ -80,12 +83,12 @@ class AdversarialEvaluator(Evaluator):
         if self.config["attack"] == "padding":
             return Padding(
                 query_budget=500,
-                padding=4096
+                padding=512
             )
 
 
-    def bulk_attack(self, n_jobs = 1, batch_size = 2):
-        X = load_from_folder(Path("/Users/bridge/PhD/Code/mal-pipeline/malware/"), "", limit=10)
+    def bulk_attack(self, n_jobs = 1, batch_size = 1):
+        X = load_from_folder(Path("/Users/bridge/PhD/Code/mal-pipeline/malware/"), "", limit=2)
         y = create_labels(X, 1)
 
         indices = list(range(len(X)))

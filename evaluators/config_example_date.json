@@ -4,5 +4,5 @@
   "max_date": "none",
   "min_date": "2022-05",
   "metadata_path": "configurations/SPEAKEASY/all_metadata.csv",
-  "attack": "padding"
+  "attack": "gamma"
 }
