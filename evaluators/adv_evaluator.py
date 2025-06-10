@@ -83,7 +83,7 @@ class AdversarialEvaluator(Evaluator):
         if self.config["attack"] == "padding":
             return Padding(
                 query_budget=500,
-                padding=512
+                padding=4096
             )
 
 
@@ -103,10 +103,15 @@ class AdversarialEvaluator(Evaluator):
             adv_dl = self.attack_engine(self.model, data_loaders[0])
         else:
             with Pool(n_jobs) as pool:
-                adv_dl = pool.map(self.attack_engine, data_loaders)
+                adv_dl = pool.starmap(self.attack_engine, [(self.model, dl) for dl in data_loaders])
+                all_datasets = [dl.dataset for dl in adv_dl]
+                merged_dataset = torch.utils.data.ConcatDataset(all_datasets)
+                adv_dl = DataLoader(merged_dataset, batch_size=batch_size, shuffle=False)
 
-        print("Accuracy: ", Accuracy()(self.model, adv_dl))
-
+        # print("Accuracy: ", Accuracy()(self.model, adv_dl))
+        for entry in adv_dl.dataset:
+            print(self.model(entry[0].unsqueeze(0)))
+            print(entry)
 
 
 
