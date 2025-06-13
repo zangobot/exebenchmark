@@ -72,7 +72,8 @@ class Evaluator:
         if architecture_name == "EmberGBDT":
             return (
                 EmberGBDT().create_model(
-                    model_path=ZOO_PATH / architecture_name
+                    model_path=ZOO_PATH / architecture_name,
+                    device="cpu"
                 )
             )
         if architecture_name == "AvastStyleConv":
@@ -109,7 +110,6 @@ class Evaluator:
                     postprocessing=sigmoid_postprocessor
                 )
             )
-
         if architecture_name == "MalConvRS":
             return (
                 MalConv().create_model(

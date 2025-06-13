@@ -1,7 +1,0 @@
-{
-  "architecture": "Model class name",
-  "predictions_path": "path_to_predictions",
-  "from": "MM-YYYY",
-  "to": "MM-YYYY"
-}
-
