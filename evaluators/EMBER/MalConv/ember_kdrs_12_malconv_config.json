@@ -9,5 +9,6 @@
   "stride": 512,
   "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
   "num_chunks": 12,
-  "min_chunk_size": 512
+  "min_chunk_size": 512,
+  "max_len": 2000000
 }

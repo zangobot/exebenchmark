@@ -8,5 +8,6 @@
   "kernel_size": 512,
   "stride": 512,
   "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
-  "chunk_size": 16384
+  "chunk_size": 16384,
+  "max_len": 2000000
 }

@@ -6,5 +6,6 @@
   "max_date": "None",
   "min_date": "None",
   "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
-  "chunk_size": 131072
+  "chunk_size": 131072,
+  "max_len": 512000
 }

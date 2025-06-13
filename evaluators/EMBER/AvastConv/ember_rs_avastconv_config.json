@@ -5,5 +5,7 @@
   "predictions_path": "../output/EMBER-RS-AvastConv-512000-pos-weight-0.875/EMBER_test_set_scores.csv",
   "max_date": "None",
   "min_date": "None",
-  "metadata_path": "../training_splits/ember/ember_test_file_server.txt"
+  "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
+  "max_len": 512000,
+  "min_len": 10244
 }

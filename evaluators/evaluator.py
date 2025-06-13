@@ -393,7 +393,7 @@ class Evaluator:
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
-                    max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
+                    max_len=self.config.get("max_len", None),
                     min_len=self.config.get("min_len", 512)
                 )
                 return DataLoader(
@@ -424,8 +424,8 @@ class Evaluator:
                     csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
-                    max_len=self.model.model.max_len if hasattr(self.model.model, 'max_len') else None,
-                    min_len=self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+                    max_len=self.config.get("max_len", None),
+                    min_len=self.config.get("min_len", 512)
                 )
                 return DataLoader(
                     dataset,

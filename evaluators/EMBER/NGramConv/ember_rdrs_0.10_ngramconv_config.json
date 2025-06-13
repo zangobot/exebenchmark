@@ -8,5 +8,6 @@
   "metadata_path": "../training_splits/ember/ember_test_file_server.txt",
   "file_percentage": 0.10,
   "num_chunks": 100,
-  "min_chunk_size": 512
+  "min_chunk_size": 512,
+  "max_len": 512000
 }
