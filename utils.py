@@ -14,6 +14,7 @@ from maltorch.zoo.resnet18 import ResNet18
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
+
 # from maltorch.data_processing.iclr_drs_preprocessing import DeRandomizedPreprocessing
 # from maltorch.data_processing.sequential_drs_preprocessing import (
 #     SequentialDeRandomizedPreprocessing,
@@ -48,8 +49,9 @@ def check_cuda():
     return device
 
 
-def load_ember_csv(filepath: str, max_date: str =  None, min_date: str = None) -> np.array:
-
+def load_ember_csv(
+    filepath: str, max_date: str = None, min_date: str = None
+) -> np.array:
     with open(filepath, "r") as f:
         reader = csv.reader(f)
         data = list(reader)
@@ -59,7 +61,7 @@ def load_ember_csv(filepath: str, max_date: str =  None, min_date: str = None) -
 
     # Separate features and labels
     X, y = data[:, :-1], data[:, -1]
-        
+
     return X, y
 
 
@@ -164,14 +166,12 @@ def build_model(
     postprocessing = get_postprocessing(configuration)
     architecture_name = configuration["architecture"]
     if architecture_name == "EmberGBDT":
-        return (
-            EmberGBDT.create_model(
-                model_path=configuration["model_path"],
-                device="cpu",
-                preprocessing=None,
-                postprocessing=None,
-                trainer=None,
-            )
+        return EmberGBDT.create_model(
+            model_path=configuration["model_path"],
+            device="cpu",
+            preprocessing=None,
+            postprocessing=None,
+            trainer=None,
         )
     if architecture_name == "MalConv":
         return (

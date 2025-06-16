@@ -1,17 +1,27 @@
 import abc
-import os 
+import os
 import sys
 
 import torch
 
-from maltorch.data_processing.dynamic_sequential_drs_preprocessing import DynamicSequentialDeRandomizedPreprocessing
+from maltorch.data_processing.dynamic_sequential_drs_preprocessing import (
+    DynamicSequentialDeRandomizedPreprocessing,
+)
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
-from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
+from maltorch.data_processing.majority_voting_postprocessing import (
+    MajorityVotingPostprocessing,
+)
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
-from maltorch.data_processing.dynamic_random_drs_preprocessing import DynamicRandomDeRandomizedPreprocessing
-from maltorch.data_processing.fixed_size_chunk_drs_preprocessing import FixedSizeChunkDeRandomizedPreprocessing
-from maltorch.data_processing.k_partition_drs_preprocessing import KPartitionDeRandomizedPreprocessing
+from maltorch.data_processing.dynamic_random_drs_preprocessing import (
+    DynamicRandomDeRandomizedPreprocessing,
+)
+from maltorch.data_processing.fixed_size_chunk_drs_preprocessing import (
+    FixedSizeChunkDeRandomizedPreprocessing,
+)
+from maltorch.data_processing.k_partition_drs_preprocessing import (
+    KPartitionDeRandomizedPreprocessing,
+)
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
 from maltorch.datasets.binary_dataset import BinaryDataset
 from maltorch.zoo.avaststyleconv import AvastStyleConv
@@ -35,7 +45,7 @@ import pandas as pd
 
 
 class Evaluator:
-    def __init__(self, config: Union[str, dict] = None, device : str = None):
+    def __init__(self, config: Union[str, dict] = None, device: str = None):
         if isinstance(config, str):
             self.config = read_json_file(config)
         elif isinstance(config, dict):
@@ -48,300 +58,252 @@ class Evaluator:
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = self.build_model(self.config)
 
-
     def build_model(self, config):
         architecture_name = config["architecture"]
 
-        ablation_preprocessing = RandomizedAblationPreprocessing(pabl=0.10, num_versions=100, padding_idx=256)
-        deletion_preprocessing = RandomizedDeletionPreprocessing(pdel=0.10, num_versions=100, padding_idx=256)
-        dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(file_percentage=0.10, num_chunks=100, padding_idx=256) # min chunk to be defined model dependently
-        dynamic_sdrs_preprocessing = DynamicSequentialDeRandomizedPreprocessing(file_percentage=0.10, num_chunks=100, padding_idx=256)
-        f_drs_preprocessing = FixedSizeChunkDeRandomizedPreprocessing(chunk_size=32768, padding_idx=256)
-        k_drs_preprocessing = KPartitionDeRandomizedPreprocessing(num_chunks=12, padding_idx=256) # min chunk to be defined model dependently
+        ablation_preprocessing = RandomizedAblationPreprocessing(
+            pabl=0.10, num_versions=100, padding_idx=256
+        )
+        deletion_preprocessing = RandomizedDeletionPreprocessing(
+            pdel=0.10, num_versions=100, padding_idx=256
+        )
+        dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(
+            file_percentage=0.10, num_chunks=100, padding_idx=256
+        )  # min chunk to be defined model dependently
+        dynamic_sdrs_preprocessing = DynamicSequentialDeRandomizedPreprocessing(
+            file_percentage=0.10, num_chunks=100, padding_idx=256
+        )
+        f_drs_preprocessing = FixedSizeChunkDeRandomizedPreprocessing(
+            chunk_size=32768, padding_idx=256
+        )
+        k_drs_preprocessing = KPartitionDeRandomizedPreprocessing(
+            num_chunks=12, padding_idx=256
+        )  # min chunk to be defined model dependently
         voting_postprocessing = MajorityVotingPostprocessing(apply_sigmoid=True)
         sigmoid_postprocessor = SigmoidPostprocessor()
 
         if architecture_name == "MalConv":
-            return (
-                MalConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    postprocessing=sigmoid_postprocessor
-                )
+            return MalConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                postprocessing=sigmoid_postprocessor,
             )
         if architecture_name == "EmberGBDT":
-            return (
-                EmberGBDT().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device="cpu"
-                )
+            return EmberGBDT().create_model(
+                model_path=ZOO_PATH / architecture_name, device="cpu"
             )
         if architecture_name == "AvastStyleConv":
-            return (
-                AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name, device=self.device,
-                    postprocessing=sigmoid_postprocessor
-                )
+            return AvastStyleConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                postprocessing=sigmoid_postprocessor,
             )
         if architecture_name == "BBDnn":
-            return (
-                BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name, device=self.device,
-                    postprocessing=sigmoid_postprocessor
-                )
+            return BBDnn().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                postprocessing=sigmoid_postprocessor,
             )
         if architecture_name == "NGramConv":
-            return (
-                NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name, device=self.device,
-                    postprocessing=sigmoid_postprocessor
-                )
+            return NGramConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                postprocessing=sigmoid_postprocessor,
             )
         if architecture_name == "ResNet18":
-            return (
-                ResNet18().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=GrayscalePreprocessing(
-                        width=256,
-                        height=256,
-                        convert_to_3d_image=True,
-                    ),
-                    postprocessing=sigmoid_postprocessor
-                )
+            return ResNet18().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=GrayscalePreprocessing(
+                    width=256,
+                    height=256,
+                    convert_to_3d_image=True,
+                ),
+                postprocessing=sigmoid_postprocessor,
             )
         if architecture_name == "MalConvRS":
-            return (
-                MalConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=ablation_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return MalConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=ablation_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvRS":
-            return (
-                AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=ablation_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return AvastStyleConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=ablation_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnRS":
-            return (
-                BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=ablation_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return BBDnn().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=ablation_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvRS":
-            return (
-                NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=ablation_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return NGramConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=ablation_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvRsDel":
-            return (
-                MalConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=deletion_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return MalConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=deletion_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvRsDel":
-            return (
-                AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=deletion_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return AvastStyleConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=deletion_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnRsDel":
-            return (
-                BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=deletion_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return BBDnn().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=deletion_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvRsDel":
-            return (
-                NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=deletion_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return NGramConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=deletion_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvRDRS":
             dynamic_rdrs_preprocessing.min_chunk_size = 500
-            return (
-                MalConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_rdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return MalConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_rdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvRDRS":
             dynamic_rdrs_preprocessing.min_chunk_size = 102400
-            return (
-                AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_rdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return AvastStyleConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_rdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnRDRS":
             dynamic_rdrs_preprocessing.min_chunk_size = 4096
-            return (
-                BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_rdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return BBDnn().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_rdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvRDRS":
             dynamic_rdrs_preprocessing.min_chunk_size = 512
-            return (
-                NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_rdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return NGramConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_rdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvSDRS":
             dynamic_sdrs_preprocessing.min_chunk_size = 500
-            return (
-                MalConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_sdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return MalConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_sdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvSDRS":
             dynamic_sdrs_preprocessing.min_chunk_size = 102400
-            return (
-                AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_sdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return AvastStyleConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_sdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnSDRS":
             dynamic_sdrs_preprocessing.min_chunk_size = 4096
-            return (
-                BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_sdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return BBDnn().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_sdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvSDRS":
             dynamic_sdrs_preprocessing.min_chunk_size = 512
-            return (
-                NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=dynamic_sdrs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return NGramConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=dynamic_sdrs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvFDRS":
-            return (
-                MalConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=f_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return MalConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=f_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvFDRS":
-            return (
-                AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=f_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return AvastStyleConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=f_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnFDRS":
-            return (
-                BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=f_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return BBDnn().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=f_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvFDRS":
-            return (
-                NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=f_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return NGramConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=f_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvKDRS":
             k_drs_preprocessing.min_chunk_size = 500
-            return (
-                MalConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=k_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return MalConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=k_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvKDRS":
             k_drs_preprocessing.min_chunk_size = 102400
-            return (
-                AvastStyleConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=k_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return AvastStyleConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=k_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnKDRS":
             k_drs_preprocessing.min_chunk_size = 4096
-            return (
-                BBDnn().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=k_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return BBDnn().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=k_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvKDRS":
             k_drs_preprocessing.min_chunk_size = 512
-            return (
-                NGramConv().create_model(
-                    model_path=ZOO_PATH / architecture_name,
-                    device=self.device,
-                    preprocessing=k_drs_preprocessing,
-                    postprocessing=voting_postprocessing
-                )
+            return NGramConv().create_model(
+                model_path=ZOO_PATH / architecture_name,
+                device=self.device,
+                preprocessing=k_drs_preprocessing,
+                postprocessing=voting_postprocessing,
             )
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
-    def load_data(self, batch_size = None) -> Union[DataLoader, np.array]:
-
+    def load_data(self, batch_size=None) -> Union[DataLoader, np.array]:
         # Set batch_size=1 only if model preprocessing is set and is not one of the known preprocessing instances
         known_preprocessings = (
             RandomizedAblationPreprocessing,
@@ -351,21 +313,23 @@ class Evaluator:
             KPartitionDeRandomizedPreprocessing,
             GrayscalePreprocessing,
         )
-        if (
-            self.model._preprocessing is not None
-            and isinstance(self.model._preprocessing, known_preprocessings)
+        if self.model._preprocessing is not None and isinstance(
+            self.model._preprocessing, known_preprocessings
         ):
             batch_size = 1
 
-        max_len = self.model.model.max_len if hasattr(self.model.model, 'max_len') else None
-        min_len = self.model.model.min_len if hasattr(self.model.model, 'min_len') else None
+        max_len = (
+            self.model.model.max_len if hasattr(self.model.model, "max_len") else None
+        )
+        min_len = (
+            self.model.model.min_len if hasattr(self.model.model, "min_len") else None
+        )
 
-        if "BBDnn" in self.config["architecture"]: 
+        if "BBDnn" in self.config["architecture"]:
             min_len = 4096
 
         if "AvastStyleConv" in self.config["architecture"]:
             min_len = 10244
- 
 
         max_date = self.config["max_date"]
         min_date = self.config["min_date"]
@@ -378,34 +342,30 @@ class Evaluator:
         metadata_path = self.config["metadata_path"]
 
         if max_date is None and min_date is None:
-
             if self.config["architecture"] == "EmberGBDT":
                 dataset = BinaryDataset(
-                    csv_filepath=metadata_path, 
+                    csv_filepath=metadata_path,
                 )
                 return DataLoader(
                     dataset,
                     shuffle=False,
-                    batch_size=1, 
+                    batch_size=1,
                 )
             else:
                 dataset = BinaryDataset(
-                    csv_filepath=metadata_path, 
-                    max_len=max_len,
-                    min_len=min_len
+                    csv_filepath=metadata_path, max_len=max_len, min_len=min_len
                 )
                 return DataLoader(
                     dataset,
                     shuffle=False,
-                    batch_size=batch_size, 
-                    collate_fn=dataset.pad_collate_func
+                    batch_size=batch_size,
+                    collate_fn=dataset.pad_collate_func,
                 )
-            
-        else:
 
+        else:
             if self.config["architecture"] == "EmberGBDT":
                 dataset = BinaryDataset(
-                    csv_filepath=metadata_path, 
+                    csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
                 )
@@ -413,29 +373,29 @@ class Evaluator:
                     dataset,
                     shuffle=False,
                     batch_size=1,
-                ) 
-            
+                )
+
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
                     max_len=max_len,
-                    min_len=min_len
+                    min_len=min_len,
                 )
                 return DataLoader(
                     dataset,
                     shuffle=False,
                     batch_size=batch_size,
-                    collate_fn=dataset.pad_collate_func
+                    collate_fn=dataset.pad_collate_func,
                 )
 
     def evaluate(self, batch_size: int = None) -> None:
-
         predictions_folder = self.config.get("predictions_folder")
-        predictions_path = Path(predictions_folder) / f"{self.config['architecture']}.csv"
+        predictions_path = (
+            Path(predictions_folder) / f"{self.config['architecture']}.csv"
+        )
         Path(predictions_folder).mkdir(parents=True, exist_ok=True)
-
 
         if self.config["architecture"] == "EmberGBDT":
             data_loader = self.load_data()
@@ -451,11 +411,12 @@ class Evaluator:
                         f.write(f"{pred[i][0]},{y[i]}\n")
 
         else:
-
             data_loader = self.load_data(batch_size)
 
             if predictions_folder is None:
-                raise ValueError("Output path for predictions is not specified in the config.")
+                raise ValueError(
+                    "Output path for predictions is not specified in the config."
+                )
 
             with open(predictions_path, "a") as f:
                 with torch.no_grad():
@@ -468,8 +429,3 @@ class Evaluator:
                         y = y.cpu().numpy()
                         for i in range(len(pred)):
                             f.write(f"{pred[i][0]},{y[i]}\n")
-
-    
-
-
-

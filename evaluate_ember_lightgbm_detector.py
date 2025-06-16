@@ -4,10 +4,12 @@ import lightgbm as lgb
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Train end2end malware detector')
-    parser.add_argument("configuration_file",
-                        type=str,
-                        help="JSON-like file including the training and model configuration hyperparameters")
+    parser = argparse.ArgumentParser(description="Train end2end malware detector")
+    parser.add_argument(
+        "configuration_file",
+        type=str,
+        help="JSON-like file including the training and model configuration hyperparameters",
+    )
     args = parser.parse_args()
 
     configuration = read_json_file(args.configuration_file)
