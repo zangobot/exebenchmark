@@ -318,19 +318,6 @@ class Evaluator:
         ):
             batch_size = 1
 
-        max_len = (
-            self.model.model.max_len if hasattr(self.model.model, "max_len") else None
-        )
-        min_len = (
-            self.model.model.min_len if hasattr(self.model.model, "min_len") else None
-        )
-
-        if "BBDnn" in self.config["architecture"]:
-            min_len = 4096
-
-        if "AvastStyleConv" in self.config["architecture"]:
-            min_len = 10244
-
         max_date = self.config["max_date"]
         min_date = self.config["min_date"]
 
@@ -353,7 +340,7 @@ class Evaluator:
                 )
             else:
                 dataset = BinaryDataset(
-                    csv_filepath=metadata_path, max_len=max_len, min_len=min_len
+                    csv_filepath=metadata_path
                 )
                 return DataLoader(
                     dataset,
@@ -380,8 +367,6 @@ class Evaluator:
                     csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
-                    max_len=max_len,
-                    min_len=min_len,
                 )
                 return DataLoader(
                     dataset,
