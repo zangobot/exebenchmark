@@ -57,7 +57,7 @@ plt.rcParams.update({
     'legend.fontsize': 20     # Legend font size
 })
 
-plt.figure(figsize=(50, 20))
+plt.figure(figsize=(50, 25))
 plt.yscale('log')
 plt.grid(True, which='both', linestyle='--', linewidth=1)
 ax0 = period_counts_label_0.plot(kind='bar', title='Samples per 4-Month Period GOODWARE', xlabel='Year-4Month', ylabel='Count')
@@ -65,7 +65,7 @@ for i, count in enumerate(period_counts_label_0):
     ax0.text(i, count * 1.05, str(count), ha='center', va='bottom', fontsize=30)
 plt.show()
 
-plt.figure(figsize=(50, 20))
+plt.figure(figsize=(50, 25))
 plt.yscale('log')
 plt.grid(True, which='both', linestyle='--', linewidth=1)
 ax1 = period_counts_label_1.plot(kind='bar', title='Samples per 4-Month Period MALWARE', xlabel='Year-4Month', ylabel='Count')
