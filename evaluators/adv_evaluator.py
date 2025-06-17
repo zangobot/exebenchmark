@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from evaluators.evaluator import Evaluator
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
-from config import BENIGNWARE_PATH, MALWARE_FOR_ADV, PREPROCESSING_LIST
+from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
 from maltorch.adv.evasion.padding import Padding
 from secmlt.metrics.classification import Accuracy
 import torch

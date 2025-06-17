@@ -25,7 +25,7 @@ MODEL_LIST = [
     "NgramConv",
 ]
 
-ATTACK_LIST = [
+ATTACKS_LIST = [
     "gamma",
     "content_shift",
 ]
