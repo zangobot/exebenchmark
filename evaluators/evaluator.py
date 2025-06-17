@@ -78,7 +78,7 @@ class Evaluator:
         )
         k_drs_preprocessing = KPartitionDeRandomizedPreprocessing(
             num_chunks=12, padding_idx=256
-        )  # min chunk to be defined model dependently
+        )  
         voting_postprocessing = MajorityVotingPostprocessing(apply_sigmoid=True)
         sigmoid_postprocessor = SigmoidPostprocessor()
 

@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from evaluators.evaluator import Evaluator
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
-from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
+from config import BENIGNWARE_PATH, MALWARE_FOR_ADV, PREPROCESSING_LIST
 from maltorch.adv.evasion.padding import Padding
 from secmlt.metrics.classification import Accuracy
 import torch
@@ -19,6 +19,11 @@ from maltorch.data.loader import load_from_folder, create_labels
 
 from config import MALWARE_FOR_ADV, BENIGNWARE_PATH
 from maltorch.datasets.binary_dataset import BinaryDataset
+
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
 
 
 class AdversarialEvaluator(Evaluator):
@@ -37,33 +42,55 @@ class AdversarialEvaluator(Evaluator):
         self.predictions_path = (
             Path(self.config["predictions_path"]) / self.config["architecture"]
         )
-        self.transfer_path = (
+        if "transfer_path" in self.config and self.config["transfer_path"] is not None:
+            self.transfer_path = (
             Path(self.config["transfer_path"])
             / self.config["architecture"]
             / self.config["attack"]
-        )
+            )
+        else:
+            self.transfer_path = None
 
     def create_attack(self):
         if self.config["attack"] == "gamma":
             return GAMMASectionInjection(
-                query_budget=20,
+                query_budget=500,
                 benignware_folder=BENIGNWARE_PATH,
                 which_sections=[".rdata"],
                 how_many_sections=50,
+                model_outputs_logits=False
             )
 
         if self.config["attack"] == "content_shift":
-            return ContentShift(query_budget=500, perturbation_size=2048)
+            return ContentShift(query_budget=500, perturbation_size=2048, 
+                                model_outputs_logits=False)
+        
+    def _service_attack(self, dataloader, hashes, predictions_file):
 
-    def bulk_attack(self, n_jobs=1, batch_size=4):
-        # X = load_from_folder(MALWARE_FOR_ADV, limit=4)
-        # y = create_labels(X, 1)
+        adv_dl = self.attack_engine(self.model, dataloader)
+        print("Attacks completed, processing adversarial examples...")
+        for idx, entry in enumerate(adv_dl.dataset):
+            score = self.model(entry[0].unsqueeze(0))
+            sample_hash = hashes[idx]
+            dump_torch_exe_to_file(
+                entry[0], str(self.examples_folder / f"{sample_hash}_adv")
+            )
+            with open(str(predictions_file), "a") as f:
+                f.write(f"{sample_hash}_adv,{score.item()},1\n")
+        
+
+    def bulk_attack(self, n_jobs, batch_size=1):
 
         dataset = BinaryDataset(malware_directory=MALWARE_FOR_ADV)
 
-        hashes = [f.name for f in Path(MALWARE_FOR_ADV).iterdir() if f.is_file()][:4]
+        hashes = [f.name for f in Path(MALWARE_FOR_ADV).iterdir() if f.is_file()]
         indices = list(range(len(hashes)))
         chunks = [indices[i::n_jobs] for i in range(n_jobs)]
+
+        self.examples_folder.mkdir(parents=True, exist_ok=True)
+        self.predictions_path.mkdir(parents=True, exist_ok=True)
+
+        predictions_file = self.predictions_path / f"{self.config['attack']}.csv"
 
         data_loaders = [
             DataLoader(
@@ -74,25 +101,16 @@ class AdversarialEvaluator(Evaluator):
             )
             for chunk in chunks
         ]
-
         if n_jobs == 1:
             adv_dl = self.attack_engine(self.model, data_loaders[0])
         else:
             with Pool(n_jobs) as pool:
-                adv_dl = pool.starmap(
-                    self.attack_engine, [(self.model, dl) for dl in data_loaders]
+                pool.starmap(
+                    self._service_attack,
+                    [(dl, [hashes[i] for i in chunk], predictions_file) for dl, chunk in zip(data_loaders, chunks)]
                 )
-                all_datasets = [dl.dataset for dl in adv_dl]
-                merged_dataset = torch.utils.data.ConcatDataset(all_datasets)
-                adv_dl = DataLoader(
-                    merged_dataset, batch_size=batch_size, shuffle=False
-                )
-
-        self.examples_folder.mkdir(parents=True, exist_ok=True)
-        self.predictions_path.mkdir(parents=True, exist_ok=True)
-
-        predictions_file = self.predictions_path / f"{self.config['attack']}.csv"
-
+            return 
+                
         for idx, entry in enumerate(adv_dl.dataset):
             score = self.model(entry[0].unsqueeze(0))
             sample_hash = hashes[idx]
@@ -131,6 +149,7 @@ class AdversarialEvaluator(Evaluator):
                         f.write(f"{pred[i][0]},{1}\n")
 
     def transfer_eval(self):
+        
         # This evaluates all adversarial examples for all models for the attack specified in the config
         base_path = Path(self.config["examples_folder"])
         for subdir in base_path.iterdir():
