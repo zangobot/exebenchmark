@@ -30,7 +30,10 @@ if __name__ == "__main__":
     multiprocessing.set_start_method("spawn")
     
     # Number of jobs to run in parallel, leaving 4 cores free for the system
-    n_jobs = multiprocessing.cpu_count() - 4 
+    n_jobs = multiprocessing.cpu_count() - 4
+    n_jobs = 1
+    #print(multiprocessing.cpu_count())
+    #n_jobs = 3
     print("Models: ", models)
     print("Attacks: ", attacks)
     for model in models:

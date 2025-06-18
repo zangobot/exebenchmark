@@ -14,7 +14,7 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 
 ZOO_PATH = Path(__file__).parent / "models"
 BENIGNWARE_PATH = Path(__file__).parent / "win_exe" / "win11" / "syswow64"
-MALWARE_FOR_ADV = Path(__file__).parent / "malware"
+MALWARE_FOR_ADV = Path(__file__).parent / "malware_subset"
 
 MODEL_LIST = [
     "EmberGBDT",
