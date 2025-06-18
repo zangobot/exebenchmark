@@ -20,6 +20,8 @@ from maltorch.data.loader import load_from_folder, create_labels
 from config import MALWARE_FOR_ADV, BENIGNWARE_PATH
 from maltorch.datasets.binary_dataset import BinaryDataset
 
+from maltorch.adv.evasion.base_optim_attack_creator import OptimizerBackends
+
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
@@ -63,7 +65,8 @@ class AdversarialEvaluator(Evaluator):
 
         if self.config["attack"] == "content_shift":
             return ContentShift(query_budget=500, perturbation_size=2048, 
-                                model_outputs_logits=False)
+                                model_outputs_logits=False,
+                                backend=OptimizerBackends.NG)
         
     def _service_attack(self, dataloader, hashes, predictions_file):
 
