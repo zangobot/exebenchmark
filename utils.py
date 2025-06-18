@@ -165,8 +165,7 @@ def get_postprocessing(configuration: dict) -> DataProcessing:
 
 def build_model(
     configuration: dict,
-) -> tuple[BaseEmbeddingPytorchClassifier, DataProcessing, DataProcessing] | BaseModel | tuple[
-    BaseGrayscalePytorchClassifier, DataProcessing, DataProcessing]:
+):
     preprocessing = get_preprocessing(configuration)
     postprocessing = get_postprocessing(configuration)
     architecture_name = configuration["architecture"]
