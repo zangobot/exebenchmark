@@ -1,0 +1,15 @@
+{
+    "models":
+        [
+            "BBDnnKDRS"
+        ],
+        "attacks":
+        [
+            "gamma",
+            "content_shift"
+        ],
+    "min_len": 4096,
+    "max_len": 102400,
+    "num_chunks": 12,
+    "min_chunk_size": 4096
+}

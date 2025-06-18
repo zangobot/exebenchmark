@@ -1,0 +1,14 @@
+{
+    "models":
+        [
+            "MalConvFDRS"
+        ],
+        "attacks":
+        [
+            "gamma",
+            "content_shift"
+        ],
+    "min_len": 512,
+    "max_len": 2000000,
+    "chunk_size": 32768
+}

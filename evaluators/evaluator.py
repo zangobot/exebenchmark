@@ -51,7 +51,7 @@ class Evaluator:
 
     def build_model(self, config):
         architecture_name = config["architecture"]
-
+        print("Architecture: ", architecture_name)
         ablation_preprocessing = RandomizedAblationPreprocessing(
             pabl=self.config.get("pabl", 0.20),
             num_versions=self.config.get("num_versions", 100),
@@ -63,13 +63,13 @@ class Evaluator:
             padding_idx=self.config.get("padding_idx", 256),
         )
         dynamic_sdrs_preprocessing = DynamicSequentialDeRandomizedPreprocessing(
-            file_percentage=self.config.get("file_percentage", 0.05),
+            file_percentage=self.config.get("file_percentage", 0.10),
             num_chunks=self.config.get("num_chunks", 100),
             padding_idx=self.config.get("padding_idx", 256),
             min_chunk_size=self.config.get("min_chunk_size", 512),
         )
         dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(
-            file_percentage=self.config.get("file_percentage", 0.05),
+            file_percentage=self.config.get("file_percentage", 0.10),
             num_chunks=self.config.get("num_chunks", 100),
             padding_idx=self.config.get("padding_idx", 256),
             min_chunk_size=self.config.get("min_chunk_size", 512),
@@ -79,7 +79,7 @@ class Evaluator:
             padding_idx=self.config.get("padding_idx", 256),
         )  # check
         k_drs_preprocessing = KPartitionDeRandomizedPreprocessing(
-            num_chunks=self.config.get("num_chunks", 4),
+            num_chunks=self.config.get("num_chunks", 12),
             min_chunk_size=self.config.get("min_chunk_size", 512),
             padding_idx=self.config.get("padding_idx", 256),
         )  # check
@@ -92,8 +92,10 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     postprocessing=sigmoid_postprocessor,
-                    kernel_size=self.config.get("kernel_size", 500),
-                    stride=self.config.get("stride", 500),
+                    kernel_size=self.config.get("kernel_size", 512),
+                    stride=self.config.get("stride", 512),
+                    max_len=self.config.get("max_len", 2000000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "EmberGBDT":
@@ -107,7 +109,9 @@ class Evaluator:
                 AvastStyleConv().create_model(
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
-                    postprocessing=sigmoid_postprocessor
+                    postprocessing=sigmoid_postprocessor,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 10244)
                 )
             )
         if architecture_name == "BBDnn":
@@ -115,7 +119,9 @@ class Evaluator:
                 BBDnn().create_model(
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
-                    postprocessing=sigmoid_postprocessor
+                    postprocessing=sigmoid_postprocessor,
+                    max_len=self.config.get("max_len", 102400),
+                    min_len=self.config.get("min_len", 4096)
                 )
             )
         if architecture_name == "NGramConv":
@@ -123,7 +129,9 @@ class Evaluator:
                 NGramConv().create_model(
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
-                    postprocessing=sigmoid_postprocessor
+                    postprocessing=sigmoid_postprocessor,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "ResNet18":
@@ -147,8 +155,10 @@ class Evaluator:
                     device=self.device,
                     preprocessing=ablation_preprocessing,
                     postprocessing=voting_postprocessing,
-                    kernel_size=self.config.get("kernel_size", 500),
-                    stride=self.config.get("stride", 500),
+                    kernel_size=self.config.get("kernel_size", 512),
+                    stride=self.config.get("stride", 512),
+                    max_len=self.config.get("max_len", 2000000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "AvastStyleConvRS":
@@ -157,7 +167,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=ablation_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 10244)
                 )
             )
         if architecture_name == "BBDnnRS":
@@ -166,7 +178,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=ablation_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 102400),
+                    min_len=self.config.get("min_len", 4096)
                 )
             )
         if architecture_name == "NGramConvRS":
@@ -175,7 +189,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=ablation_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "MalConvRsDel":
@@ -185,8 +201,10 @@ class Evaluator:
                     device=self.device,
                     preprocessing=deletion_preprocessing,
                     postprocessing=voting_postprocessing,
-                    kernel_size=self.config.get("kernel_size", 500),
-                    stride=self.config.get("stride", 500),
+                    kernel_size=self.config.get("kernel_size", 512),
+                    stride=self.config.get("stride", 512),
+                    max_len=self.config.get("max_len", 2000000),
+                    min_len=self.config.get("min_len", 512)
 
                 )
             )
@@ -196,7 +214,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=deletion_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 10244)
                 )
             )
         if architecture_name == "BBDnnRsDel":
@@ -205,7 +225,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=deletion_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 102400),
+                    min_len=self.config.get("min_len", 4096)
                 )
             )
         if architecture_name == "NGramConvRsDel":
@@ -214,7 +236,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=deletion_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "MalConvSDRS":
@@ -224,8 +248,10 @@ class Evaluator:
                     device=self.device,
                     preprocessing=dynamic_sdrs_preprocessing,
                     postprocessing=voting_postprocessing,
-                    kernel_size=self.config.get("kernel_size", 500),
-                    stride=self.config.get("stride", 500),
+                    kernel_size=self.config.get("kernel_size", 512),
+                    stride=self.config.get("stride", 512),
+                    max_len=self.config.get("max_len", 2000000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "AvastStyleConvSDRS":
@@ -234,7 +260,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=dynamic_sdrs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 10244)
                 )
             )
         if architecture_name == "BBDnnSDRS":
@@ -243,7 +271,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=dynamic_sdrs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 102400),
+                    min_len=self.config.get("min_len", 4096)
                 )
             )
         if architecture_name == "NGramConvSDRS":
@@ -252,7 +282,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=dynamic_sdrs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "MalConvRDRS":
@@ -262,8 +294,10 @@ class Evaluator:
                     device=self.device,
                     preprocessing=dynamic_rdrs_preprocessing,
                     postprocessing=voting_postprocessing,
-                    kernel_size=self.config.get("kernel_size", 500),
-                    stride=self.config.get("stride", 500),
+                    kernel_size=self.config.get("kernel_size", 512),
+                    stride=self.config.get("stride", 512),
+                    max_len=self.config.get("max_len", 2000000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "AvastStyleConvRDRS":
@@ -272,7 +306,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=dynamic_rdrs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 10244)
                 )
             )
         if architecture_name == "BBDnnRDRS":
@@ -281,7 +317,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=dynamic_rdrs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 102400),
+                    min_len=self.config.get("min_len", 4096)
                 )
             )
         if architecture_name == "NGramConvRDRS":
@@ -290,7 +328,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=dynamic_rdrs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "MalConvFDRS":
@@ -300,8 +340,10 @@ class Evaluator:
                     device=self.device,
                     preprocessing=f_drs_preprocessing,
                     postprocessing=voting_postprocessing,
-                    kernel_size=self.config.get("kernel_size", 500),
-                    stride=self.config.get("stride", 500),
+                    kernel_size=self.config.get("kernel_size", 512),
+                    stride=self.config.get("stride", 512),
+                    max_len=self.config.get("max_len", 2000000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "AvastStyleConvFDRS":
@@ -310,7 +352,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=f_drs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 10244)
                 )
             )
         if architecture_name == "BBDnnFDRS":
@@ -319,7 +363,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=f_drs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 102400),
+                    min_len=self.config.get("min_len", 4096)
                 )
             )
         if architecture_name == "NGramConvFDRS":
@@ -328,7 +374,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=f_drs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         if architecture_name == "MalConvKDRS":
@@ -338,8 +386,9 @@ class Evaluator:
                     device=self.device,
                     preprocessing=k_drs_preprocessing,
                     postprocessing=voting_postprocessing,
-                    kernel_size=self.config.get("kernel_size", 500),
-                    stride=self.config.get("stride", 500),
+                    kernel_size=self.config.get("kernel_size", 512),
+                    stride=self.config.get("stride", 512),
+                    max_len=self.config.get("max_len", 2000000),
                 )
             )
         if architecture_name == "AvastStyleConvKDRS":
@@ -349,6 +398,8 @@ class Evaluator:
                     device=self.device,
                     preprocessing=k_drs_preprocessing,
                     postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 10244)
                 )
             )
         if architecture_name == "BBDnnKDRS":
@@ -357,7 +408,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=k_drs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 102400),
+                    min_len=self.config.get("min_len", 4096)
                 )
             )
         if architecture_name == "NGramConvKDRS":
@@ -366,7 +419,9 @@ class Evaluator:
                     model_path=self.config.get("model_file", ZOO_PATH / architecture_name),
                     device=self.device,
                     preprocessing=k_drs_preprocessing,
-                    postprocessing=voting_postprocessing
+                    postprocessing=voting_postprocessing,
+                    max_len=self.config.get("max_len", 512000),
+                    min_len=self.config.get("min_len", 512)
                 )
             )
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
@@ -410,8 +465,6 @@ class Evaluator:
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
-                    max_len=self.config.get("max_len", None),
-                    min_len=self.config.get("min_len", 512)
                 )
                 return DataLoader(
                     dataset,
@@ -438,8 +491,6 @@ class Evaluator:
                     csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
-                    max_len=self.config.get("max_len", None),
-                    min_len=self.config.get("min_len", 512)
                 )
                 return DataLoader(
                     dataset,

@@ -1,0 +1,13 @@
+{
+    "models":
+        [
+            "AvastStyleConvRsDel"
+        ],
+        "attacks":
+        [
+            "gamma",
+            "content_shift"
+        ],
+    "min_len": 10244,
+    "max_len": 51200
+}

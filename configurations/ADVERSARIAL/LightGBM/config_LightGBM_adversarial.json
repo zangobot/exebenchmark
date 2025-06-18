@@ -1,0 +1,11 @@
+{
+    "models":
+        [
+            "EmberGBDT"
+        ],
+        "attacks":
+        [
+            "gamma",
+            "content_shift"
+        ]
+}

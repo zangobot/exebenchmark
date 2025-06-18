@@ -7,6 +7,7 @@ import lief
 from torch.utils.data import DataLoader, TensorDataset
 
 from evaluators.evaluator import Evaluator
+from maltorch.adv.evasion.base_optim_attack_creator import OptimizerBackends
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
 from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
@@ -62,8 +63,12 @@ class AdversarialEvaluator(Evaluator):
             )
 
         if self.config["attack"] == "content_shift":
-            return ContentShift(query_budget=500, perturbation_size=2048, 
-                                model_outputs_logits=False)
+            return ContentShift(
+                query_budget=500,
+                perturbation_size=2048,
+                model_outputs_logits=False,
+                backend=OptimizerBackends.NG
+            )
         
     def _service_attack(self, dataloader, hashes, predictions_file):
 

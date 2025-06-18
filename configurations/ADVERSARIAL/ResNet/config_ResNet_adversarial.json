@@ -1,0 +1,11 @@
+{
+    "models":
+        [
+            "ResNet18"
+        ],
+        "attacks":
+        [
+            "gamma",
+            "content_shift"
+        ]
+}
