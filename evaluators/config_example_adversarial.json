@@ -1,0 +1,7 @@
+{
+  "architecture": "EmberGBDT",
+  "examples_folder": "adversarial_evaluation/adversarial_examples",
+  "predictions_path": "adversarial_evaluation/adversarial_scores/",
+  "transfer_path": "adversarial_evaluation/transfer_scores/",
+  "attack": "gamma"
+}

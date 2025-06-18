@@ -1,0 +1,8 @@
+{
+  "architecture": "BBDnn",
+  "predictions_path": "output/adversarial_examples",
+  "max_date": "none",
+  "min_date": "2022-05",
+  "metadata_path": "configurations/SPEAKEASY/all_metadata.csv",
+  "attack": "content_shift"
+}

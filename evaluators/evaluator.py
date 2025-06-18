@@ -36,9 +36,17 @@ import pandas as pd
 
 
 class Evaluator:
-    def __init__(self, config_path):
-        self.config = read_json_file(config_path)
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+    def __init__(self, config: Union[str, dict] = None, device: str = None):
+        if isinstance(config, str):
+            self.config = read_json_file(config)
+        elif isinstance(config, dict):
+            self.config = config
+        else:
+            raise ValueError("config must be a str (path) or a dict.")
+        if device is not None:
+            self.device = device
+        else:
+            self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = self.build_model(self.config)
 
     def build_model(self, config):
@@ -364,8 +372,18 @@ class Evaluator:
         raise NotImplementedError(f"Model {architecture_name} not implemented.")
 
     def load_data(self, batch_size=None) -> Union[DataLoader, np.array]:
-
-        if self.model._preprocessing is not None:
+        # Set batch_size=1 only if model preprocessing is set and is not one of the known preprocessing instances
+        known_preprocessings = (
+            RandomizedAblationPreprocessing,
+            RandomizedDeletionPreprocessing,
+            DynamicRandomDeRandomizedPreprocessing,
+            FixedSizeChunkDeRandomizedPreprocessing,
+            KPartitionDeRandomizedPreprocessing,
+            GrayscalePreprocessing,
+        )
+        if self.model._preprocessing is not None and isinstance(
+            self.model._preprocessing, known_preprocessings
+        ):
             batch_size = 1
 
         max_date = self.config["max_date"]
@@ -380,7 +398,6 @@ class Evaluator:
         num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
 
         if max_date is None and min_date is None:
-
             if self.config["architecture"] == "EmberGBDT":
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
@@ -403,9 +420,7 @@ class Evaluator:
                     collate_fn=dataset.pad_collate_func,
                     num_workers=num_workers
                 )
-
         else:
-
             if self.config["architecture"] == "EmberGBDT":
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
@@ -418,7 +433,6 @@ class Evaluator:
                     batch_size=1,
                     num_workers=num_workers
                 )
-
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
@@ -454,7 +468,6 @@ class Evaluator:
                         f.write(f"{pred[i][0]},{y[i]}\n")
 
         else:
-
             data_loader = self.load_data(batch_size)
 
             if predictions_folder is None:

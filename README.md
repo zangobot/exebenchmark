@@ -1275,6 +1275,8 @@ F-DRS specifies a fixed chunk size, e.g. 2048 bytes. K-DRS specifies the number 
 - (De)Randomized Smoothing with Sequential Chunks (Sequential-DRS). Similar to Random-DRS, but it selects contiguous adjacent chunks instead of random chunks.
   - Link: https://ieeexplore.ieee.org/abstract/document/10506708
 
+=======
+>>>>>>> evaluation
 ## EMBER Dataset
 The EMBER dataset has been split into three sets: training, validation, and test. The original EMBER dataset contains 400,000 benign and 400,000 malicious samples. 
 Unfortunately, I have only been able to retrieve 349,994/400,000 benign samples and 399,992/400,000 malicious samples.

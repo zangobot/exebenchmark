@@ -4,13 +4,15 @@ import csv
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Train end2end malware detector')
-    parser.add_argument("hashes_filepath",
-                        type=str,
-                        help="CSV-like file containing the path to the files and their corresponding labels")
-    parser.add_argument("output_filepath",
-                        type=str,
-                        help="CSV-like file containing the EMBER features")
+    parser = argparse.ArgumentParser(description="Train end2end malware detector")
+    parser.add_argument(
+        "hashes_filepath",
+        type=str,
+        help="CSV-like file containing the path to the files and their corresponding labels",
+    )
+    parser.add_argument(
+        "output_filepath", type=str, help="CSV-like file containing the EMBER features"
+    )
     args = parser.parse_args()
 
     feature_extractor = PEFeatureExtractor()
@@ -31,8 +33,3 @@ if __name__ == "__main__":
             features = list(features) + [int(label)]
             writer.writerow(features)
             i += 1
-
-
-
-
-

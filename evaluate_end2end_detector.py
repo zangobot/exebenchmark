@@ -26,6 +26,7 @@ from utils import read_json_file, write_predictions, write_metrics, check_cuda
 
 device = check_cuda()
 
+
 def get_preprocessing(configuration: dict) -> DataProcessing:
     try:
         print("Preprocessing: ", configuration["preprocessing"])
@@ -33,32 +34,32 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
             return RandomizedAblationPreprocessing(
                 pabl=configuration["pabl"],
                 num_versions=configuration["num_versions"],
-                padding_idx=configuration["padding_idx"]
+                padding_idx=configuration["padding_idx"],
             )
         elif configuration["preprocessing"] == "RsDel":
             return RandomizedDeletionPreprocessing(
                 pdel=configuration["pdel"],
                 num_versions=configuration["num_versions"],
-                padding_idx=configuration["padding_idx"]
+                padding_idx=configuration["padding_idx"],
             )
         elif configuration["preprocessing"] == "F-DRS":
             return FixedSizeChunkDeRandomizedPreprocessing(
                 chunk_size=configuration["chunk_size"],
-                padding_idx=configuration["padding_idx"]
+                padding_idx=configuration["padding_idx"],
             )
         elif configuration["preprocessing"] == "SequentialDRS":
             return DynamicSequentialDeRandomizedPreprocessing(
                 file_percentage=configuration["file_percentage"],
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
-                min_chunk_size=configuration["min_chunk_size"]
+                min_chunk_size=configuration["min_chunk_size"],
             )
         elif configuration["preprocessing"] == "RandomDRS":
             return DynamicRandomDeRandomizedPreprocessing(
                 file_percentage=configuration["file_percentage"],
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
-                min_chunk_size=configuration["min_chunk_size"]
+                min_chunk_size=configuration["min_chunk_size"],
             )
         elif configuration["preprocessing"] == "K-DRS":
             return KPartitionDeRandomizedPreprocessing(
@@ -70,14 +71,13 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
             return GrayscalePreprocessing(
                 width=configuration["width"],
                 height=configuration["height"],
-                convert_to_3d_image=configuration["convert_to_3d_image"]
+                convert_to_3d_image=configuration["convert_to_3d_image"],
             )
         else:
             return None
     except KeyError:
         print("Preprocessing: None")
         return None
-
 
 
 def get_postprocessing(configuration: dict) -> DataProcessing:
@@ -111,62 +111,91 @@ def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcess
             stride=configuration["stride"] if "stride" in configuration else None,
         ), preprocessing, postprocessing
     elif architecture_name == "AvastConv":
-        return AvastStyleConv.create_model(
-            model_path=configuration["model_path"],
-            device="cuda" if torch.cuda.is_available() else "cpu",
-            preprocessing=preprocessing,
-            postprocessing=postprocessing,
-            threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"] if "max_len" in configuration else None,
-        ), preprocessing, postprocessing
+        return (
+            AvastStyleConv.create_model(
+                model_path=configuration["model_path"],
+                device="cuda" if torch.cuda.is_available() else "cpu",
+                preprocessing=preprocessing,
+                postprocessing=postprocessing,
+                threshold=configuration["threshold"],
+                padding_idx=configuration["padding_idx"],
+                max_len=configuration["max_len"]
+                if "max_len" in configuration
+                else None,
+            ),
+            preprocessing,
+            postprocessing,
+        )
     elif architecture_name == "NGramConv":
-        return NGramConv.create_model(
-            model_path=configuration["model_path"],
-            device="cuda" if torch.cuda.is_available() else "cpu",
-            preprocessing=preprocessing,
-            postprocessing=postprocessing,
-            threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"] if "max_len" in configuration else None,
-        ), preprocessing, postprocessing
+        return (
+            NGramConv.create_model(
+                model_path=configuration["model_path"],
+                device="cuda" if torch.cuda.is_available() else "cpu",
+                preprocessing=preprocessing,
+                postprocessing=postprocessing,
+                threshold=configuration["threshold"],
+                padding_idx=configuration["padding_idx"],
+                max_len=configuration["max_len"]
+                if "max_len" in configuration
+                else None,
+            ),
+            preprocessing,
+            postprocessing,
+        )
     elif architecture_name == "ShallowConv":
-        return ShallowConv.create_model(
-            model_path=configuration["model_path"],
-            device="cuda" if torch.cuda.is_available() else "cpu",
-            preprocessing=preprocessing,
-            postprocessing=postprocessing,
-            threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"] if "max_len" in configuration else None,
-        ), preprocessing, postprocessing
+        return (
+            ShallowConv.create_model(
+                model_path=configuration["model_path"],
+                device="cuda" if torch.cuda.is_available() else "cpu",
+                preprocessing=preprocessing,
+                postprocessing=postprocessing,
+                threshold=configuration["threshold"],
+                padding_idx=configuration["padding_idx"],
+                max_len=configuration["max_len"]
+                if "max_len" in configuration
+                else None,
+            ),
+            preprocessing,
+            postprocessing,
+        )
     elif architecture_name == "BBDnn":
-        return BBDnn.create_model(
-            model_path=configuration["model_path"],
-            device="cuda" if torch.cuda.is_available() else "cpu",
-            preprocessing=preprocessing,
-            postprocessing=postprocessing,
-            threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"] if "max_len" in configuration else None,
-        ), preprocessing, postprocessing
+        return (
+            BBDnn.create_model(
+                model_path=configuration["model_path"],
+                device="cuda" if torch.cuda.is_available() else "cpu",
+                preprocessing=preprocessing,
+                postprocessing=postprocessing,
+                threshold=configuration["threshold"],
+                padding_idx=configuration["padding_idx"],
+                max_len=configuration["max_len"]
+                if "max_len" in configuration
+                else None,
+            ),
+            preprocessing,
+            postprocessing,
+        )
     elif architecture_name == "ResNet18":
-        return ResNet18.create_model(
-            model_path=configuration["model_path"],
-            device="cuda" if torch.cuda.is_available() else "cpu",
-            preprocessing=preprocessing,
-            postprocessing=postprocessing,
-            threshold=configuration["threshold"]
-        ), preprocessing, postprocessing
+        return (
+            ResNet18.create_model(
+                model_path=configuration["model_path"],
+                device="cuda" if torch.cuda.is_available() else "cpu",
+                preprocessing=preprocessing,
+                postprocessing=postprocessing,
+                threshold=configuration["threshold"],
+            ),
+            preprocessing,
+            postprocessing,
+        )
     else:
         raise ValueError(f"classifier {architecture_name} not found")
+
 
 def create_dataset(configuration: dict) -> Dataset:
     evaluation_dataset = BinaryDataset(
         csv_filepath=configuration["evaluation_file"],
         max_len=configuration["max_len"] if "max_len" in configuration else None,
         min_len=configuration["min_len"] if "min_len" in configuration else None,
-        padding_idx=configuration["padding_idx"]
+        padding_idx=configuration["padding_idx"],
     )
     return evaluation_dataset
 
@@ -193,18 +222,17 @@ if __name__ == "__main__":
     classifier, preprocessing, postprocessing = build_model(configuration)
 
     dataset = create_dataset(configuration)
-    num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
+    num_workers = max(
+        multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1
+    )
     dataloader = DataLoader(
         dataset,
         batch_size=configuration["batch_size"],
         shuffle=False,
         num_workers=num_workers,
-        collate_fn=dataset.pad_collate_func)
+        collate_fn=dataset.pad_collate_func,
+    )
 
     y_preds, y_trues = evaluate(classifier, dataloader)
     write_predictions(y_preds, y_trues, configuration["predictions_path"])
     write_metrics(y_preds, y_trues, configuration["metrics_path"])
-
-
-
-

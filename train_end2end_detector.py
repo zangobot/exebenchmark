@@ -26,6 +26,7 @@ from utils import check_cuda
 
 device = check_cuda()
 
+
 def build_model(configuration: dict) -> torch.nn.Module:
     architecture_name = configuration["architecture"]
     if architecture_name == "MalConv":
@@ -42,21 +43,21 @@ def build_model(configuration: dict) -> torch.nn.Module:
             embedding_size=configuration["embedding_size"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"]
+            padding_idx=configuration["padding_idx"],
         )
     elif architecture_name == "NGramConv":
         return NGramConv(
             embedding_size=configuration["embedding_size"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"]
+            padding_idx=configuration["padding_idx"],
         )
     elif architecture_name == "ShallowConv":
         return ShallowConv(
             embedding_size=configuration["embedding_size"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             threshold=configuration["threshold"],
-            padding_idx=configuration["padding_idx"]
+            padding_idx=configuration["padding_idx"],
         )
     elif architecture_name == "BBDnn":
         return BBDnn(
@@ -70,8 +71,13 @@ def build_model(configuration: dict) -> torch.nn.Module:
     else:
         raise ValueError(f"Model {architecture_name} not found")
 
-def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, DataLoader]:
-    num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
+
+def create_datasets(
+    configuration: dict,
+) -> tuple[Dataset, Dataset, DataLoader, DataLoader]:
+    num_workers = max(
+        multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1
+    )
     if configuration["dataset_type"] == "Binary":
         training_dataset = BinaryDataset(
             csv_filepath=configuration["training_file"],
@@ -90,7 +96,8 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             batch_size=configuration["batch_size"],
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func)
+            collate_fn=training_dataset.pad_collate_func,
+        )
         validation_dataloader = DataLoader(
             validation_dataset,
             batch_size=1,
@@ -106,7 +113,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pabl=configuration["pabl"],
-            is_training=True
+            is_training=True,
         )
         validation_dataset = RandomizedAblationDataset(
             csv_filepath=configuration["validation_file"],
@@ -115,14 +122,15 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pabl=configuration["pabl"],
-            is_training=True
+            is_training=True,
         )
         training_dataloader = DataLoader(
             training_dataset,
             batch_size=configuration["batch_size"],
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func)
+            collate_fn=training_dataset.pad_collate_func,
+        )
         validation_dataloader = DataLoader(
             validation_dataset,
             batch_size=1,
@@ -138,7 +146,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pdel=configuration["pdel"],
-            is_training=True
+            is_training=True,
         )
         validation_dataset = RandomizedDeletionDataset(
             csv_filepath=configuration["validation_file"],
@@ -147,14 +155,15 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             num_versions=configuration["num_versions"],
             pdel=configuration["pdel"],
-            is_training=True
+            is_training=True,
         )
         training_dataloader = DataLoader(
             training_dataset,
             batch_size=configuration["batch_size"],
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func)
+            collate_fn=training_dataset.pad_collate_func,
+        )
         validation_dataloader = DataLoader(
             validation_dataset,
             batch_size=1,
@@ -169,7 +178,7 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             chunk_size=configuration["chunk_size"],
-            is_training=True
+            is_training=True,
         )
         validation_dataset = FixedSizeChunkDeRandomizedSmoothingDataset(
             csv_filepath=configuration["validation_file"],
@@ -177,14 +186,15 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
             chunk_size=configuration["chunk_size"],
-            is_training=True
+            is_training=True,
         )
         training_dataloader = DataLoader(
             training_dataset,
             batch_size=configuration["batch_size"],
             shuffle=True,
             num_workers=num_workers,
-            collate_fn=training_dataset.pad_collate_func)
+            collate_fn=training_dataset.pad_collate_func,
+        )
         validation_dataloader = DataLoader(
             validation_dataset,
             batch_size=1,
@@ -198,22 +208,26 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
-            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
+            sort_by_size=configuration["sort_by_size"]
+            if "sort_by_size" in configuration
+            else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
-            is_training=True
+            is_training=True,
         )
         validation_dataset = DynamicSequentialDRSDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
-            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
+            sort_by_size=configuration["sort_by_size"]
+            if "sort_by_size" in configuration
+            else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
-            is_training=True
+            is_training=True,
         )
         if configuration["sort_by_size"] is True:
             training_dataloader = DataLoader(
@@ -221,7 +235,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 batch_size=configuration["batch_size"],
                 num_workers=num_workers,
                 collate_fn=training_dataset.pad_collate_func,
-                sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
+                sampler=RandomChunkSampler(
+                    training_dataset, configuration["batch_size"]
+                ),
+            )
             validation_dataloader = DataLoader(
                 validation_dataset,
                 batch_size=1,
@@ -249,22 +266,26 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
-            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
+            sort_by_size=configuration["sort_by_size"]
+            if "sort_by_size" in configuration
+            else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
-            is_training=True
+            is_training=True,
         )
         validation_dataset = DynamicRandomDRSDataset(
             csv_filepath=configuration["validation_file"],
             max_len=configuration["max_len"] if "max_len" in configuration else None,
             padding_idx=configuration["padding_idx"],
             min_len=configuration["min_len"] if "min_len" in configuration else None,
-            sort_by_size=configuration["sort_by_size"] if "sort_by_size" in configuration else None,
+            sort_by_size=configuration["sort_by_size"]
+            if "sort_by_size" in configuration
+            else None,
             file_percentage=configuration["file_percentage"],
             num_chunks=configuration["num_chunks"],
             min_chunk_size=configuration["min_chunk_size"],
-            is_training=True
+            is_training=True,
         )
         if configuration["sort_by_size"] is True:
             training_dataloader = DataLoader(
@@ -272,7 +293,10 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 batch_size=configuration["batch_size"],
                 num_workers=num_workers,
                 collate_fn=training_dataset.pad_collate_func,
-                sampler=RandomChunkSampler(training_dataset, configuration["batch_size"]))
+                sampler=RandomChunkSampler(
+                    training_dataset, configuration["batch_size"]
+                ),
+            )
             validation_dataloader = DataLoader(
                 validation_dataset,
                 batch_size=1,
@@ -286,7 +310,8 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
                 batch_size=configuration["batch_size"],
                 shuffle=True,
                 num_workers=num_workers,
-                collate_fn=training_dataset.pad_collate_func)
+                collate_fn=training_dataset.pad_collate_func,
+            )
             validation_dataloader = DataLoader(
                 validation_dataset,
                 batch_size=1,
@@ -348,19 +373,19 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
             csv_filepath=configuration["training_file"],
             width=configuration["width"],
             height=configuration["height"],
-            convert_to_3d_image=configuration["convert_to_3d_image"]
+            convert_to_3d_image=configuration["convert_to_3d_image"],
         )
         validation_dataset = GrayscaleDataset(
             csv_filepath=configuration["validation_file"],
             width=configuration["width"],
             height=configuration["height"],
-            convert_to_3d_image=configuration["convert_to_3d_image"]
+            convert_to_3d_image=configuration["convert_to_3d_image"],
         )
         training_dataloader = DataLoader(
             training_dataset,
             batch_size=configuration["batch_size"],
             shuffle=True,
-            num_workers=num_workers
+            num_workers=num_workers,
         )
         validation_dataloader = DataLoader(
             validation_dataset,
@@ -370,32 +395,45 @@ def create_datasets(configuration: dict) -> tuple[Dataset, Dataset, DataLoader, 
         )
 
     else:
-        raise ValueError(f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS, Grayscale")
-    return training_dataset, validation_dataset, training_dataloader, validation_dataloader
+        raise ValueError(
+            f"Dataset type {configuration['dataset_type']} not found. Please use one of the following: Binary, RS, RsDel, DRS, SequentialDRS, RandomDRS, Grayscale"
+        )
+    return (
+        training_dataset,
+        validation_dataset,
+        training_dataloader,
+        validation_dataloader,
+    )
+
 
 def save_results(trainer: EarlyStoppingPyTorchTrainer, configuration: dict):
     results = {
         "training_losses": trainer.training_losses,
         "training_accuracies": trainer.training_accuracies,
         "validation_losses": trainer.validation_losses,
-        "validation_accuracies": trainer.validation_accuracies
+        "validation_accuracies": trainer.validation_accuracies,
     }
-    with open(os.path.join(configuration["model_path"], "results.json"), "w") as output_file:
+    with open(
+        os.path.join(configuration["model_path"], "results.json"), "w"
+    ) as output_file:
         json.dump(results, output_file)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Train end2end malware detector')
-    parser.add_argument("configuration_file",
-                        type=str,
-                        help="JSON-like file including the training and model configuration hyperparameters")
+    parser = argparse.ArgumentParser(description="Train end2end malware detector")
+    parser.add_argument(
+        "configuration_file",
+        type=str,
+        help="JSON-like file including the training and model configuration hyperparameters",
+    )
 
     args = parser.parse_args()
 
     configuration = read_json_file(args.configuration_file)
 
-    training_dataset, validation_dataset, training_dataloader, validation_dataloader = create_datasets(configuration)
-
+    training_dataset, validation_dataset, training_dataloader, validation_dataloader = (
+        create_datasets(configuration)
+    )
 
     model = build_model(configuration)
     model = model.to(device)
@@ -404,22 +442,14 @@ if __name__ == "__main__":
     criterion = torch.nn.BCEWithLogitsLoss(
         pos_weight=torch.Tensor([configuration["pos_weight"]]) if "pos_weight" in configuration else torch.Tensor([1.0])).to(device)
     trainer = EarlyStoppingPyTorchTrainer(
-        optimizer,
-        configuration["num_epochs"],
-        criterion
+        optimizer, configuration["num_epochs"], criterion
     )
     model = trainer.train(
-        model,
-        training_dataloader,
-        validation_dataloader,
-        configuration["patience"]
+        model, training_dataloader, validation_dataloader, configuration["patience"]
     )
     if not os.path.exists(configuration["model_path"]):
         os.makedirs(configuration["model_path"])
-    torch.save(model.state_dict(), os.path.join(configuration["model_path"], "model.pth"))
+    torch.save(
+        model.state_dict(), os.path.join(configuration["model_path"], "model.pth")
+    )
     save_results(trainer, configuration)
-
-
-
-
-

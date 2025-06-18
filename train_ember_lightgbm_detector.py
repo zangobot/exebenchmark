@@ -6,10 +6,12 @@ import os
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Train end2end malware detector')
-    parser.add_argument("configuration_file",
-                        type=str,
-                        help="JSON-like file including the training and model configuration hyperparameters")
+    parser = argparse.ArgumentParser(description="Train end2end malware detector")
+    parser.add_argument(
+        "configuration_file",
+        type=str,
+        help="JSON-like file including the training and model configuration hyperparameters",
+    )
     args = parser.parse_args()
     configuration = read_json_file(args.configuration_file)
 
@@ -19,7 +21,12 @@ if __name__ == "__main__":
 
     # Create LightGBM datasets
     train_dataset = lgb.Dataset(X_train, label=y_train, categorical_feature=[])
-    valid_dataset = lgb.Dataset(X_validation, label=y_validation, reference=train_dataset, categorical_feature=[])
+    valid_dataset = lgb.Dataset(
+        X_validation,
+        label=y_validation,
+        reference=train_dataset,
+        categorical_feature=[],
+    )
 
     params = {
         "objective": configuration["objective"],
@@ -37,7 +44,7 @@ if __name__ == "__main__":
         num_boost_round=100,
         valid_sets=[valid_dataset],
         valid_names=["eval"],
-        early_stopping_rounds=10
+        early_stopping_rounds=10,
     )
 
     # Ensure the directory exists
