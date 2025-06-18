@@ -9,6 +9,6 @@ module load Python/3.9.6
 source /lustre/home/iiia/dgibert/exebenchmark/venv_3.9.6/bin/activate
 
 SECONDS=0  # Reset timer
-cd ../../../
+cd ../../../../
 python3 adversarial_evaluation_server.py configurations/ADVERSARIAL/AvastConv/config_AvastConv_adversarial.json
 
