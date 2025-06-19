@@ -1,0 +1,14 @@
+{
+    "models":
+        [
+            "MalConv"
+        ],
+        "attacks":
+        [
+            "padding"
+        ],
+    "kernel_size": 512,
+    "stride": 512,
+    "min_len": 512,
+    "max_len": 2000000
+}

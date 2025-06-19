@@ -1,0 +1,12 @@
+{
+    "models":
+        [
+            "BBDnnRS"
+        ],
+        "attacks":
+        [
+            "padding"
+        ],
+    "min_len": 4096,
+    "max_len": 102400
+}

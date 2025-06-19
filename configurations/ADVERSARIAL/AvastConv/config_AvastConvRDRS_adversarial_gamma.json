@@ -1,0 +1,15 @@
+{
+    "models":
+        [
+            "AvastStyleConvRDRS"
+        ],
+        "attacks":
+        [
+            "gamma"
+        ],
+    "min_len": 10244,
+    "max_len": 51200,
+    "file_percentage": 0.10,
+    "num_chunks": 100,
+    "min_chunk_size": 10244
+}

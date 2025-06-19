@@ -1,0 +1,15 @@
+{
+    "models":
+        [
+            "BBDnnSDRS"
+        ],
+        "attacks":
+        [
+            "partial_dos"
+        ],
+    "min_len": 4096,
+    "max_len": 102400,
+    "file_percentage": 0.10,
+    "num_chunks": 100,
+    "min_chunk_size": 4096
+}

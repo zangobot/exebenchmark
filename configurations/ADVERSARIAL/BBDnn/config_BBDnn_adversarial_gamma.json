@@ -1,0 +1,12 @@
+{
+    "models":
+        [
+            "BBDnn"
+        ],
+        "attacks":
+        [
+            "gamma"
+        ],
+    "min_len": 4096,
+    "max_len": 102400
+}

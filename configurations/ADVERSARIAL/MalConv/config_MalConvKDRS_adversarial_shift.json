@@ -5,7 +5,6 @@
         ],
         "attacks":
         [
-            "gamma",
             "content_shift"
         ],
     "min_len": 512,

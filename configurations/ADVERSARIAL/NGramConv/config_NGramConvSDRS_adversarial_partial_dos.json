@@ -1,15 +1,15 @@
 {
     "models":
         [
-            "MalConvKDRS"
+            "NGramConvSDRS"
         ],
         "attacks":
         [
-            "gamma",
-            "content_shift"
+            "partial_dos"
         ],
     "min_len": 512,
     "max_len": 2000000,
-    "num_chunks": 12,
+    "file_percentage": 0.10,
+    "num_chunks": 100,
     "min_chunk_size": 512
 }

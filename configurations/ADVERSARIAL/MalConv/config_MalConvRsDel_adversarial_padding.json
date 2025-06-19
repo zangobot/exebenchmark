@@ -1,0 +1,12 @@
+{
+    "models":
+        [
+            "MalConvRsDel"
+        ],
+        "attacks":
+        [
+            "padding"
+        ],
+    "min_len": 512,
+    "max_len": 2000000
+}

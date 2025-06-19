@@ -1,0 +1,10 @@
+{
+    "models":
+        [
+            "ResNet18"
+        ],
+        "attacks":
+        [
+            "content_shift"
+        ]
+}

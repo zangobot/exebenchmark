@@ -1,15 +1,14 @@
 {
     "models":
         [
-            "MalConvKDRS"
+            "AvastStyleConvKDRS"
         ],
         "attacks":
         [
-            "gamma",
             "content_shift"
         ],
-    "min_len": 512,
-    "max_len": 2000000,
+    "min_len": 10244,
+    "max_len": 51200,
     "num_chunks": 12,
-    "min_chunk_size": 512
+    "min_chunk_size": 10244
 }

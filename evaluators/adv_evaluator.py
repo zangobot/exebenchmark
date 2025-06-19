@@ -10,8 +10,9 @@ from evaluators.evaluator import Evaluator
 from maltorch.adv.evasion.base_optim_attack_creator import OptimizerBackends
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
-from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
+from maltorch.adv.evasion.partialdos import PartialDOS
 from maltorch.adv.evasion.padding import Padding
+from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
 from secmlt.metrics.classification import Accuracy
 import torch
 from maltorch.utils.utils import dump_torch_exe_to_file
@@ -61,14 +62,28 @@ class AdversarialEvaluator(Evaluator):
                 how_many_sections=50,
                 model_outputs_logits=False
             )
-
-        if self.config["attack"] == "content_shift":
+        elif self.config["attack"] == "content_shift":
             return ContentShift(
                 query_budget=500,
                 perturbation_size=2048,
                 model_outputs_logits=False,
                 backend=OptimizerBackends.NG
             )
+        elif self.config["attack"] == "partial_dos":
+            return PartialDOS(
+                query_budget=500,
+                model_outputs_logits=False,
+                backend=OptimizerBackends.NG
+            )
+        elif self.config["attack"] == "padding":
+            return Padding(
+                query_budget=500,
+                padding=2048,
+                model_outputs_logits=False,
+                backend=OptimizerBackends.NG
+            )
+        else:
+            raise Exception("Choose between the following attacks: gamma, content_shift, padding, partial_dos")
         
     def _service_attack(self, dataloader, hashes, predictions_file):
 
