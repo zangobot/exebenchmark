@@ -9,6 +9,14 @@
 #SBATCH --mail-type=BEGIN,END,FAIL      # Notify me when the job starts/finishes/fails
 #SBATCH --mail-user=daniel.gibertlla@gmail.com # Email
 
+module avail gcc
+module load GCC/11.2.0
+module avail libfii
+module load libffi/3.4.2
+module avail python
+module load Python/3.9.6
+source /lustre/home/iiia/dgibert/exebenchmark/venv_3.9.6/bin/activate
+
 # Obtener unos directorios determinados
 CONFS=($(find configurations/ADVERSARIAL/ -mindepth 1 -maxdepth 2 -type f -iname "*gamma*"))
 

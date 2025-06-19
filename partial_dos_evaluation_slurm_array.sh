@@ -9,11 +9,20 @@
 #SBATCH --mail-type=BEGIN,END,FAIL      # Notify me when the job starts/finishes/fails
 #SBATCH --mail-user=daniel.gibertlla@gmail.com # Email
 
+module avail gcc
+module load GCC/11.2.0
+module avail libfii
+module load libffi/3.4.2
+module avail python
+module load Python/3.9.6
+source /lustre/home/iiia/dgibert/exebenchmark/venv_3.9.6/bin/activate
+
 # Obtener unos directorios determinados
 CONFS=($(find configurations/ADVERSARIAL/ -mindepth 1 -maxdepth 2 -type f -iname "*partial_dos*"))
 
 # Obtener el directorio correspondiente al índice de la tarea
 CONF=${CONFS[$SLURM_ARRAY_TASK_ID]}
+
 
 echo $(date +"%Y-%m-%d %H:%M:%S") "Evaluation configuration file: $CONF"
 python3 adversarial_evaluation_server.py  ${CONF}
