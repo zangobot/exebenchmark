@@ -8,6 +8,7 @@
 #SBATCH -e drago_jobs/partial_dos/slurm.%A_%a.err  # STDERR
 #SBATCH --mail-type=BEGIN,END,FAIL      # Notify me when the job starts/finishes/fails
 #SBATCH --mail-user=daniel.gibertlla@gmail.com # Email
+#SBATCH --array=0-29
 
 module avail gcc
 module load GCC/11.2.0
