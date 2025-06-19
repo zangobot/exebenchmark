@@ -4,8 +4,8 @@
 #SBATCH -N 1             # Number of nodes
 #SBATCH -n 8             # Number of cores(CPUs)
 #SBATCH --mem 20GB       # Memory per core
-#SBATCH -o drago_jobs/append/slurm.%A_%a.out  # STDOUT
-#SBATCH -e drago_jobs/append/slurm.%A_%a.err  # STDERR
+#SBATCH -o drago_jobs/padding/slurm.%A_%a.out  # STDOUT
+#SBATCH -e drago_jobs/padding/slurm.%A_%a.err  # STDERR
 #SBATCH --mail-type=BEGIN,END,FAIL      # Notify me when the job starts/finishes/fails
 #SBATCH --mail-user=daniel.gibertlla@gmail.com # Email
 
