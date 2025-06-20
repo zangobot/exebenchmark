@@ -31,7 +31,7 @@ if __name__ == "__main__":
     
     # Number of jobs to run in parallel, leaving 4 cores free for the system
     print("Num CPUs:", multiprocessing.cpu_count())
-    n_jobs = multiprocessing.cpu_count() - 8
+    n_jobs = 8
     #n_jobs = 3
     print("Num jobs: ", n_jobs)
     #print(multiprocessing.cpu_count())
