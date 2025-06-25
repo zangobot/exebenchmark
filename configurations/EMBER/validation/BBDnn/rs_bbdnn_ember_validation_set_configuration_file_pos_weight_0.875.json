@@ -12,6 +12,6 @@
   "metrics_path": "output/EMBER-RS-BBDnn-102400-pos-weight-0.875/EMBER_validation_set_metrics.out",
   "preprocessing": "RS",
   "postprocessing": "MajorityVoting",
-  "pabl": 0.20,
+  "pabl": 0.97,
   "num_versions": 100
 }

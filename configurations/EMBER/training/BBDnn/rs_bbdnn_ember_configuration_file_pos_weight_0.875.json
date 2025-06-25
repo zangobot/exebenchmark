@@ -13,7 +13,7 @@
   "padding_idx": 256,
   "model_path": "output/EMBER-RS-BBDnn-102400-pos-weight-0.875",
   "dataset_type": "RS",
-  "pabl": 0.20,
+  "pabl": 0.97,
   "num_versions": 100,
   "pos_weight": 0.875
 }

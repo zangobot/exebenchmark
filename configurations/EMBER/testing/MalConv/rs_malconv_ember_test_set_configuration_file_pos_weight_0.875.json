@@ -14,6 +14,6 @@
   "metrics_path": "output/EMBER-RS-MalConv-2000000-pos-weight-0.875/EMBER_test_set_metrics.out",
   "preprocessing": "RS",
   "postprocessing": "MajorityVoting",
-  "pabl": 0.20,
+  "pabl": 0.97,
   "num_versions": 100
 }
