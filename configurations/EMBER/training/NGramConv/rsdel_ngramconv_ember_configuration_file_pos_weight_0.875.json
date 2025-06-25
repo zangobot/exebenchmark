@@ -4,7 +4,7 @@
   "test_file": "training_splits/ember/ember_test_file_server.txt",
   "batch_size": 64,
   "num_epochs": 100,
-  "patience": 5,
+  "patience": 10,
   "architecture": "NGramConv",
   "embedding_size": 8,
   "max_len": 512000,
