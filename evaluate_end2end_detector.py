@@ -106,9 +106,10 @@ def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcess
             postprocessing=postprocessing,
             threshold=configuration["threshold"],
             padding_idx=configuration["padding_idx"],
-            max_len=configuration["max_len"] if "max_len" in configuration else None,
-            kernel_size=configuration["kernel_size"] if "kernel_size" in configuration else None,
-            stride=configuration["stride"] if "stride" in configuration else None,
+            max_len=configuration.get("max_len", 512),
+            min_len=configuration.get("min_len", 512),
+            kernel_size=configuration.get("kernel_size", 512),
+            stride=configuration.get("stride", 512)
         ), preprocessing, postprocessing
     elif architecture_name == "AvastConv":
         return (
@@ -119,9 +120,8 @@ def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcess
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 512000),
+                min_len=configuration.get("min_len", 10244)
             ),
             preprocessing,
             postprocessing,
@@ -135,9 +135,8 @@ def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcess
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 512000),
+                min_len=configuration.get("min_len", 512)
             ),
             preprocessing,
             postprocessing,
@@ -151,9 +150,8 @@ def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcess
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 512000),
+                min_len=configuration.get("min_len", 512)
             ),
             preprocessing,
             postprocessing,
@@ -167,9 +165,8 @@ def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcess
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 102400),
+                min_len=configuration.get("min_len", 4096)
             ),
             preprocessing,
             postprocessing,
