@@ -1,3 +1,5 @@
+cd ../../
+
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/rsdel_N=100_malconv_ember_test_set_configuration_file_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/rsdel_N=200_malconv_ember_test_set_configuration_file_pos_weight_0.875.json
 python evaluate_end2end_detector.py  configurations/EMBER/testing/MalConv/rsdel_N=500_malconv_ember_test_set_configuration_file_pos_weight_0.875.json
