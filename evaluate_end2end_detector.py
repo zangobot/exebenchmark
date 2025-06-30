@@ -22,6 +22,7 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
 from utils import read_json_file, write_predictions, write_metrics, check_cuda
+import time
 
 
 device = check_cuda()
@@ -196,17 +197,24 @@ def create_dataset(configuration: dict) -> Dataset:
     )
     return evaluation_dataset
 
+eval_inference_time = []
 def evaluate(classifier: BasePytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:
     eval_trues = []
     eval_preds = []
     with torch.no_grad():
         for x, y in tqdm(dataloader):
+            start_time = time.time()
             x, y = x.to(device), y.to(device)
             y_preds = classifier.predict(x)
+            end_time = time.time()
+            eval_inference_time.append(end_time-start_time)
             eval_trues.append(y)
             eval_preds.append(y_preds)
     return eval_preds, eval_trues
 
+def write_avg_inf_time(output_file: str):
+    with open(output_file, "a") as f:
+        f.write("Average inference time: {}\n".format(sum(eval_inference_time)/len(eval_inference_time)))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Evaluate end2end malware detector')
@@ -233,3 +241,4 @@ if __name__ == "__main__":
     y_preds, y_trues = evaluate(classifier, dataloader)
     write_predictions(y_preds, y_trues, configuration["predictions_path"])
     write_metrics(y_preds, y_trues, configuration["metrics_path"])
+    write_avg_inf_time(configuration["metrics_path"])
