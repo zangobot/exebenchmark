@@ -1,0 +1,9 @@
+{
+  "architecture": "EmberGBDT",
+  "model_file": "../output/EMBER-LightGBM/model.txt",
+  "predictions_folder": "../output/EMBER-LightGBM/",
+  "predictions_path": "../output/EMBER-LightGBM/EMBER_validation_set_scores.csv",
+  "max_date": "None",
+  "min_date": "None",
+  "metadata_path": "../training_splits/ember/ember_validation_file_server.txt"
+}
