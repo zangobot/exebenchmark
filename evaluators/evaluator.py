@@ -1,7 +1,8 @@
 import abc
 import os
 import sys
-
+import argparse
+sys.path.append("../")
 import torch
 
 from maltorch.data_processing.dynamic_sequential_drs_preprocessing import (
@@ -62,10 +63,10 @@ class Evaluator:
         architecture_name = config["architecture"]
 
         ablation_preprocessing = RandomizedAblationPreprocessing(
-            pabl=0.10, num_versions=100, padding_idx=256
+            pabl=0.97, num_versions=100, padding_idx=256
         )
         deletion_preprocessing = RandomizedDeletionPreprocessing(
-            pdel=0.10, num_versions=100, padding_idx=256
+            pdel=0.97, num_versions=100, padding_idx=256
         )
         dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(
             file_percentage=0.10, num_chunks=100, padding_idx=256
@@ -414,3 +415,13 @@ class Evaluator:
                         y = y.cpu().numpy()
                         for i in range(len(pred)):
                             f.write(f"{pred[i][0]},{y[i]}\n")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Evaluate model')
+    parser.add_argument("configuration_file",
+                        type=str,
+                        help="JSON-like file including the training and model configuration hyperparameters")
+
+    args = parser.parse_args()
+    evaluator = Evaluator(args.configuration_file)
+    evaluator.evaluate(batch_size=1)
