@@ -450,7 +450,6 @@ class Evaluator:
             min_date = None
 
         metadata_path = self.config["metadata_path"]
-        num_workers = max(multiprocessing.cpu_count() - 4, multiprocessing.cpu_count() // 2 + 1)
 
         if max_date is None and min_date is None:
             if self.config["architecture"] == "EmberGBDT":
@@ -471,7 +470,6 @@ class Evaluator:
                     shuffle=False,
                     batch_size=batch_size,
                     collate_fn=dataset.pad_collate_func,
-                    num_workers=num_workers
                 )
         else:
             if self.config["architecture"] == "EmberGBDT":
@@ -484,7 +482,6 @@ class Evaluator:
                     dataset,
                     shuffle=False,
                     batch_size=1,
-                    num_workers=num_workers
                 )
             else:
                 dataset = BinaryDataset(
@@ -497,7 +494,6 @@ class Evaluator:
                     shuffle=False,
                     batch_size=batch_size,
                     collate_fn=dataset.pad_collate_func,
-                    num_workers=num_workers
                 )
 
     def evaluate(self, batch_size: int = None) -> None:
