@@ -529,7 +529,7 @@ class Evaluator:
                         x = x.to(self.device)
                         y = y.to(self.device)
                         pred = self.model(x)
-                        pred = pred.cpu().numpy()
+                        pred = pred.cpu().numpy().item()
                         print(pred)
                         y = y.cpu().numpy()
                         try:
