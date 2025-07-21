@@ -531,12 +531,9 @@ class Evaluator:
                         pred = self.model(x)
                         pred = pred.cpu().numpy().item()
                         print(pred)
-                        y = y.cpu().numpy()
-                        try:
-                            for i in range(len(pred)):
-                                f.write(f"{pred[i][0]},{y[i]}\n")
-                        except TypeError as te: # Batch size equals to 1
-                            f.write(f"{pred},{y[0]}\n")
+                        y = y.cpu().numpy().item()
+                        f.write(f"{pred},{y}\n")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Evaluate model')
     parser.add_argument("configuration_file",
