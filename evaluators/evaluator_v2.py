@@ -464,12 +464,13 @@ class Evaluator:
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
+                    max_len=10000000
                 )
                 return DataLoader(
                     dataset,
                     shuffle=False,
                     batch_size=batch_size,
-                    collate_fn=dataset.pad_collate_func,
+                    collate_fn=dataset.pad_collate_func
                 )
         else:
             if self.config["architecture"] == "EmberGBDT":
@@ -488,6 +489,7 @@ class Evaluator:
                     csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
+                    max_len=10000000
                 )
                 return DataLoader(
                     dataset,
