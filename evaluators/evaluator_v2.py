@@ -530,6 +530,7 @@ class Evaluator:
                         y = y.to(self.device)
                         pred = self.model(x)
                         pred = pred.cpu().numpy()
+                        print(pred)
                         y = y.cpu().numpy()
                         try:
                             for i in range(len(pred)):
