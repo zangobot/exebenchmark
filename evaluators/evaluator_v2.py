@@ -464,7 +464,7 @@ class Evaluator:
             else:
                 dataset = BinaryDataset(
                     csv_filepath=metadata_path,
-                    max_len=10000000
+                    max_len=self.config.get("max_len", None)
                 )
                 return DataLoader(
                     dataset,
@@ -489,7 +489,7 @@ class Evaluator:
                     csv_filepath=metadata_path,
                     max_date=max_date,
                     min_date=min_date,
-                    max_len=10000000
+                    max_len=self.config.get("max_len", None)
                 )
                 return DataLoader(
                     dataset,
