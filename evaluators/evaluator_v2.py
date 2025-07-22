@@ -56,6 +56,8 @@ class Evaluator:
             pabl=self.config.get("pabl", 0.20),
             num_versions=self.config.get("num_versions", 100),
             padding_idx=self.config.get("padding_idx", 256),
+            min_len=self.config["min_len"],
+            max_len=self.config["max_len"]
         )
         deletion_preprocessing = RandomizedDeletionPreprocessing(
             pdel=self.config.get("pdel", 0.97),
