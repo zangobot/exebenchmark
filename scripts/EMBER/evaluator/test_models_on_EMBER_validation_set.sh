@@ -95,10 +95,10 @@ python evaluator_v2.py EMBER/validation/BBDnn/ember_rsdel_bbdnn_config.json
 python evaluator_v2.py EMBER/validation/AvastConv/ember_rsdel_avastconv_config.json
 python evaluator_v2.py EMBER/validation/NGramConv/ember_rsdel_ngramconv_config.json
 
-python evaluator.py EMBER/validation/MalConv/ember_rs_malconv_config.json
-python evaluator.py EMBER/validation/BBDnn/ember_rs_bbdnn_config.json
-python evaluator.py EMBER/validation/AvastConv/ember_rs_avastconv_config.json
-python evaluator.py EMBER/validation/NGramConv/ember_rs_ngramconv_config.json
+python evaluator_v2.py EMBER/validation/MalConv/ember_rs_malconv_config.json
+python evaluator_v2.py EMBER/validation/BBDnn/ember_rs_bbdnn_config.json
+python evaluator_v2.py EMBER/validation/AvastConv/ember_rs_avastconv_config.json
+python evaluator_v2.py EMBER/validation/NGramConv/ember_rs_ngramconv_config.json
 
 
 
