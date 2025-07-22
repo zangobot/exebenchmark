@@ -89,14 +89,14 @@ python evaluator.py EMBER/test/ResNet/ember_resnet_config.json
 # LightGBM
 python evaluator.py EMBER/test/LightGBM/ember_lightgbm_config.json
 
-
+'
 python evaluator.py EMBER/test/MalConv/ember_rs_malconv_config.json
 python evaluator.py EMBER/test/BBDnn/ember_rs_bbdnn_config.json
 python evaluator.py EMBER/test/AvastConv/ember_rs_avastconv_config.json
 python evaluator.py EMBER/test/NGramConv/ember_rs_ngramconv_config.json
-'
 
-python evaluator_v2.py EMBER/test/MalConv/ember_rsdel_malconv_config.json
-python evaluator_v2.py EMBER/test/BBDnn/ember_rsdel_bbdnn_config.json
-python evaluator_v2.py EMBER/test/AvastConv/ember_rsdel_avastconv_config.json
-python evaluator_v2.py EMBER/test/NGramConv/ember_rsdel_ngramconv_config.json
+
+#python evaluator_v2.py EMBER/test/MalConv/ember_rsdel_malconv_config.json
+#python evaluator_v2.py EMBER/test/BBDnn/ember_rsdel_bbdnn_config.json
+#python evaluator_v2.py EMBER/test/AvastConv/ember_rsdel_avastconv_config.json
+#python evaluator_v2.py EMBER/test/NGramConv/ember_rsdel_ngramconv_config.json
