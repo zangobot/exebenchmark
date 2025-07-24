@@ -22,7 +22,7 @@ import multiprocessing
 import os
 from utils import read_json_file
 from utils import check_cuda
-
+import time
 
 device = check_cuda()
 
@@ -445,12 +445,20 @@ if __name__ == "__main__":
     trainer = EarlyStoppingPyTorchTrainer(
         optimizer, configuration["num_epochs"], criterion
     )
-    model = trainer.train(
-        model, training_dataloader, validation_dataloader, configuration["patience"]
-    )
-    if not os.path.exists(configuration["model_path"]):
-        os.makedirs(configuration["model_path"])
-    torch.save(
-        model.state_dict(), os.path.join(configuration["model_path"], "model.pth")
-    )
-    save_results(trainer, configuration)
+    start_time = time.time()
+    try:
+        model = trainer.train(
+            model, training_dataloader, validation_dataloader, configuration["patience"]
+        )
+        if not os.path.exists(configuration["model_path"]):
+            os.makedirs(configuration["model_path"])
+        torch.save(
+            model.state_dict(), os.path.join(configuration["model_path"], "model.pth")
+        )
+        save_results(trainer, configuration)
+    except Exception as e:
+        end_time = time.time()
+        with open(os.path.join(configuration["model_path"], "training_time.txt"), "w") as f:
+            f.write("Training time: {}".format(end_time-start_time))
+
+
