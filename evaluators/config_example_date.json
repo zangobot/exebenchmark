@@ -1,7 +1,8 @@
 {
-  "architecture": "MalConv",
-  "predictions_path": "output/example.csv",
-  "max_date": "2023-10",
-  "min_date": "None",
-  "metadata_path": "configurations/SPEAKEASY/all_metadata.csv"
+  "architecture": "BBDnn",
+  "predictions_path": "output/adversarial_examples",
+  "max_date": "none",
+  "min_date": "2022-05",
+  "metadata_path": "configurations/SPEAKEASY/all_metadata.csv",
+  "attack": "content_shift"
 }

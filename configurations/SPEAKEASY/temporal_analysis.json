@@ -1,0 +1,74 @@
+{
+    "models": [
+        "MalConv", 
+        "EmberGBDT", 
+        "AvastStyleConv", 
+        "BBDnn",
+        "NGramConv",
+        "ResNet18"
+    ],
+    "temporal_bins": [
+        {
+            "temporal_bin": "2019-Q1",
+            "min_date": "2019-01",
+            "max_date": "2019-04"
+        },
+        {
+            "temporal_bin": "2019-Q2",
+            "min_date": "2019-05",
+            "max_date": "2019-08"
+        },
+        {
+            "temporal_bin": "2019-Q3",
+            "min_date": "2019-09",
+            "max_date": "2019-12"
+        },
+        {
+            "temporal_bin": "2020-Q1",
+            "min_date": "2020-01",
+            "max_date": "2020-04"
+        },
+        {
+            "temporal_bin": "2020-Q2",
+            "min_date": "2020-05",
+            "max_date": "2020-08"
+        },
+        {
+            "temporal_bin": "2020-Q3",
+            "min_date": "2020-09",
+            "max_date": "2020-12"
+        },
+        {
+            "temporal_bin": "2021-Q1",
+            "min_date": "2021-01",
+            "max_date": "2021-04"
+        },
+        {
+            "temporal_bin": "2021-Q2",
+            "min_date": "2021-05",
+            "max_date": "2021-08"
+        },
+        {
+            "temporal_bin": "2021-Q3",
+            "min_date": "2021-09",
+            "max_date": "2021-12"
+        },
+        {
+            "temporal_bin": "2022-Q1",
+            "min_date": "2022-01",
+            "max_date": "2022-04"
+        },
+        {
+            "temporal_bin": "Other_past",
+            "min_date": "none",
+            "max_date": "2018-12"
+        },
+        {
+            "temporal_bin": "Other_future",
+            "min_date": "2022-05",
+            "max_date": "none"
+        }
+    ],
+    "predictions_folder": "output/temporal_analysis/",
+    "metadata_path": "configurations/SPEAKEASY/all_metadata.csv"
+}
