@@ -29,7 +29,7 @@ from utils import read_json_file
 class Evaluator:
     def __init__(self, config_path):
         self.config = read_json_file(config_path)
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = self.build_model(self.config)
 
 
