@@ -1,6 +1,6 @@
-import numpy as np
-import pandas
 from pathlib import Path
+
+import pandas
 
 root = Path(__file__).parent
 data_folder = root / "data"

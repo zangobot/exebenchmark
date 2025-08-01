@@ -6,11 +6,10 @@ from pathlib import Path
 
 from results.constants import REGULAR_MODELS, MODELS
 
-root = Path(__file__).parent
-data_folder = root / "data"
-
 
 def compute_robustness_metric():
+    root = Path(__file__).parent
+    data_folder = root / "data"
     all_adv_data = {m: {} for m in MODELS}
     all_eps_across_models = set()
     total_samples = 4764
