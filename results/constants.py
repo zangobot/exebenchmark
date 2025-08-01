@@ -1,0 +1,4 @@
+E2E_MODELS = ["MalConv", "AvastStyleConv", "BBDnn", "ResNet18", "NGramConv"]
+FEATURE_MODELS = ["EmberGBDT"]
+MODELS = E2E_MODELS + FEATURE_MODELS
+CERTIFICATION_MODELS =["RsDel", "RS", "RDRS", "SDRS", "KDRS"]

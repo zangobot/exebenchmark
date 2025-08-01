@@ -1,4 +1,4 @@
-﻿file,f1_score,accuracy,TPR,FPR
+﻿model,f1_score,accuracy,TPR,FPR
 AvastStyleConv,0.7763,0.8033,0.6399,0.01
 BBDnn,0.966,0.9646,0.9424,0.01
 EmberGBDT,0.995,0.9946,0.9984,0.0098
