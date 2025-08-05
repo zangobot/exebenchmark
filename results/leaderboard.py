@@ -9,8 +9,6 @@ from results.performance.performance_metric import compute_performance_metric
 from results.temporal.temporal_metric import compute_temporal_metric
 
 def compute_benchmark():
-    root = Path(__file__).parent
-
     robustness = compute_robustness_metric()
     temporal = compute_temporal_metric()
     inference = compute_inference_metric()
@@ -23,3 +21,6 @@ def compute_benchmark():
         'inference_metric']) / 4
     results = results.sort_values(by="rank", ascending=False)
     return results
+
+if __name__ == '__main__':
+    print(compute_benchmark())

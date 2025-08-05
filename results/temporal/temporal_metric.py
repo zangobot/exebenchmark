@@ -53,3 +53,6 @@ def compute_temporal_metric():
                                        columns=['model', 'temporal_metric']).sort_values(by='temporal_metric',
                                                                                          ascending=False)
     return temporal_metric
+
+if __name__ == '__main__':
+    print(compute_temporal_metric())

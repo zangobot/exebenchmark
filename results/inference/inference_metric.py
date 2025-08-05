@@ -11,3 +11,6 @@ def compute_inference_metric():
     data = data.sort_values(by=['mean'], ascending=False)
     data = data.rename(columns={'mean':'inference_metric'})
     return data
+
+if __name__ == '__main__':
+    print(compute_inference_metric())

@@ -8,3 +8,8 @@ for c in CERTIFICATION_PROCESSING:
     for m in E2E_MODELS:
         CERTIFICATION_MODELS.append(m + c)
 MODELS = REGULAR_MODELS + CERTIFICATION_MODELS
+
+ROBUSTNESS_METRIC = "robustness_metric"
+TEMPORAL_METRIC = "temporal_metric"
+INFERENCE_METRIC = "inference_metric"
+PERFORMANCE_METRIC = "performance_metric"

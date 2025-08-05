@@ -10,3 +10,6 @@ def compute_performance_metric():
     data = data.drop(["accuracy","TPR","FPR"], axis=1)
     data = data.sort_values(by="performance_metric", ascending=False)
     return data
+
+if __name__ == '__main__':
+    compute_performance_metric()

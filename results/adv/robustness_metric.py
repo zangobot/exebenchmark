@@ -56,3 +56,6 @@ def compute_robustness_metric():
                                   columns=['model', 'robustness_metric']).sort_values(by='robustness_metric',
                                                                                       ascending=False)
     return robustness
+
+if __name__ == '__main__':
+    compute_robustness_metric()
