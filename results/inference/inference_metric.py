@@ -7,7 +7,9 @@ def compute_inference_metric():
     data_folder = root / "data"
     data = pandas.read_csv(data_folder / "inference_times_stats_cpu_updated.csv")
     data = data.drop(['std'], axis=1)
+    slowest = data['mean'].max()
     data['mean'] = np.exp(-data['mean'])
+    # data['mean'] = 1 - data['mean'] / slowest
     data = data.sort_values(by=['mean'], ascending=False)
     data = data.rename(columns={'mean':'inference_metric'})
     return data
