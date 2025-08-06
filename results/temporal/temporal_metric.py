@@ -34,11 +34,7 @@ def _parse_temporal_data():
 
 
 def compute_temporal_metric():
-    data = _parse_temporal_data()
-    # last_period = '2022-Q1'
-    total_malware = data[[f"n_malware.{yq}" for yq in year_quarters[:-2]]].iloc[0].sum()
-    total_goodware = data[[f"n_goodware.{yq}" for yq in year_quarters[:-2]]].iloc[0].sum()
-    total_temporal_samples = total_malware + total_goodware
+    data, total_temporal_samples = load_temporal_data()
     temporal_metric = {}
     for m in data['model']:
         temporal_metric[m] = 0
@@ -53,6 +49,16 @@ def compute_temporal_metric():
                                        columns=['model', 'temporal_metric']).sort_values(by='temporal_metric',
                                                                                          ascending=False)
     return temporal_metric
+
+
+def load_temporal_data():
+    data = _parse_temporal_data()
+    # last_period = '2022-Q1'
+    total_malware = data[[f"n_malware.{yq}" for yq in year_quarters[:-2]]].iloc[0].sum()
+    total_goodware = data[[f"n_goodware.{yq}" for yq in year_quarters[:-2]]].iloc[0].sum()
+    total_temporal_samples = total_malware + total_goodware
+    return data, total_temporal_samples
+
 
 if __name__ == '__main__':
     print(compute_temporal_metric())

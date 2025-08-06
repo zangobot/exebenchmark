@@ -1,3 +1,5 @@
+import pickle
+
 import numpy as np
 from sklearn.metrics import auc
 import pandas
@@ -45,16 +47,25 @@ def compute_robustness_metric():
 
     robustness = {}
 
+    data_for_plots = {}
+    x = np.arange(len(all_eps_across_models) - 1)
+    x_eps = all_eps_across_models[:-1]
+    data_for_plots['x'] = x.tolist()
+    data_for_plots['eps'] = all_eps_across_models.tolist()
+
     for m in MODELS:
         adv_data = pandas.DataFrame(data=[[k, all_adv_data[m][k]] for k in all_adv_data[m]], columns=['hash', 'eps'])
-        x = np.arange(len(all_eps_across_models) - 1)
         y = [total_samples - len(adv_data.loc[adv_data['eps'] <= eps]) for eps in all_eps_across_models[:-1]]
-        auc_m = auc(x, y) / (total_samples * x[-1])
+        data_for_plots[m] = y
+        auc_m = auc(x_eps, y) / (total_samples * x_eps[-1])
         robustness[m] = auc_m.item()
+
     robustness = pandas.DataFrame(data=[[m, robustness[m]] for m in robustness],
                                   columns=['model', 'robustness_metric']).sort_values(by='robustness_metric',
                                                                                       ascending=False)
+    with open(str(root / "plot_data.pickle"), 'wb') as h:
+        pickle.dump(data_for_plots, h)
     return robustness
 
 if __name__ == '__main__':
-    compute_robustness_metric()
+    print(compute_robustness_metric())
