@@ -56,10 +56,10 @@ class Evaluator:
         architecture_name = config["architecture"]
 
         ablation_preprocessing = RandomizedAblationPreprocessing(
-            pabl=0.10, num_versions=100, padding_idx=256
+            pabl=0.97, num_versions=100, padding_idx=256
         )
         deletion_preprocessing = RandomizedDeletionPreprocessing(
-            pdel=0.10, num_versions=100, padding_idx=256
+            pdel=0.97, num_versions=100, padding_idx=256
         )
         dynamic_rdrs_preprocessing = DynamicRandomDeRandomizedPreprocessing(
             file_percentage=0.10, num_chunks=100, padding_idx=256
@@ -116,6 +116,8 @@ class Evaluator:
                 postprocessing=sigmoid_postprocessor,
             )
         if architecture_name == "MalConvRS":
+            ablation_preprocessing.min_len = 512
+            ablation_preprocessing.max_len = 2**20
             return MalConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -123,6 +125,8 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvRS":
+            ablation_preprocessing.min_len = 10244
+            ablation_preprocessing.max_len = 512000
             return AvastStyleConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -130,6 +134,8 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnRS":
+            ablation_preprocessing.min_len = 4096
+            ablation_preprocessing.max_len = 102400
             return BBDnn().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -137,6 +143,8 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvRS":
+            ablation_preprocessing.min_len = 512
+            ablation_preprocessing.max_len = 2**20
             return NGramConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -172,7 +180,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvRDRS":
-            dynamic_rdrs_preprocessing.min_chunk_size = 500
+            dynamic_rdrs_preprocessing.min_len = 512
+            dynamic_rdrs_preprocessing.min_chunk_size = 512
+            dynamic_rdrs_preprocessing.max_len = 2**20
             return MalConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -180,7 +190,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvRDRS":
-            dynamic_rdrs_preprocessing.min_chunk_size = 102400
+            dynamic_rdrs_preprocessing.min_len = 10244
+            dynamic_rdrs_preprocessing.min_chunk_size = 10244
+            dynamic_rdrs_preprocessing.max_len = 512000
             return AvastStyleConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -188,7 +200,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnRDRS":
+            dynamic_rdrs_preprocessing.min_len = 4096
             dynamic_rdrs_preprocessing.min_chunk_size = 4096
+            dynamic_rdrs_preprocessing.max_len = 102400
             return BBDnn().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -196,7 +210,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvRDRS":
+            dynamic_rdrs_preprocessing.min_len = 512
             dynamic_rdrs_preprocessing.min_chunk_size = 512
+            dynamic_rdrs_preprocessing.max_len = 2**20
             return NGramConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -204,7 +220,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvSDRS":
-            dynamic_sdrs_preprocessing.min_chunk_size = 500
+            dynamic_sdrs_preprocessing.min_len = 512
+            dynamic_sdrs_preprocessing.min_chunk_size = 512
+            dynamic_sdrs_preprocessing.max_len = 2**20
             return MalConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -212,7 +230,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvSDRS":
-            dynamic_sdrs_preprocessing.min_chunk_size = 102400
+            dynamic_sdrs_preprocessing.min_len = 10244
+            dynamic_sdrs_preprocessing.min_chunk_size = 10244
+            dynamic_sdrs_preprocessing.max_len = 512000
             return AvastStyleConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -220,7 +240,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnSDRS":
+            dynamic_sdrs_preprocessing.min_len = 4096
             dynamic_sdrs_preprocessing.min_chunk_size = 4096
+            dynamic_sdrs_preprocessing.max_len = 102400
             return BBDnn().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -228,7 +250,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvSDRS":
+            dynamic_sdrs_preprocessing.min_len = 512
             dynamic_sdrs_preprocessing.min_chunk_size = 512
+            dynamic_sdrs_preprocessing.max_len = 2**20
             return NGramConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -236,6 +260,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvFDRS":
+            f_drs_preprocessing.min_chunk_size = 512
+            f_drs_preprocessing.min_len = 512
+            f_drs_preprocessing.max_len = 2**20
             return MalConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -243,6 +270,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvFDRS":
+            f_drs_preprocessing.min_len = 10244
+            f_drs_preprocessing.min_chunk_size = 10244
+            f_drs_preprocessing.max_len = 512000
             return AvastStyleConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -250,6 +280,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnFDRS":
+            f_drs_preprocessing.min_len = 4096
+            f_drs_preprocessing.min_chunk_size = 4096
+            f_drs_preprocessing.max_len = 102400
             return BBDnn().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -257,6 +290,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "NGramConvFDRS":
+            f_drs_preprocessing.min_len = 512
+            f_drs_preprocessing.min_chunk_size = 512
+            f_drs_preprocessing.max_len = 2**20
             return NGramConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -264,7 +300,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "MalConvKDRS":
-            k_drs_preprocessing.min_chunk_size = 500
+            k_drs_preprocessing.min_chunk_size = 512
+            k_drs_preprocessing.min_len = 512
+            k_drs_preprocessing.max_len = 2**20
             return MalConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -272,7 +310,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "AvastStyleConvKDRS":
-            k_drs_preprocessing.min_chunk_size = 102400
+            k_drs_preprocessing.min_len = 10244
+            k_drs_preprocessing.min_chunk_size = 10244
+            k_drs_preprocessing.max_len = 512000
             return AvastStyleConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -280,7 +320,9 @@ class Evaluator:
                 postprocessing=voting_postprocessing,
             )
         if architecture_name == "BBDnnKDRS":
+            k_drs_preprocessing.min_len = 4096
             k_drs_preprocessing.min_chunk_size = 4096
+            k_drs_preprocessing.max_len = 102400
             return BBDnn().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
@@ -289,6 +331,8 @@ class Evaluator:
             )
         if architecture_name == "NGramConvKDRS":
             k_drs_preprocessing.min_chunk_size = 512
+            k_drs_preprocessing.min_len = 512
+            k_drs_preprocessing.max_len = 2**20
             return NGramConv().create_model(
                 model_path=ZOO_PATH / architecture_name,
                 device=self.device,
