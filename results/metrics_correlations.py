@@ -63,11 +63,9 @@ def extract_local_leaderboard(base_path, data, limit_up: int = 5, limit_down: in
     index = False)
     inf_table_output = base_path / "c_rank.tex"
     data[["model", INFERENCE_METRIC]].sort_values(by=INFERENCE_METRIC, ascending=False).to_latex(inf_table_output,
-
-
-header = ["Model", "C"],
-float_format = "{:.2f}".format,
-index = False)
+    header = ["Model", "C"],
+    float_format = "{:.2f}".format,
+    index = False)
 
 
 produce_tex_tables()
