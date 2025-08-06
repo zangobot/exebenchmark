@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 root_path = Path("/Users/zangobot/Documents/Datasets/Windows executables")

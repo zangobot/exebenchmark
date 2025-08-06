@@ -1,10 +1,9 @@
 import numpy as np
 from sklearn.metrics import auc
-import matplotlib.pyplot as plt
 import pandas
 from pathlib import Path
 
-from results.constants import REGULAR_MODELS, MODELS
+from results.constants import MODELS
 
 
 def compute_robustness_metric():

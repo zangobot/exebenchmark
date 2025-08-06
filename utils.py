@@ -26,8 +26,6 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 from maltorch.data_processing.majority_voting_postprocessing import (
     MajorityVotingPostprocessing,
 )
-import pandas as pd
-import os
 
 
 def read_json_file(filepath: str) -> dict:

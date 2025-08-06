@@ -1,6 +1,3 @@
-import abc
-import os
-import sys
 
 import torch
 
@@ -32,16 +29,13 @@ from maltorch.zoo.ngramconv import NGramConv
 from maltorch.zoo.resnet18 import ResNet18
 from torch.utils.data import DataLoader
 from pathlib import Path
-import lightgbm as lgb
 
 
 # all models should be downloaded in ZOO_PATH folder of exebenchmark
 from config import ZOO_PATH
 from utils import read_json_file
-from utils import load_ember_csv
 from typing import Union
 import numpy as np
-import pandas as pd
 
 
 class Evaluator:

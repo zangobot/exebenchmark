@@ -2,22 +2,17 @@ import os
 from multiprocessing import Pool
 from pathlib import Path
 
-import lief
 
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader
 
 from evaluators.evaluator import Evaluator
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
 from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
-from maltorch.adv.evasion.padding import Padding
-from secmlt.metrics.classification import Accuracy
 import torch
 from maltorch.utils.utils import dump_torch_exe_to_file
 
-from maltorch.data.loader import load_from_folder, create_labels
 
-from config import MALWARE_FOR_ADV, BENIGNWARE_PATH
 from maltorch.datasets.binary_dataset import BinaryDataset
 
 from maltorch.adv.evasion.base_optim_attack_creator import OptimizerBackends

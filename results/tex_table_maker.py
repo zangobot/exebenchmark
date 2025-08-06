@@ -52,20 +52,20 @@ def extract_local_leaderboard(base_path, data, limit_up: int = 5, limit_down: in
 
     temp_table_output = base_path / "t_rank.tex"
     data[["model", TEMPORAL_METRIC]].sort_values(by=TEMPORAL_METRIC, ascending=False).to_latex(temp_table_output,
-    header = ["Model", "T"],
-    float_format = "{:.2f}".format,
-    index = False)
+                                                                                               header=["Model", "T"],
+                                                                                               float_format="{:.2f}".format,
+                                                                                               index=False)
     rob_table_output = base_path / "r_rank.tex"
     data[["model", ROBUSTNESS_METRIC]].sort_values(by=ROBUSTNESS_METRIC, ascending=False).to_latex(rob_table_output,
-    header = ["Model",
-              "R"],
-    float_format = "{:.2f}".format,
-    index = False)
+                                                                                                   header=["Model",
+                                                                                                           "R"],
+                                                                                                   float_format="{:.2f}".format,
+                                                                                                   index=False)
     inf_table_output = base_path / "c_rank.tex"
     data[["model", INFERENCE_METRIC]].sort_values(by=INFERENCE_METRIC, ascending=False).to_latex(inf_table_output,
-    header = ["Model", "C"],
-    float_format = "{:.2f}".format,
-    index = False)
+                                                                                                 header=["Model", "C"],
+                                                                                                 float_format="{:.2f}".format,
+                                                                                                 index=False)
 
 
 produce_tex_tables()
