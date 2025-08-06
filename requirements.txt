@@ -3,3 +3,4 @@ git+https://github.com/zangobot/ember.git
 tqdm
 ruff
 matplotlib
+SciencePlots
