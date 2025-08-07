@@ -61,18 +61,3 @@ if __name__ == "__main__":
             with open("adversarial_evaluation/times_1.txt", "a") as f:
                 f.write(f"{model},{attack},{elapsed_hours:.4f}\n")
 
-
-    # Once we have all advarsarial for all models, we can do trasfer evaluation
-    
-    # for model in models:
-    #     for attack in attacks:
-    #         print(f"Evaluating Adversarial Examples: {model} with attack: {attack}")
-    #         micro_config = {
-    #             "architecture": model,
-    #             "attack": attack,
-    #             "examples_folder": "adversarial_evaluation/adversarial_examples",
-    #             "predictions_path": "adversarial_evaluation/adversarial_scores/",
-    #             "transfer_path": "adversarial_evaluation/transfer_scores/"
-    #         }
-    #         eval = AdversarialEvaluator(micro_config)
-    #         eval.transfer_eval()
