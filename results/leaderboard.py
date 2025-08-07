@@ -1,4 +1,5 @@
 from functools import reduce
+from pathlib import Path
 
 import pandas
 
@@ -22,4 +23,5 @@ def compute_benchmark():
     return results
 
 if __name__ == '__main__':
-    print(compute_benchmark())
+    results = compute_benchmark()
+    results.to_csv(Path(__file__).parent / "ranking.csv")
