@@ -3,7 +3,7 @@ import lightgbm as lgb
 import argparse
 from utils import load_ember_csv
 import os
-import time
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train end2end malware detector")
@@ -37,7 +37,6 @@ if __name__ == "__main__":
         "bagging_fraction": configuration["bagging_fraction"],
         "max_depth": configuration["max_depth"],
     }
-    start_time = time.time()
     # Train the model
     model = lgb.train(
         params,
@@ -47,12 +46,9 @@ if __name__ == "__main__":
         valid_names=["eval"],
         early_stopping_rounds=10,
     )
-    end_time = time.time()
     # Ensure the directory exists
     model_dir = os.path.dirname(configuration["model_path"])  # Extract directory path
     if not os.path.exists(model_dir):
         os.makedirs(model_dir, exist_ok=True)  # Create directories if they don't exist
     # Save the model
     model.save_model(configuration["model_path"])
-    with open(os.path.join(model_dir, "training_time.txt"), "w") as f:
-        f.write("Training time: {}".format(end_time-start_time))

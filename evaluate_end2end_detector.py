@@ -4,7 +4,7 @@ import multiprocessing
 from torch.utils.data import DataLoader, Dataset
 from maltorch.datasets.binary_dataset import BinaryDataset
 from tqdm import tqdm
-from maltorch.zoo.model import BaseEmbeddingPytorchClassifier, BasePytorchClassifier
+from maltorch.zoo.model import BasePytorchClassifier
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.avaststyleconv import AvastStyleConv
@@ -22,7 +22,6 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
 from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
 from utils import read_json_file, write_predictions, write_metrics, check_cuda
-import time
 
 
 device = check_cuda()
@@ -30,7 +29,6 @@ device = check_cuda()
 
 def get_preprocessing(configuration: dict) -> DataProcessing:
     try:
-        print("Preprocessing: ", configuration["preprocessing"])
         if configuration["preprocessing"] == "RS":
             return RandomizedAblationPreprocessing(
                 pabl=configuration["pabl"],
@@ -75,15 +73,13 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 convert_to_3d_image=configuration["convert_to_3d_image"],
             )
         else:
-            return None
+            raise ValueError(f"preprocessing {configuration['preprocessing']} not found")
     except KeyError:
-        print("Preprocessing: None")
         return None
 
 
 def get_postprocessing(configuration: dict) -> DataProcessing:
     try:
-        print("Postprocessing: ", configuration["postprocessing"])
         if configuration["postprocessing"] == "MajorityVoting":
             return MajorityVotingPostprocessing(apply_sigmoid=True)
         elif configuration["postprocessing"] == "Sigmoid":
@@ -91,14 +87,12 @@ def get_postprocessing(configuration: dict) -> DataProcessing:
         else:
             raise ValueError(f"postprocessing {configuration['postprocessing']} not found")
     except KeyError:
-        print("Postprocessing: None")
         return None
 
 def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcessing, DataProcessing]:
     preprocessing = get_preprocessing(configuration)
     postprocessing = get_postprocessing(configuration)
     architecture_name = configuration["architecture"]
-    print("Architecture: ", architecture_name)
     if architecture_name == "MalConv":
         return MalConv.create_model(
             model_path=configuration["model_path"],
@@ -197,30 +191,23 @@ def create_dataset(configuration: dict) -> Dataset:
     )
     return evaluation_dataset
 
-eval_inference_time = []
 def evaluate(classifier: BasePytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:
     eval_trues = []
     eval_preds = []
     with torch.no_grad():
         for x, y in tqdm(dataloader):
-            start_time = time.time()
             x, y = x.to(device), y.to(device)
             y_preds = classifier.predict(x)
-            end_time = time.time()
-            eval_inference_time.append(end_time-start_time)
             eval_trues.append(y)
             eval_preds.append(y_preds)
     return eval_preds, eval_trues
 
-def write_avg_inf_time(output_file: str):
-    with open(output_file, "a") as f:
-        f.write("Average inference time: {}\n".format(sum(eval_inference_time)/len(eval_inference_time)))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Evaluate end2end malware detector')
     parser.add_argument("configuration_file",
                         type=str,
-                        help="JSON-like file including the training and classifier configuration hyperparameters")
+                        help="JSON-like file including the classifier's configuration parameters")
     args = parser.parse_args()
 
     configuration = read_json_file(args.configuration_file)
@@ -241,4 +228,3 @@ if __name__ == "__main__":
     y_preds, y_trues = evaluate(classifier, dataloader)
     write_predictions(y_preds, y_trues, configuration["predictions_path"])
     write_metrics(y_preds, y_trues, configuration["metrics_path"])
-    write_avg_inf_time(configuration["metrics_path"])

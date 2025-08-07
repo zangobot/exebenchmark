@@ -1,26 +1,16 @@
 import os
 from multiprocessing import Pool
 from pathlib import Path
-
-import lief
-
-from torch.utils.data import DataLoader, TensorDataset
-
+from torch.utils.data import DataLoader
 from evaluators.evaluator import Evaluator
-from maltorch.adv.evasion.base_optim_attack_creator import OptimizerBackends
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
-from maltorch.adv.evasion.partialdos import PartialDOS
-from maltorch.adv.evasion.padding import Padding
-from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
-from secmlt.metrics.classification import Accuracy
 import torch
 from maltorch.utils.utils import dump_torch_exe_to_file
-
-from maltorch.data.loader import load_from_folder, create_labels
-
 from config import MALWARE_FOR_ADV, BENIGNWARE_PATH
 from maltorch.datasets.binary_dataset import BinaryDataset
+
+from maltorch.adv.evasion.base_optim_attack_creator import OptimizerBackends
 
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
@@ -37,18 +27,18 @@ class AdversarialEvaluator(Evaluator):
 
         self.attack_engine = self.create_attack()
         self.examples_folder = (
-            Path(self.config["examples_folder"])
-            / self.config["architecture"]
-            / self.config["attack"]
+                Path(self.config["examples_folder"])
+                / self.config["architecture"]
+                / self.config["attack"]
         )
         self.predictions_path = (
-            Path(self.config["predictions_path"]) / self.config["architecture"]
+                Path(self.config["predictions_path"]) / self.config["architecture"]
         )
         if "transfer_path" in self.config and self.config["transfer_path"] is not None:
             self.transfer_path = (
-            Path(self.config["transfer_path"])
-            / self.config["architecture"]
-            / self.config["attack"]
+                    Path(self.config["transfer_path"])
+                    / self.config["architecture"]
+                    / self.config["attack"]
             )
         else:
             self.transfer_path = None
@@ -62,29 +52,12 @@ class AdversarialEvaluator(Evaluator):
                 how_many_sections=50,
                 model_outputs_logits=False
             )
-        elif self.config["attack"] == "content_shift":
-            return ContentShift(
-                query_budget=500,
-                perturbation_size=2048,
-                model_outputs_logits=False,
-                backend=OptimizerBackends.NG
-            )
-        elif self.config["attack"] == "partial_dos":
-            return PartialDOS(
-                query_budget=500,
-                model_outputs_logits=False,
-                backend=OptimizerBackends.NG
-            )
-        elif self.config["attack"] == "padding":
-            return Padding(
-                query_budget=500,
-                padding=2048,
-                model_outputs_logits=False,
-                backend=OptimizerBackends.NG
-            )
-        else:
-            raise Exception("Choose between the following attacks: gamma, content_shift, padding, partial_dos")
-        
+
+        if self.config["attack"] == "content_shift":
+            return ContentShift(query_budget=500, perturbation_size=2048,
+                                model_outputs_logits=False,
+                                backend=OptimizerBackends.NG)
+
     def _service_attack(self, dataloader, hashes, predictions_file):
 
         adv_dl = self.attack_engine(self.model, dataloader)
@@ -97,7 +70,6 @@ class AdversarialEvaluator(Evaluator):
             )
             with open(str(predictions_file), "a") as f:
                 f.write(f"{sample_hash}_adv,{score.item()},1\n")
-        
 
     def bulk_attack(self, n_jobs, batch_size=1):
 
@@ -129,8 +101,8 @@ class AdversarialEvaluator(Evaluator):
                     self._service_attack,
                     [(dl, [hashes[i] for i in chunk], predictions_file) for dl, chunk in zip(data_loaders, chunks)]
                 )
-            return 
-                
+            return
+
         for idx, entry in enumerate(adv_dl.dataset):
             score = self.model(entry[0].unsqueeze(0))
             sample_hash = hashes[idx]
@@ -169,7 +141,7 @@ class AdversarialEvaluator(Evaluator):
                         f.write(f"{pred[i][0]},{1}\n")
 
     def transfer_eval(self):
-        
+
         # This evaluates all adversarial examples for all models for the attack specified in the config
         base_path = Path(self.config["examples_folder"])
         for subdir in base_path.iterdir():

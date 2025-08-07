@@ -1,5 +1,5 @@
 cd ../../../evaluators/
-!'
+
 # MalConv models
 python evaluator.py EMBER/test/MalConv/ember_malconv_config.json
 python evaluator.py EMBER/test/MalConv/ember_fdrs_512_malconv_config.json
@@ -24,7 +24,6 @@ python evaluator.py EMBER/test/MalConv/ember_sdrs_0.20_malconv_config.json
 
 # NgramConv models
 python evaluator.py EMBER/test/NGramConv/ember_ngramconv_config.json
-
 python evaluator.py EMBER/test/NGramConv/ember_fdrs_512_ngramconv_config.json
 python evaluator.py EMBER/test/NGramConv/ember_fdrs_2048_ngramconv_config.json
 python evaluator.py EMBER/test/NGramConv/ember_fdrs_4096_ngramconv_config.json
@@ -89,14 +88,14 @@ python evaluator.py EMBER/test/ResNet/ember_resnet_config.json
 # LightGBM
 python evaluator.py EMBER/test/LightGBM/ember_lightgbm_config.json
 
-'
+# RS models
 python evaluator_v2.py EMBER/test/MalConv/ember_rs_malconv_config.json
 python evaluator_v2.py EMBER/test/BBDnn/ember_rs_bbdnn_config.json
 python evaluator_v2.py EMBER/test/AvastConv/ember_rs_avastconv_config.json
 python evaluator_v2.py EMBER/test/NGramConv/ember_rs_ngramconv_config.json
 
-
-#python evaluator_v2.py EMBER/test/MalConv/ember_rsdel_malconv_config.json
-#python evaluator_v2.py EMBER/test/BBDnn/ember_rsdel_bbdnn_config.json
-#python evaluator_v2.py EMBER/test/AvastConv/ember_rsdel_avastconv_config.json
-#python evaluator_v2.py EMBER/test/NGramConv/ember_rsdel_ngramconv_config.json
+# RsDel models
+python evaluator_v2.py EMBER/test/MalConv/ember_rsdel_malconv_config.json
+python evaluator_v2.py EMBER/test/BBDnn/ember_rsdel_bbdnn_config.json
+python evaluator_v2.py EMBER/test/AvastConv/ember_rsdel_avastconv_config.json
+python evaluator_v2.py EMBER/test/NGramConv/ember_rsdel_ngramconv_config.json
