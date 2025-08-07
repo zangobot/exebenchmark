@@ -202,10 +202,14 @@ class AdversarialEvaluator(Evaluator):
             with torch.no_grad():
                 for idx, batch in enumerate(data_loader):
                     x = batch[0]
+                    hash_name = hashes[idx]
+                    # Check if hash already exists in the predictions file
+                    # with open(predictions_file, "r") as pf:
+                    #     if any(hash_name in line for line in pf):
+                    #         continue
                     x = x.to(self.device)
                     pred = self.model(x)
                     pred = pred.cpu().numpy()
-                    hash_name = hashes[idx]
                     for i in range(len(pred)):
                         f.write(f"{hash_name},{pred[i][0]},{1}\n")
 
