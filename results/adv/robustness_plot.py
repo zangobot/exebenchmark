@@ -6,6 +6,7 @@ import pandas
 import scienceplots
 from results.adv.robustness_metric import compute_robustness_metric
 from results.constants import REGULAR_MODELS, CERTIFICATION_MODELS, MODELS
+plt.style.use(['science','no-latex', 'high-vis'])
 
 plt.rcParams.update({
         "font.family": "DejaVu Serif",
@@ -18,8 +19,6 @@ plt.rcParams.update({
         "axes.labelweight": "bold",
         "axes.titleweight": "bold",
     })
-plt.style.use(['science','no-latex', 'high-vis'])
-plt.grid(True, alpha=0.5, linewidth=2)
 
 data_path = Path(__file__).parent / "plot_data.pickle"
 ranking_path = Path(__file__).parent.parent / "ranking.csv"
@@ -37,4 +36,6 @@ for i, m in enumerate(top_six_models):
 plt.xlabel("Perturbation (bytes)")
 plt.ylabel("Detection Rate")
 plt.legend()
+plt.grid(True, alpha=0.5, linewidth=2)
+plt.tight_layout()
 plt.savefig("robustness_dr_eps.pdf")
