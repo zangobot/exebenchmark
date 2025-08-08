@@ -54,7 +54,7 @@ def plot_spie_chart(ax, title, values, colors=None):
 
 
 csv_file = pd.read_csv("ranking.csv")
-labels = ["P", "I", "T", "R"]
+labels = ["Performance", "Inference", "Temporal", "Robustness"]
 colors = ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2"]  # Color-blind friendly
 
 num_rows, num_cols = 3, 10
@@ -78,7 +78,7 @@ fig.legend(
     handles=legend_elements,
     loc="lower center",
     ncol=len(labels),
-    fontsize=10,
+    fontsize=14,
     frameon=False,
     bbox_to_anchor=(0.5, -0.02),  # Slightly below the figure
 )

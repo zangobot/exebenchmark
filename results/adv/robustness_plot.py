@@ -27,8 +27,8 @@ if not data_path.exists():
 with open(str(data_path), 'rb') as h:
     plot_data = pickle.load(h)
 
-x = plot_data['eps'][:-1]
-
+# x = plot_data['eps'][:-1]
+x = np.arange(stop=1, step=1/len(plot_data['eps'][:-1]))
 # plt.figure()
 # for m in MODELS:
 #     plt.semilogx(x, np.array(plot_data[m]) / 4764, label=m) 
@@ -42,14 +42,14 @@ x = plot_data['eps'][:-1]
 
 plt.figure(figsize=(10,6))
 for i, m in enumerate(REGULAR_MODELS):
-    plt.semilogx(x, np.array(plot_data[m]) / 4764, label=m, linewidth=4, color=colors[i])
+    plt.plot(x, np.array(plot_data[m]) / 4764, label=m, linewidth=4, color=colors[i])
 plt.xlabel("Perturbation (bytes)", fontsize=18)
 plt.ylabel("Detection Rate", fontsize=18)
 plt.legend()
 plt.grid(True, alpha=0.5, linewidth=2)
 plt.tight_layout()
-plt.savefig("robustness_dr_eps.pdf")
-
+# plt.savefig("robustness_dr_eps.pdf")
+plt.show()
 # plt.figure(figsize=(10,3))
 # for m in CERTIFICATION_MODELS:
 #     plt.semilogx(x, np.array(plot_data[m]) / 4764, label=m)
