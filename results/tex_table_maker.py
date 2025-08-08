@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from results.constants import INFERENCE_METRIC, TEMPORAL_METRIC, ROBUSTNESS_METRIC, PERFORMANCE_METRIC, E2E_MODELS, \
     FEATURE_MODELS, CERTIFICATION_MODELS, IMG_MODELS
+from results.inference.inference_metric import collect_training_time
 from results.leaderboard import compute_benchmark
 
 
@@ -29,11 +30,20 @@ def scatter_metrics(data, metric_a, metric_b, title):
     plt.show()
 
 
+def produce_training_table(base_path):
+    data = collect_training_time()
+    tr_table_output = base_path / "training_time.tex"
+    data.to_latex(tr_table_output,
+                  header=["Model", "Time (h)"],
+                  float_format="{:.2f}".format,
+                  index=False)
+
+
 def produce_tex_tables(limit_up: int = 5, limit_down: int = 5):
     data = compute_benchmark()
     base_path = Path(__file__).parent / "tables"
     base_path.mkdir(exist_ok=True)
-
+    produce_training_table(base_path)
     extract_local_leaderboard(base_path, data, limit_up, limit_down)
 
 
@@ -67,5 +77,5 @@ def extract_local_leaderboard(base_path, data, limit_up: int = 5, limit_down: in
                                                                                                  float_format="{:.2f}".format,
                                                                                                  index=False)
 
-
-produce_tex_tables()
+if __name__ == '__main__':
+    produce_tex_tables()

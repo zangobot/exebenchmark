@@ -28,4 +28,4 @@ i,model,num_epochs,time_per_epoch,total_training_time_seconds,preprocessing_time
 26,NGramConvKDRS,47,396.66,18643.02,0.0
 27,NGramConvRDRS,17,433.76,7373.92,0.0
 28,NGramConvSDRS,17,433.76,7373.92,0.0
-29,EmberGBDT,0.0,0.0,229.01,25605,84
+29,EmberGBDT,0.0,0.0,229.01,25605.84

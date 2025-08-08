@@ -10,7 +10,7 @@ from results.constants import MODELS
 
 def compute_robustness_metric():
     root = Path(__file__).parent
-    data_folder = root / "data"
+    data_folder = root / "data_merged"
     all_adv_data = {m: {} for m in MODELS}
     all_eps_across_models = set()
     total_samples = 4764
