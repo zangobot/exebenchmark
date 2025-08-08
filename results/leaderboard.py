@@ -20,8 +20,8 @@ def compute_benchmark():
     results['rank'] = (results['performance_metric'] + results['temporal_metric'] + results['robustness_metric'] + results[
         'inference_metric']) / 4
     results = results.sort_values(by="rank", ascending=False)
+    results.to_csv(Path(__file__).parent / "ranking.csv")
     return results
 
 if __name__ == '__main__':
     results = compute_benchmark()
-    results.to_csv(Path(__file__).parent / "ranking.csv")
