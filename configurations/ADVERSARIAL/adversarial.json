@@ -43,6 +43,4 @@
             "content_shift": "OptimizerBackends.NEVERGRAD",
             "full_dos": "OptimizerBackends.NEVERGRAD"
         }
-
-
 }
