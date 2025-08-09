@@ -1,12 +1,21 @@
 {
     "models":
-        [
-            "MalConv", 
-            "AvastStyleConv", 
+
+        [   
+            "MalConv",
+            "AvastStyleConv",
+            "ResNet18",
             "BBDnn",
             "NGramConv",
             "EmberGBDT", 
-            "ResNet18", 
+            "MalConvRsDel",
+            "AvastStyleConvRsDel",
+            "BBDnnRsDel",
+            "NGramConvRsDel",
+            "MalConvRS",
+            "AvastStyleConvRS",
+            "BBDnnRS",
+            "NGramConvRS",
             "MalConvFDRS", 
             "AvastStyleConvFDRS",
             "BBDnnFDRS",
@@ -17,24 +26,23 @@
             "NGramConvKDRS",
             "MalConvRDRS", 
             "AvastStyleConvRDRS",
-            "BBDnnRDRS",
             "NGramConvRDRS", 
-            "MalConvRS", 
-            "AvastStyleConvRS",
-            "BBDnnRS",
-            "NGramConvRS", 
+            "BBDnnRDRS",
             "MalConvSDRS", 
             "AvastStyleConvSDRS",
             "BBDnnSDRS",
-            "NGramConvSDRS",
-            "MalConvRsDel", 
-            "AvastStyleConvRsDel",
-            "BBDnnRsDel",
-            "NGramConvRsDel"
+            "NGramConvSDRS" 
         ],
         "attacks": 
-        [
-            "gamma", 
-            "content_shift"
-        ]
+        {   
+            "gamma_5": 5,
+            "gamma_10": 10, 
+            "gamma_20": 20,
+            "gamma_30": 30,
+            "gamma_50": 50,
+            "content_shift": "OptimizerBackends.NEVERGRAD",
+            "full_dos": "OptimizerBackends.NEVERGRAD"
+        }
+
+
 }
