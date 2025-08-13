@@ -1,0 +1,8 @@
+MalConv,gamma,20.4379
+AvastStyleConv,gamma_50,19.7328
+BBDnn,gamma_50,16.9827
+NGramConv,gamma_50,25.2656
+EmberGBDT,gamma_50,27.7963
+ResNet18,gamma_50,22.7907
+MalConv,gamma_20,15.6406
+AvastStyleConv,gamma_20,16.0225

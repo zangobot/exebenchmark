@@ -14,6 +14,9 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 
 ZOO_PATH = Path(__file__).parent / "models"
 BENIGNWARE_PATH = Path(__file__).parent / "win_exe" / "win11" / "syswow64"
+
+GOODWARE_PATH =  Path(__file__).parent / Path("/mnt/data/aponte/repos/maltorch/examples/data/goodware")
+
 MALWARE_FOR_ADV = Path(__file__).parent / "malware"
 
 MODEL_LIST = [
