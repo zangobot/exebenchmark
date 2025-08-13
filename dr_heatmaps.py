@@ -24,14 +24,7 @@ other_scores_root = "adversarial_evaluation/transfer_scores/"
 other_models = macro_config["models"][:6]
 
 models = sorted(models)
-# Custom sort: FDRS first, then KDRS, then RDRS, then SDRS
-# def custom_sort(models_list):
 
-#     fdrs = sorted([m for m in models_list if "FDRS" in m])
-#     kdrs = sorted([m for m in models_list if "KDRS" in m])
-#     rdrs = sorted([m for m in models_list if "RDRS" in m])
-#     sdrs = sorted([m for m in models_list if "SDRS" in m])
-#     return fdrs + kdrs + rdrs + sdrs
 
 def custom_sort(models_list):
 
@@ -81,11 +74,6 @@ for attack, param in attacks.items():
 
         # # take the diagonal scores
         diagonal_scores_path = os.path.join(diagonal_scores_root, model_d, attack + f"_{param}.csv")
-
-        # if not os.path.exists(diagonal_scores_path):
-        #     # Fill the entire column for this model_d with "-"
-        #     heatmap_matrix.loc[:, model_d] = 0
-        #     continue
 
         scores = pd.read_csv(diagonal_scores_path, header=None)
         score_values = scores.iloc[:, 1]

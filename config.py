@@ -13,25 +13,14 @@ from maltorch.data_processing.k_partition_drs_preprocessing import (
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
 
 ZOO_PATH = Path(__file__).parent / "models"
+
+
+#insert here path to goodware for adv attacks
 BENIGNWARE_PATH = Path(__file__).parent / "win_exe" / "win11" / "syswow64"
 
-GOODWARE_PATH =  Path(__file__).parent / Path("/mnt/data/aponte/repos/maltorch/examples/data/goodware")
-
+#insert here path to malware for adv attacks
 MALWARE_FOR_ADV = Path(__file__).parent / "malware"
 
-MODEL_LIST = [
-    "EmberGBDT",
-    "ResNet18",
-    "MalConv",
-    "BBDnn",
-    "AvastStyleConv",
-    "NgramConv",
-]
-
-ATTACKS_LIST = [
-    "gamma",
-    "content_shift",
-]
 
 PREPROCESSING_LIST = [
             RandomizedAblationPreprocessing,

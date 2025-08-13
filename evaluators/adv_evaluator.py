@@ -59,7 +59,7 @@ class AdversarialEvaluator(Evaluator):
         if self.config["attack"] == "gamma":
             return GAMMASectionInjection(
                 query_budget=500,
-                benignware_folder=GOODWARE_PATH,
+                benignware_folder=BENIGNWARE_PATH,
                 which_sections=[".rdata"],
                 how_many_sections=self.config["param"],
                 model_outputs_logits=False, 
