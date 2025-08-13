@@ -7,7 +7,7 @@
   "patience": 5,
   "architecture": "NGramConv",
   "embedding_size": 8,
-  "max_len": 10000000,
+  "max_len": 2000000,
   "min_len": 512,
   "threshold": 0.5,
   "padding_idx": 256,
@@ -15,5 +15,6 @@
   "dataset_type": "SequentialDRS",
   "file_percentage": 0.10,
   "num_chunks": 100,
-  "min_chunk_size": 512
+  "min_chunk_size": 512,
+  "sort_by_size": true
 }
