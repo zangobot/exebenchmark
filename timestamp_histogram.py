@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 metadata = pd.read_csv(
-    "/Users/bridge/PhD/Code/exebenchmark/configurations/SPEAKEASY/all_metadata.csv"
+    "configurations/SPEAKEASY/all_metadata.csv"
 )
 
 # Check if 'timestamp' column exists
