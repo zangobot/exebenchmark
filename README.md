@@ -108,8 +108,35 @@ python evaluate_end2end_detector.py configurations/EMBER/validation/MalConv/malc
 python evaluate_end2end_detector.py configurations/EMBER/test/MalConv/malconv_ember_test_set_configuration_file_pos_weight_0.875.json
 
 ```
+
+## Temporal Evaluation
+The temporal evaluation can be performed using the script [temporal_evaluation.py](temporal_evaluation.py). The script loads the configuration file [temporal_analysis.json](configurations/SPEAKEASY/temporal_analysis.json), containing the models, the temporal bins to test, the path of the [Speakeasy metadata](configurations/SPEAKEASY/all_metadata.csv) and the output path. 
+The script uses the [evaluator interface](evaluators/evaluator.py), which initializes the models and performs inference.
+The script uses GPU if available, besides when testing EmberGBDT.
+
 ## Adversarial Evaluation
 You can download the subset of nonpacked malicious executables used for the adversarial evaluation from https://drive.google.com/file/d/1qiShG-WUp-0itBPTAo8vvfUWF5dnJoE4/view?usp=sharing
 
 In https://drive.google.com/file/d/1FgAojUDswwFpLvNypwJ9iaDk-C8XGKrz/view?usp=sharing you will find the families associated to each sample.
 
+To perform attack computation against Vanilla models you can use the script [adversarial_evaluation.py](adversarial_evaluation.py). The script loads the configuration file [adversarial_evaluation.json](configurations/ADVERSARIAL/adversarial.json), containing the models to attack and the attack with parameters to use. 
+The script then specifies which model to attack with the selected manipulation and parameters, where to save the adversarial examples and the corresponding adversarial scores to the [adversarial evaluator](evaluators/adv_evaluator.py), which initializes the models and performs the attacks.
+Attacks can be run in parallel specifying the number of workers inside the script. It uses only one job if not specified. 
+
+
+For the transfer evaluation, the same configuration file is used by [transfer_evaluation.py](transfer_evaluation.py) to test all models against the adversarial attacks previously computed. In this case, the script specifies also where to save the transfer scores to the [adversarial evaluator](evaluators/adv_evaluator.py).
+The script uses GPU if available, besides when testing EmberGBDT.
+
+The adversarial evaluators expects the following structure for the configuration file: 
+```
+{
+  "architecture": model,
+  "attack": attack,
+  "param": param,
+  "examples_folder": "adversarial_evaluation/adversarial_examples/",
+  "predictions_path": "adversarial_evaluation/adversarial_scores/",
+  "transfer_path": "adversarial_evaluation/transfer_scores/"
+}
+```
+
+The adversarial evaluator uses the interface [evaluator](evaluators/evaluator.py), to initialize the models. 

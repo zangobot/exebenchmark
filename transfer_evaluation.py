@@ -13,13 +13,13 @@ attacks = macro_config["attacks_inference"]
 
 attacks = list(attacks.items())
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 for model in models:
     for attack, param in attacks:
 
-        if model == "EmberGBDT": 
+        if model == "EmberGBDT":
             device = "cpu"
-        else:
-            device = "cuda"
 
         print(f"Computing Transfer: {model} with attack: {attack}")
 
