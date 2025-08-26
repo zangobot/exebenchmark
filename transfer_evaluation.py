@@ -13,11 +13,6 @@ attacks = macro_config["attacks_inference"]
 
 attacks = list(attacks.items())
 
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"] = "1"
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-os.environ["NUMEXPR_NUM_THREADS"] = "1"
-
 for model in models:
     for attack, param in attacks:
 
@@ -25,18 +20,13 @@ for model in models:
             device = "cpu"
         else:
             device = "cuda"
-        
 
         print(f"Computing Transfer: {model} with attack: {attack}")
 
         attack = "_".join(attack.split("_")[:-1])  # keep everything but the last split
 
         if param == "OptimizerBackends.NEVERGRAD":
-            # For nevergrad attacks, we use the NG backend
             param = OptimizerBackends.NG
-        elif param == "OptimizerBackends.GRADIENT":
-            # For gradient attacks, we use the GRADIENT backend
-            param = OptimizerBackends.GRADIENT
 
         # Create the configuration for the micro-evaluation 
         micro_config = {

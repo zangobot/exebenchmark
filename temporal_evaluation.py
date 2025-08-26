@@ -24,7 +24,7 @@ if __name__ == "__main__":
                 f"Period: {temporal_bin['temporal_bin']}"
             )
 
-            evaluator = Evaluator(config=micro_config, device="cuda:0")
+            evaluator = Evaluator(config=micro_config)
             evaluator.evaluate(
                 batch_size=1
             ) 

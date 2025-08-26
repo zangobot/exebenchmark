@@ -14,7 +14,6 @@ from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocess
 
 ZOO_PATH = Path(__file__).parent / "models"
 
-
 #insert here path to goodware for adv attacks
 BENIGNWARE_PATH = Path(__file__).parent / "win_exe" / "win11" / "syswow64"
 

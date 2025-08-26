@@ -95,7 +95,7 @@ class AdversarialEvaluator(Evaluator):
                 f.write(f"{sample_hash}_adv,{score.item()},1\n")
         
 
-    def bulk_attack(self, n_jobs, batch_size=1):
+    def bulk_attack(self, n_jobs=1, batch_size=1):
 
         dataset = BinaryDataset(malware_directory=MALWARE_FOR_ADV)
 

@@ -40,7 +40,5 @@ plt.xticks(rotation=90)
 plt.grid(axis='both', linestyle='--', linewidth=1)
 plt.xlabel('')
 plt.tight_layout()
-plt.savefig('inference_times_cpu.pdf', dpi=300, bbox_inches='tight')
 plt.show()
 
-# %%
