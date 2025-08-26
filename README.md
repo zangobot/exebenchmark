@@ -29,7 +29,6 @@ F-DRS specifies a fixed chunk size, e.g. 32768 bytes. K-DRS specifies the number
 * [adversarial_evaluation](adversarial_evaluation)/: Contains the adversarial scores and the transferability scores of the detectors
 * [configurations](configurations)/: Contains the configurations of the detectors
 * [evaluators](evaluators)/: Contains the implementation of the adversarial evaluator.
-* [imgs](imgs)/: Contains the plots of the paper showcasing the results of the adversarial attacks.
 * [models](models)/: Contains the pretrained models
 * [output](output)/: Contains the training, validation, and test results for each model.
 * [results](results)/: Contains the results of the performance, adversarial evaluation, concept drift evaluation and inference times of the detectors.
