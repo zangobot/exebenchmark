@@ -1,9 +1,0 @@
-cd ../../../
-
-
-python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/malconv_ember_validation_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/rs_malconv_ember_validation_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/rsdel_malconv_ember_validation_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/drs_malconv_ember_validation_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/sequential_drs_malconv_ember_validation_set_configuration_file.json
-python evaluate_end2end_detector.py  configurations/EMBER/validation/MalConv/random_drs_malconv_ember_validation_set_configuration_file.json
