@@ -4,7 +4,7 @@ import multiprocessing
 from torch.utils.data import DataLoader, Dataset
 from maltorch.datasets.binary_dataset import BinaryDataset
 from tqdm import tqdm
-from maltorch.zoo.model import BaseEmbeddingPytorchClassifier
+from maltorch.zoo.model import BasePytorchClassifier
 from maltorch.zoo.malconv import MalConv
 from maltorch.zoo.bbdnn import BBDnn
 from maltorch.zoo.avaststyleconv import AvastStyleConv
@@ -14,17 +14,13 @@ from maltorch.zoo.resnet18 import ResNet18
 from secmlt.models.data_processing.data_processing import DataProcessing
 from maltorch.data_processing.rs_preprocessing import RandomizedAblationPreprocessing
 from maltorch.data_processing.rsdel_preprocessing import RandomizedDeletionPreprocessing
-from maltorch.data_processing.drs_preprocessing import DeRandomizedPreprocessing
-from maltorch.data_processing.sequential_drs_preprocessing import (
-    SequentialDeRandomizedPreprocessing,
-)
-from maltorch.data_processing.random_drs_preprocessing import (
-    RandomDeRandomizedPreprocessing,
-)
+from maltorch.data_processing.fixed_size_chunk_drs_preprocessing import FixedSizeChunkDeRandomizedPreprocessing
+from maltorch.data_processing.dynamic_sequential_drs_preprocessing import DynamicSequentialDeRandomizedPreprocessing
+from maltorch.data_processing.dynamic_random_drs_preprocessing import DynamicRandomDeRandomizedPreprocessing
+from maltorch.data_processing.k_partition_drs_preprocessing import KPartitionDeRandomizedPreprocessing
 from maltorch.data_processing.grayscale_preprocessing import GrayscalePreprocessing
-from maltorch.data_processing.majority_voting_postprocessing import (
-    MajorityVotingPostprocessing,
-)
+from maltorch.data_processing.majority_voting_postprocessing import MajorityVotingPostprocessing
+from maltorch.data_processing.sigmoid_postprocessor import SigmoidPostprocessor
 from utils import read_json_file, write_predictions, write_metrics, check_cuda
 
 
@@ -45,24 +41,30 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 num_versions=configuration["num_versions"],
                 padding_idx=configuration["padding_idx"],
             )
-        elif configuration["preprocessing"] == "DRS":
-            return DeRandomizedPreprocessing(
+        elif configuration["preprocessing"] == "F-DRS":
+            return FixedSizeChunkDeRandomizedPreprocessing(
                 chunk_size=configuration["chunk_size"],
                 padding_idx=configuration["padding_idx"],
             )
         elif configuration["preprocessing"] == "SequentialDRS":
-            return SequentialDeRandomizedPreprocessing(
+            return DynamicSequentialDeRandomizedPreprocessing(
                 file_percentage=configuration["file_percentage"],
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
                 min_chunk_size=configuration["min_chunk_size"],
             )
         elif configuration["preprocessing"] == "RandomDRS":
-            return RandomDeRandomizedPreprocessing(
+            return DynamicRandomDeRandomizedPreprocessing(
                 file_percentage=configuration["file_percentage"],
                 num_chunks=configuration["num_chunks"],
                 padding_idx=configuration["padding_idx"],
                 min_chunk_size=configuration["min_chunk_size"],
+            )
+        elif configuration["preprocessing"] == "K-DRS":
+            return KPartitionDeRandomizedPreprocessing(
+                num_chunks=configuration["num_chunks"],
+                min_chunk_size=configuration["min_chunk_size"],
+                padding_idx=configuration["padding_idx"]
             )
         elif configuration["preprocessing"] == "Grayscale":
             return GrayscalePreprocessing(
@@ -71,7 +73,7 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
                 convert_to_3d_image=configuration["convert_to_3d_image"],
             )
         else:
-            return None
+            raise ValueError(f"preprocessing {configuration['preprocessing']} not found")
     except KeyError:
         return None
 
@@ -79,35 +81,31 @@ def get_preprocessing(configuration: dict) -> DataProcessing:
 def get_postprocessing(configuration: dict) -> DataProcessing:
     try:
         if configuration["postprocessing"] == "MajorityVoting":
-            return MajorityVotingPostprocessing()
+            return MajorityVotingPostprocessing(apply_sigmoid=True)
+        elif configuration["postprocessing"] == "Sigmoid":
+            return SigmoidPostprocessor()
         else:
-            return None
+            raise ValueError(f"postprocessing {configuration['postprocessing']} not found")
     except KeyError:
         return None
 
-
-def build_model(
-    configuration: dict,
-) -> tuple[BaseEmbeddingPytorchClassifier, DataProcessing, DataProcessing]:
+def build_model(configuration: dict) -> tuple[BasePytorchClassifier, DataProcessing, DataProcessing]:
     preprocessing = get_preprocessing(configuration)
     postprocessing = get_postprocessing(configuration)
     architecture_name = configuration["architecture"]
     if architecture_name == "MalConv":
-        return (
-            MalConv.create_model(
-                model_path=configuration["model_path"],
-                device="cuda" if torch.cuda.is_available() else "cpu",
-                preprocessing=preprocessing,
-                postprocessing=postprocessing,
-                threshold=configuration["threshold"],
-                padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
-            ),
-            preprocessing,
-            postprocessing,
-        )
+        return MalConv.create_model(
+            model_path=configuration["model_path"],
+            device="cuda" if torch.cuda.is_available() else "cpu",
+            preprocessing=preprocessing,
+            postprocessing=postprocessing,
+            threshold=configuration["threshold"],
+            padding_idx=configuration["padding_idx"],
+            max_len=configuration.get("max_len", 512),
+            min_len=configuration.get("min_len", 512),
+            kernel_size=configuration.get("kernel_size", 512),
+            stride=configuration.get("stride", 512)
+        ), preprocessing, postprocessing
     elif architecture_name == "AvastConv":
         return (
             AvastStyleConv.create_model(
@@ -117,9 +115,8 @@ def build_model(
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 512000),
+                min_len=configuration.get("min_len", 10244)
             ),
             preprocessing,
             postprocessing,
@@ -133,9 +130,8 @@ def build_model(
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 512000),
+                min_len=configuration.get("min_len", 512)
             ),
             preprocessing,
             postprocessing,
@@ -149,9 +145,8 @@ def build_model(
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 512000),
+                min_len=configuration.get("min_len", 512)
             ),
             preprocessing,
             postprocessing,
@@ -165,9 +160,8 @@ def build_model(
                 postprocessing=postprocessing,
                 threshold=configuration["threshold"],
                 padding_idx=configuration["padding_idx"],
-                max_len=configuration["max_len"]
-                if "max_len" in configuration
-                else None,
+                max_len=configuration.get("max_len", 102400),
+                min_len=configuration.get("min_len", 4096)
             ),
             preprocessing,
             postprocessing,
@@ -185,7 +179,7 @@ def build_model(
             postprocessing,
         )
     else:
-        raise ValueError(f"Model {architecture_name} not found")
+        raise ValueError(f"classifier {architecture_name} not found")
 
 
 def create_dataset(configuration: dict) -> Dataset:
@@ -197,37 +191,27 @@ def create_dataset(configuration: dict) -> Dataset:
     )
     return evaluation_dataset
 
-
-def evaluate(
-    model: BaseEmbeddingPytorchClassifier, dataloader: DataLoader
-) -> tuple[list[int], list[int]]:
-    eval_total = 0
+def evaluate(classifier: BasePytorchClassifier, dataloader: DataLoader)-> tuple[list[int], list[int]]:
     eval_trues = []
     eval_preds = []
-
     with torch.no_grad():
         for x, y in tqdm(dataloader):
             x, y = x.to(device), y.to(device)
-            outputs = model(x)
-            outputs = outputs.squeeze()
-            y_preds = outputs.round()
+            y_preds = classifier.predict(x)
             eval_trues.append(y)
             eval_preds.append(y_preds)
-            eval_total += configuration["batch_size"]
     return eval_preds, eval_trues
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evaluate end2end malware detector")
-    parser.add_argument(
-        "configuration_file",
-        type=str,
-        help="JSON-like file including the training and model configuration hyperparameters",
-    )
+    parser = argparse.ArgumentParser(description='Evaluate end2end malware detector')
+    parser.add_argument("configuration_file",
+                        type=str,
+                        help="JSON-like file including the classifier's configuration parameters")
     args = parser.parse_args()
 
     configuration = read_json_file(args.configuration_file)
-    model, preprocessing, postprocessing = build_model(configuration)
+    classifier, preprocessing, postprocessing = build_model(configuration)
 
     dataset = create_dataset(configuration)
     num_workers = max(
@@ -241,6 +225,6 @@ if __name__ == "__main__":
         collate_fn=dataset.pad_collate_func,
     )
 
-    y_preds, y_trues = evaluate(model, dataloader)
+    y_preds, y_trues = evaluate(classifier, dataloader)
     write_predictions(y_preds, y_trues, configuration["predictions_path"])
     write_metrics(y_preds, y_trues, configuration["metrics_path"])

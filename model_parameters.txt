@@ -1,0 +1,141 @@
+Model: MalConv(
+  (embedding_1): Embedding(257, 8, padding_idx=256)
+  (conv1d_1): Conv1d(8, 128, kernel_size=(512,), stride=(512,))
+  (conv1d_2): Conv1d(8, 128, kernel_size=(512,), stride=(512,))
+  (dense_1): Linear(in_features=128, out_features=128, bias=True)
+  (dense_2): Linear(in_features=128, out_features=1, bias=True)
+)
+Total parameters: 1067529
+Trainable parameters: 1067529
+
+
+Model: AvastStyleConv(
+  (embedding_1): Embedding(257, 8, padding_idx=256)
+  (conv1d_1): Conv1d(8, 48, kernel_size=(32,), stride=(4,))
+  (conv1d_2): Conv1d(48, 96, kernel_size=(32,), stride=(4,))
+  (pool_1): MaxPool1d(kernel_size=4, stride=4, padding=0, dilation=1, ceil_mode=False)
+  (conv1d_3): Conv1d(96, 144, kernel_size=(16,), stride=(8,))
+  (conv1d_4): Conv1d(144, 192, kernel_size=(16,), stride=(8,))
+  (dense_1): Linear(in_features=192, out_features=192, bias=True)
+  (dense_2): Linear(in_features=192, out_features=144, bias=True)
+  (dense_3): Linear(in_features=144, out_features=96, bias=True)
+  (dense_4): Linear(in_features=96, out_features=1, bias=True)
+)
+Total parameters: 904697
+Trainable parameters: 904697
+
+
+Model: NGramConv(
+  (embedding_1): Embedding(257, 8, padding_idx=256)
+  (conv1d_1): Conv1d(8, 100, kernel_size=(7,), stride=(3,))
+  (dense_1): Linear(in_features=100, out_features=100, bias=True)
+  (drop_1): Dropout1d(p=0.5, inplace=False)
+  (dense_2): Linear(in_features=100, out_features=1, bias=True)
+)
+Total parameters: 17957
+Trainable parameters: 17957
+
+
+Model: BBDnn(
+  (embedding_1): Embedding(257, 10, padding_idx=256)
+  (conv1d_1): Conv1d(10, 96, kernel_size=(11,), stride=(1,))
+  (conv1d_2): Conv1d(96, 128, kernel_size=(5,), stride=(1,))
+  (conv1d_3): Conv1d(128, 256, kernel_size=(5,), stride=(1,))
+  (conv1d_4): Conv1d(256, 256, kernel_size=(5,), stride=(1,))
+  (conv1d_5): Conv1d(256, 256, kernel_size=(5,), stride=(1,))
+  (dense_1): Linear(in_features=512, out_features=1, bias=True)
+)
+Total parameters: 895275
+Trainable parameters: 895275
+
+
+Model: ResNet18(
+  (model): ResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (relu): ReLU(inplace=True)
+    (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+    (layer1): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+    (fc): Linear(in_features=512, out_features=1, bias=True)
+  )
+)
+Total parameters: 11177025
+Trainable parameters: 11177025
+
+

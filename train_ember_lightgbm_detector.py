@@ -46,7 +46,6 @@ if __name__ == "__main__":
         valid_names=["eval"],
         early_stopping_rounds=10,
     )
-
     # Ensure the directory exists
     model_dir = os.path.dirname(configuration["model_path"])  # Extract directory path
     if not os.path.exists(model_dir):
