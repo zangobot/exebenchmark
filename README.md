@@ -37,7 +37,7 @@ F-DRS specifies a fixed chunk size, e.g. 32768 bytes. K-DRS specifies the number
 * [train_end2end_detector.py](train_end2end_detector.py): Python script used to train the end2end detectors.
 * [evaluate_ember_lightgbm_detector.py](evaluate_ember_lightgbm_detector.py): Python script used to evaluate the LightGBM detector.
 * [evaluate_end2end_detector.py](evaluate_end2end_detector.py): Python script used to evaluate the end2end detectors.
-* [adversarial_evaluation.py](adversarial_evaluation.py): Python script used to evaluate the robustness of the detectors against evasion attacks.
+* [adversarial_evaluation.py](adversarial_evaluation.py): Python script used to compute adversarial attacks.
 * [transfer_evaluation.py](transfer_evaluation.py): Python script used to evaluate the transferability of attacks.
 * [temporal_evaluation.py](temporal_evaluation.py): Python script used to evaluate the detectors against concept drift.
 
