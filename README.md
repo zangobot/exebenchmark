@@ -124,9 +124,9 @@ The script then specifies which model to attack with the selected manipulation a
 Attacks can be run in parallel specifying the number of workers inside the script. It uses only one job if not specified. 
 For GAMMA attacks, the path to the goodware and malware folders must be specified inside [config.py](config.py).
 
-We computed adversarial examples using GAMMA, FullDOS and Content-Shift attacks. GAMMA uses goodware harvested from Windows 11 system files or 
+We computed adversarial examples using GAMMA (https://ieeexplore.ieee.org/abstract/document/9437194), FullDOS (https://arxiv.org/pdf/2008.07125) and Content-Shift (https://arxiv.org/pdf/2008.07125) attacks. GAMMA uses goodware harvested from Windows 11 system files or 
 from the Speakeasy dataset. When injecting Windows sections the attack is initialized with 5, 10, 20, 30, and 50 sections, while with 5 and 10 
-sections when injecting Speakeasy goodware sections.
+sections when injecting Speakeasy sections.
 
 For the transfer evaluation, the same configuration file is used by [transfer_evaluation.py](transfer_evaluation.py) to test all models against the adversarial attacks previously computed. In this case, the script specifies also where to save the transfer scores to the [adversarial evaluator](evaluators/adv_evaluator.py).
 The script uses GPU if available, besides when testing EmberGBDT.
