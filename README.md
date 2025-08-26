@@ -110,7 +110,9 @@ python evaluate_end2end_detector.py configurations/EMBER/test/MalConv/malconv_em
 ```
 
 ## Temporal Evaluation
-The temporal evaluation can be performed using the script [temporal_evaluation.py](temporal_evaluation.py). The script loads the configuration file [temporal_analysis.json](configurations/SPEAKEASY/temporal_analysis.json), containing the models, the temporal bins to test, the path of the [Speakeasy metadata](configurations/SPEAKEASY/all_metadata.csv) and the output path. 
+The temporal evaluation can be performed using the script [temporal_evaluation.py](temporal_evaluation.py). 
+The script loads the configuration file [temporal_analysis.json](configurations/SPEAKEASY/temporal_analysis.json), containing the models, the temporal bins to test, the path of 
+the [Speakeasy metadata](configurations/SPEAKEASY/all_metadata.csv) and the output path. The metadata files reports the hashes, the timestamp, the family and the labels of samples. 
 The script uses the [evaluator interface](evaluators/evaluator.py), which initializes the models and performs inference.
 The script uses GPU if available, besides when testing EmberGBDT.
 
