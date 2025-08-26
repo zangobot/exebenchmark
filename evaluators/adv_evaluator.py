@@ -9,7 +9,7 @@ from evaluators.evaluator import Evaluator
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
 from maltorch.adv.evasion.fulldos import FullDOS
-from config import BENIGNWARE_PATH, MALWARE_FOR_ADV, GOODWARE_PATH
+from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
 import torch
 from maltorch.utils.utils import dump_torch_exe_to_file
 
