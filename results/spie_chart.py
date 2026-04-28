@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Wedge, Circle, Patch
@@ -52,36 +54,39 @@ def plot_spie_chart(ax, title, values, colors=None):
 
     ax.set_title(title, fontsize=12, pad=4)
 
+def create_spie_charts():
+    base_path = Path(__file__).parent
+    csv_file = pd.read_csv(base_path / "ranking.csv")
+    labels = ["Performance", "Inference", "Temporal", "Robustness"]
+    colors = ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2"]  # Color-blind friendly
 
-csv_file = pd.read_csv("ranking.csv")
-labels = ["Performance", "Inference", "Temporal", "Robustness"]
-colors = ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2"]  # Color-blind friendly
+    num_rows, num_cols = 3, 10
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(1.5 * num_cols, 1.6 * num_rows))
+    axes = axes.flatten()
 
-num_rows, num_cols = 3, 10
-fig, axes = plt.subplots(num_rows, num_cols, figsize=(1.5 * num_cols, 1.6 * num_rows))
-axes = axes.flatten()
-
-for i, (idx, row) in enumerate(csv_file.iterrows()):
-    if i >= len(axes):
-        break
-    title = f"{row[1]} \n Rank = {row[-1]:.2f}"
-    values = row[2 : 2 + len(labels)].tolist()
-    plot_spie_chart(axes[i], title, values, colors=colors)
+    for i, (idx, row) in enumerate(csv_file.iterrows()):
+        if i >= len(axes):
+            break
+        title = f"{row[1]} \n Rank = {row[-1]:.2f}"
+        values = row[2 : 2 + len(labels)].tolist()
+        plot_spie_chart(axes[i], title, values, colors=colors)
 
 
-legend_elements = [
-    Patch(facecolor=color, edgecolor="black", label=label)
-    for label, color in zip(labels, colors)
-]
+    legend_elements = [
+        Patch(facecolor=color, edgecolor="black", label=label)
+        for label, color in zip(labels, colors)
+    ]
 
-fig.legend(
-    handles=legend_elements,
-    loc="lower center",
-    ncol=len(labels),
-    fontsize=14,
-    frameon=False,
-    bbox_to_anchor=(0.5, -0.02),  # Slightly below the figure
-)
+    fig.legend(
+        handles=legend_elements,
+        loc="lower center",
+        ncol=len(labels),
+        fontsize=14,
+        frameon=False,
+        bbox_to_anchor=(0.5, -0.02),  # Slightly below the figure
+    )
 
-plt.tight_layout()
-plt.savefig("spie_chart.pdf", dpi=300, bbox_inches="tight")  # Save the figure
+    plt.tight_layout()
+    plt.savefig(str(base_path / "spie_chart.pdf"), dpi=300, bbox_inches="tight")  # Save the figure
+
+create_spie_charts()

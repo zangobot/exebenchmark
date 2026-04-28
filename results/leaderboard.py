@@ -6,6 +6,7 @@ import pandas
 from results.adv.robustness_metric import compute_robustness_metric
 from results.inference.inference_metric import compute_inference_metric
 from results.performance.performance_metric import compute_performance_metric
+from results.spie_chart import create_spie_charts
 from results.temporal.temporal_metric import compute_temporal_metric
 
 def compute_benchmark():
@@ -21,7 +22,8 @@ def compute_benchmark():
         'inference_metric']) / 4
     results = results.sort_values(by="rank", ascending=False)
     results.to_csv(Path(__file__).parent / "ranking.csv")
+    create_spie_charts()
     return results
 
 if __name__ == '__main__':
-    results = compute_benchmark()
+    print(compute_benchmark())
