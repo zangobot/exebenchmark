@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load the data from the file
-df = pd.read_csv('inference_times_cpu_updated.csv')
+df = pd.read_csv('results/raw_results/inference_times_cpu_updated.csv')
 
 # Remove the first column
 df = df.iloc[:, 1:]
@@ -38,7 +38,6 @@ plt.ylabel('Inference Time (s)')
 plt.yscale('log')
 plt.xticks(rotation=90)
 plt.grid(axis='both', linestyle='--', linewidth=1)
-
 plt.xlabel('')
 plt.tight_layout()
 plt.savefig('inference_times_cpu.pdf', dpi=300, bbox_inches='tight')

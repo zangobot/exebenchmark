@@ -9,7 +9,7 @@ from evaluators.evaluator import Evaluator
 from maltorch.adv.evasion.content_shift import ContentShift
 from maltorch.adv.evasion.gamma_section_injection import GAMMASectionInjection
 from maltorch.adv.evasion.fulldos import FullDOS
-from config import BENIGNWARE_PATH, MALWARE_FOR_ADV
+from config import BENIGNWARE_PATH, MALWARE_FOR_ADV, GOODWARE_PATH
 import torch
 from maltorch.utils.utils import dump_torch_exe_to_file
 
@@ -59,7 +59,7 @@ class AdversarialEvaluator(Evaluator):
         if self.config["attack"] == "gamma":
             return GAMMASectionInjection(
                 query_budget=500,
-                benignware_folder=Path("/mnt/data/aponte/repos/maltorch/examples/data/goodware_clean"),
+                benignware_folder=BENIGNWARE_PATH,
                 which_sections=[".rdata"],
                 how_many_sections=self.config["param"],
                 model_outputs_logits=False, 
@@ -93,7 +93,6 @@ class AdversarialEvaluator(Evaluator):
             )
             with open(str(predictions_file), "a") as f:
                 f.write(f"{sample_hash}_adv,{score.item()},1\n")
-            # self.model.model.to("cpu")  # Move the model back to CPU after processing
         
 
     def bulk_attack(self, n_jobs, batch_size=1):
@@ -149,34 +148,6 @@ class AdversarialEvaluator(Evaluator):
                     )
                 
 
-        # data_loaders = [
-        #     DataLoader(
-        #         torch.utils.data.Subset(dataset, chunk),
-        #         batch_size=self.batch_size,
-        #         shuffle=False,
-        #         collate_fn=dataset.pad_collate_func,
-        #     )
-        #     for chunk in chunks
-        # ]
-        # if n_jobs == 1:
-        #     adv_dl = self.attack_engine(self.model, data_loaders[0])
-        # else:
-        #     with Pool(n_jobs) as pool:
-        #         pool.starmap(
-        #             self._service_attack,
-        #             [(dl, [hashes[i] for i in chunk], predictions_file) for dl, chunk in zip(data_loaders, chunks)]
-        #         )
-        #     return 
-                
-        # for idx, entry in enumerate(adv_dl.dataset):
-        #     score = self.model(entry[0].unsqueeze(0))
-        #     sample_hash = hashes[idx]
-        #     dump_torch_exe_to_file(
-        #         entry[0], str(self.examples_folder / f"{sample_hash}_adv")
-        #     )
-        #     with open(str(predictions_file), "a") as f:
-        #         f.write(f"{sample_hash}_adv,{score.item()},1\n")
-
     def attacks_eval(self, examples_folder=None, predictions_file=None):
         predictions_path = (
             self.predictions_path
@@ -203,10 +174,6 @@ class AdversarialEvaluator(Evaluator):
                 for idx, batch in enumerate(data_loader):
                     x = batch[0]
                     hash_name = hashes[idx]
-                    # Check if hash already exists in the predictions file
-                    # with open(predictions_file, "r") as pf:
-                    #     if any(hash_name in line for line in pf):
-                    #         continue
                     x = x.to(self.device)
                     pred = self.model(x)
                     pred = pred.cpu().numpy()

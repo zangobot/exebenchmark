@@ -1,2 +1,7 @@
 malware/
 adversarial_evaluation/adversarial_examples/
+adversarial_evaluation/adversarial_examples_1/
+inference_test/
+__pychache__/
+*__pychache__/
+.vscode
