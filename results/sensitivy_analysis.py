@@ -137,8 +137,8 @@ def tornado_plot(
 
     ax.set_xticks(np.arange(0, 1.1, 0.25))
     ax.tick_params(axis="x", labelsize=9)
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.tick_params(which="both", top=False, right=False)
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.tick_params(which="both", top=False, right=False, left=False)
 
     ax.legend(
         handles=patches,
