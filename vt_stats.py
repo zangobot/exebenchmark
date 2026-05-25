@@ -1,10 +1,3 @@
-"""
-VT Results - Temporal Bin Analysis
-------------------------------------
-Input:  CSV con colonne: hash, timestamp (YYYY-MM), label,
-        first_seen_itw, first_submission (unix o human-readable), error
-Output: CSV con statistiche per bin temporale
-"""
 
 import sys
 import re
@@ -167,7 +160,6 @@ def analyze_bins(df: pd.DataFrame) -> pd.DataFrame:
 
         rows.append({
             "bin": bname,
-            # "n_total (% collected)": fmt(n_total, round(n_total / total_population * 100, 2)),
             # first_seen_itw
             "n_first_seen (% of total)": fmt(int(n_fs), round(n_fs / n_total * 100, 2) if n_total else np.nan),
             "n_first_seen_in_bin (% of first_seen)": fmt(n_fs_in_bin,
@@ -207,7 +199,7 @@ def analyze_bins(df: pd.DataFrame) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 
 def main():
-    input_path  = sys.argv[1] if len(sys.argv) > 1 else "vt_results_merged.csv"
+    input_path  = sys.argv[1] if len(sys.argv) > 1 else "vt_results.csv"
     output_path = sys.argv[2] if len(sys.argv) > 2 else input_path.replace(".csv", "_bin_analysis.csv")
 
     df     = load_and_clean(input_path)
