@@ -21,7 +21,7 @@ def plot_spie_chart(ax, title, values, colors=None):
             (0, 0),
             r,
             facecolor="none",
-            edgecolor="lightgray",
+            edgecolor="black",
             linestyle="dotted",
             linewidth=0.6,
         )
@@ -46,11 +46,11 @@ def plot_spie_chart(ax, title, values, colors=None):
             facecolor=color,
             edgecolor="black",
             linewidth=1.0,
-            alpha=0.85,
+            alpha=1,
         )
         ax.add_patch(wedge)
 
-    ax.set_title(title, fontsize=12, pad=4)
+    ax.set_title(title, fontsize=10.5, pad=4)
 
 
 csv_file = pd.read_csv("ranking.csv")
@@ -64,7 +64,7 @@ axes = axes.flatten()
 for i, (idx, row) in enumerate(csv_file.iterrows()):
     if i >= len(axes):
         break
-    title = f"{row[1]} \n Rank = {row[-1]:.2f}"
+    title = f"{row[1]} \n Score = {row[-1]:.2f}"
     values = row[2 : 2 + len(labels)].tolist()
     plot_spie_chart(axes[i], title, values, colors=colors)
 
@@ -78,10 +78,10 @@ fig.legend(
     handles=legend_elements,
     loc="lower center",
     ncol=len(labels),
-    fontsize=14,
+    fontsize=12,
     frameon=False,
-    bbox_to_anchor=(0.5, -0.02),  # Slightly below the figure
+    bbox_to_anchor=(0.5, -0.03),  # Slightly below the figure
 )
 
 plt.tight_layout()
-plt.savefig("spie_chart.pdf", dpi=300, bbox_inches="tight")  # Save the figure
+plt.savefig("spie_chart_2.pdf", dpi=300, bbox_inches="tight")  # Save the figure
