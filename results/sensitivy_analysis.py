@@ -35,9 +35,9 @@ CORR_STYLES = {
 
 
 # Hardcoded runtime configuration.
-CSV_PATH = "ranking_mean.csv"
+CSV_PATH = "ranking_mean_linear_inference.csv"
 RANK_COL = "rank"
-OUTPUT_PATH = None
+OUTPUT_PATH = "imgs/correlation_linear_inference.pdf"
 PLOT_TITLE = "Metric Rank Correlation"
 
 
@@ -133,7 +133,7 @@ def tornado_plot(
     )
     ax.set_xlim(0, 1)
     ax.set_xlabel("Correlation With Final Rank", fontsize=12)
-    ax.set_title(title, fontsize=13, fontweight="bold", pad=14)
+    # ax.set_title(title, fontsize=13, fontweight="bold", pad=14)
 
     ax.set_xticks(np.arange(0, 1.1, 0.25))
     ax.tick_params(axis="x", labelsize=9)
